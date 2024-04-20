@@ -3,31 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Molopony</title>
+    <title>Monopoly-like Game</title>
     <link rel="stylesheet" href="kylemono.css">
 </head>
 <body>
     <div class="container">
-        <h1>Molopony taking over</h1>
+        <h1>Monopoly-like Game</h1>
         <div id="board">
-            <img src="Images/moloponyboard.png" alt="Molopoly Board" id="monopolyBoard">
+            <img src="Images/moloponyboard.png" alt="Molopony Board" id="monopolyBoard">
             <div id="playerToken"></div> <!-- This will represent the player's position -->
         </div>
 
-        <div>
-            <button id="rollDice">Roll Two Dice</button>
-            <button id="rollThreeDice">Roll Three Dice</button>
-        </div>
-        
         <div id="playerInfo">
             <h2>Player Info</h2>
             <p>Position: <span id="playerPosition">0</span></p>
-            <p>Money: $<span id="playerMoney">1500</span></p>
+            <p>Ven: $<span id="playerMoney">1500</span></p>
+        </div>
+
+        <div id="propertyDialog" class="hidden">
+            <div class="propertyCard">
+                <p>This is a property. Would you like to buy it?</p>
+                <button id="buyProperty">Buy</button>
+                <button id="moveOn">Move On</button>
+            </div>
         </div>
     </div>
 
     <script src="kylemono.js"></script>
 </body>
 </html>
+
 
 
