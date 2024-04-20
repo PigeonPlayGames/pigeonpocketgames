@@ -37,8 +37,8 @@ function updatePlayerInfo() {
 
 // Function to check if player landed on a property tile
 function checkPropertyTile() {
-    // List of property tiles (for demonstration purposes, assume they are at positions 5, 15, 25, 35)
-    const propertyTiles = [5, 15, 25, 35];
+    // List of property tiles
+    const propertyTiles = [1, 3, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19, 21, 23, 24, 25, 26, 27, 28, 29, 31, 32, 34, 35, 37, 39];
     if (propertyTiles.includes(player.position)) {
         const propertyDialog = document.getElementById('propertyDialog');
         propertyDialog.classList.remove('hidden');
@@ -68,6 +68,7 @@ function hidePropertyDialog() {
     propertyDialog.classList.add('hidden');
 }
 
+// Function to get X position based on player position
 function getPositionX(position) {
     if (position < 5) {
         return 550 - (position * 55);
