@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
         player.money -= purchaseCost;
         // Additional logic for property ownership can be added here
         hidePropertyDialog();
+        updatePlayerInfo(); // Update player info after buying
     }
 
     // Function to handle moving on without buying the property
@@ -129,3 +130,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize player position
     renderPlayer();
 });
+        
