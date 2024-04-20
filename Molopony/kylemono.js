@@ -11,6 +11,10 @@ const player = {
 function movePlayer(spaces) {
     player.position += spaces;
     player.position %= boardSize; // Ensure player wraps around the board
+    // Check if player passed Go (position 0) and award $200
+    if (player.position < spaces) {
+        player.money += 200;
+    }
     renderPlayer();
 }
 
@@ -32,31 +36,27 @@ function updatePlayerInfo() {
 
 // Function to get X position based on player position
 function getPositionX(position) {
-    if (position < 5) {
-        return 550 - (position * 55);
-    } else if (position >= 5 && position < 10) {
-        return 570 - (position * 52);
-    } else if (position >= 10 && position < 20) {
-        return 50;
-    } else if (position >= 20 && position < 30) {
-        return 50 + ((position - 20) * 48);
+    if (position < 10) {
+        return 550 - (position * 55); // Top row, moving right to left
+    } else if (position < 20) {
+        return 50; // Left column, moving bottom to top
+    } else if (position < 30) {
+        return 50 + ((position - 20) * 48); // Bottom row, moving left to right
     } else {
-        return 570;
+        return 570; // Right column, moving top to bottom
     }
 }
 
 // Function to get Y position based on player position
 function getPositionY(position) {
     if (position < 10) {
-        return 570;
-    } else if (position >= 10 && position < 15) {
-        return 570 - ((position - 10) * 65);
-    } else if (position >= 15 && position < 20) {
-        return 570 - ((position - 10) * 55);
-    } else if (position >= 20 && position < 30) {
-        return 50;
+        return 570; // Top row, fixed Y position
+    } else if (position < 20) {
+        return 570 - ((position - 10) * 65); // Left column, moving bottom to top
+    } else if (position < 30) {
+        return 50; // Bottom row, fixed Y position
     } else {
-        return 50 + ((position - 30) * 50);
+        return 50 + ((position - 30) * 50); // Right column, moving top to bottom
     }
 }
 
