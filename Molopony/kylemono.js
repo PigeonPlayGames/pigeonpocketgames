@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const player = {
         position: 0,
         money: 1500, // Starting money
-        ownedProperties: [] // Array to store owned properties
+        ownedProperties: [], // Array to store owned properties
+        poisonTurns: 0 // Counter for poison turns
     };
 
     // Function to move player
@@ -19,8 +20,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if (player.position < spaces) {
             player.money += 200;
         }
+        if (player.position === 30 && player.poisonTurns === 0) {
+            player.position = 10; // Move player to position 10 if they land on poison
+            player.poisonTurns = 3; // Set poison turns counter
+            displayPoisonEffect(); // Display poison effect message
+        } else if (player.poisonTurns > 0) {
+            player.poisonTurns--; // Decrease poison turns counter
+        }
         renderPlayer();
         checkPropertyTile();
+        updatePlayerInfo();
     }
 
     // Function to render player's position on the board
@@ -30,13 +39,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const positionY = getPositionY(player.position);
         playerToken.style.left = `${positionX}px`;
         playerToken.style.top = `${positionY}px`;
-        updatePlayerInfo();
     }
 
     // Function to update player info display
     function updatePlayerInfo() {
         document.getElementById('playerPosition').textContent = player.position;
         document.getElementById('playerMoney').textContent = player.money;
+        document.getElementById('poisonTurns').textContent = player.poisonTurns;
     }
 
     // Function to check if player landed on a property tile
@@ -122,6 +131,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Function to display poison effect message
+    function displayPoisonEffect() {
+        const poisonEffect = document.getElementById('poisonEffect');
+        poisonEffect.classList.remove('hidden');
+        setTimeout(function() {
+            poisonEffect.classList.add('hidden');
+        }, 3000); // Hide message after 3 seconds
+    }
+
     // Function to roll the dice and move player
     function rollDice(numDice) {
         let diceValue = 0;
@@ -144,4 +162,3 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize player position
     renderPlayer();
 });
-                                                       
