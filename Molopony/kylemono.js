@@ -127,4 +127,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize player position
     renderPlayer();
 });
-                               
+                                
