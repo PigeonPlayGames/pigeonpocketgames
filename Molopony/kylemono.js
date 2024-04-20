@@ -61,13 +61,23 @@ function getPositionY(position) {
 }
 
 // Function to roll the dice and move player
-function rollDice() {
-    const diceValue = Math.floor(Math.random() * 11) + 2; // Random number between 2 and 12
+function rollDice(numDice) {
+    let diceValue = 0;
+    for (let i = 0; i < numDice; i++) {
+        diceValue += Math.floor(Math.random() * 6) + 1; // Roll a single six-sided die
+    }
     movePlayer(diceValue);
 }
 
-// Event listener for rolling the dice
-document.getElementById('rollDice').addEventListener('click', rollDice);
+// Event listener for rolling two dice
+document.getElementById('rollDice').addEventListener('click', function() {
+    rollDice(2);
+});
+
+// Event listener for rolling three dice
+document.getElementById('rollThreeDice').addEventListener('click', function() {
+    rollDice(3);
+});
 
 // Initialize player position
 renderPlayer();
