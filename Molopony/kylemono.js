@@ -16,6 +16,7 @@ function movePlayer(spaces) {
         player.money += 200;
     }
     renderPlayer();
+    checkPropertyTile();
 }
 
 // Function to render player's position on the board
@@ -32,6 +33,39 @@ function renderPlayer() {
 function updatePlayerInfo() {
     document.getElementById('playerPosition').textContent = player.position;
     document.getElementById('playerMoney').textContent = player.money;
+}
+
+// Function to check if player landed on a property tile
+function checkPropertyTile() {
+    // List of property tiles (for demonstration purposes, assume they are at positions 5, 15, 25, 35)
+    const propertyTiles = [5, 15, 25, 35];
+    if (propertyTiles.includes(player.position)) {
+        const propertyDialog = document.getElementById('propertyDialog');
+        propertyDialog.classList.remove('hidden');
+        // Event listener for the buy property button
+        document.getElementById('buyProperty').addEventListener('click', buyProperty);
+        // Event listener for the move on button
+        document.getElementById('moveOn').addEventListener('click', moveOn);
+    }
+}
+
+// Function to handle buying a property
+function buyProperty() {
+    // For demonstration purposes, deduct $200 from player's money
+    player.money -= 200;
+    // You can add more logic here to handle property ownership
+    hidePropertyDialog();
+}
+
+// Function to handle moving on without buying the property
+function moveOn() {
+    hidePropertyDialog();
+}
+
+// Function to hide the property dialog
+function hidePropertyDialog() {
+    const propertyDialog = document.getElementById('propertyDialog');
+    propertyDialog.classList.add('hidden');
 }
 
 function getPositionX(position) {
@@ -60,7 +94,6 @@ function getPositionY(position) {
         return 50 + ((position - 30) * 50);
     }
 }
-
 
 // Function to roll the dice and move player
 function rollDice(numDice) {
