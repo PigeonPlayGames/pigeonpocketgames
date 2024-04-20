@@ -1,50 +1,67 @@
-// Define your board layout, players, properties, etc.
-// For simplicity, let's just consider moving a single player
-
-const board = document.getElementById('board');
-const rollDiceBtn = document.getElementById('rollDice');
-
-const boardSize = 40; // Number of spaces on the board
+// Define board size
+const boardSize = 40;
 
 // Define player object
 const player = {
     position: 0,
     money: 1500, // Starting money
-    properties: []
 };
 
 // Function to move player
 function movePlayer(spaces) {
     player.position += spaces;
-    if (player.position >= boardSize) {
-        player.position -= boardSize; // Wrap around the board
-        player.money += 200; // Collect $200 for passing Go
-    }
+    player.position %= boardSize; // Ensure player wraps around the board
     renderPlayer();
-    // Additional logic for landing on properties, chance, community chest, etc.
 }
 
 // Function to render player's position on the board
 function renderPlayer() {
     const playerToken = document.getElementById('playerToken');
-    playerToken.style.left = `${player.position * 15}px`; // Adjust according to your board layout and player token size
+    const positionX = getPositionX(player.position);
+    const positionY = getPositionY(player.position);
+    playerToken.style.left = `${positionX}px`;
+    playerToken.style.top = `${positionY}px`;
+    updatePlayerInfo();
 }
 
-// Function to roll the dice
+// Function to update player info display
+function updatePlayerInfo() {
+    document.getElementById('playerPosition').textContent = player.position;
+    document.getElementById('playerMoney').textContent = player.money;
+}
+
+// Function to get X position based on player position
+function getPositionX(position) {
+    if (position < 10 || position >= 30) {
+        return 570 - (position % 10) * 54;
+    } else if (position >= 10 && position < 20) {
+        return 50;
+    } else {
+        return 50 + ((position - 20) % 10) * 54;
+    }
+}
+
+// Function to get Y position based on player position
+function getPositionY(position) {
+    if (position < 10) {
+        return 570;
+    } else if (position >= 10 && position < 20) {
+        return 50 + ((position - 10) % 10) * 54;
+    } else if (position >= 20 && position < 30) {
+        return 50;
+    } else {
+        return 570 - ((position - 30) % 10) * 54;
+    }
+}
+
+// Function to roll the dice and move player
 function rollDice() {
-    const diceValue = Math.floor(Math.random() * 6) + 1; // Random number between 1 and 6
+    const diceValue = Math.floor(Math.random() * 11) + 2; // Random number between 2 and 12
     movePlayer(diceValue);
-    // Additional logic for handling doubles, jail, etc.
 }
 
 // Event listener for rolling the dice
-rollDiceBtn.addEventListener('click', rollDice);
+document.getElementById('rollDice').addEventListener('click', rollDice);
 
-// Function to initialize the game
-function initializeGame() {
-    renderPlayer();
-    // Additional initialization logic such as rendering board, properties, etc.
-}
-
-// Call initializeGame to start the game
-initializeGame();
+// Initialize player position
+renderPlayer();
