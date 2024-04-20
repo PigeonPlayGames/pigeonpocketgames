@@ -46,6 +46,8 @@ function checkPropertyTile() {
         document.getElementById('buyProperty').addEventListener('click', buyProperty);
         // Event listener for the move on button
         document.getElementById('moveOn').addEventListener('click', moveOn);
+    } else {
+        hidePropertyDialog(); // Hide the dialog if the player didn't land on a property tile
     }
 }
 
