@@ -10,7 +10,7 @@
     <div class="container">
         <h1>Monopoly-like Game</h1>
         <div id="board">
-            <img src="Images/moloponyboard.png" alt="Molopony Board" id="monopolyBoard">
+            <img src="Images/moloponyboard.png" alt="Monopoly Board" id="monopolyBoard">
             <div id="playerToken"></div> <!-- This will represent the player's position -->
         </div>
 
@@ -23,16 +23,18 @@
         <div id="propertyDialog" class="hidden">
             <div class="propertyCard">
                 <p>This is a property. Would you like to buy it?</p>
+                <p>Property Number: <span id="propertyNumber"></span></p>
+                <p>Purchase Cost: $<span id="purchaseCost"></span></p>
                 <button id="buyProperty">Buy</button>
                 <button id="moveOn">Move On</button>
             </div>
         </div>
 
-        <!-- Buttons for rolling dice -->
         <button id="rollDice">Roll Dice (2)</button>
         <button id="rollThreeDice">Roll Dice (3)</button>
     </div>
 
     <script src="kylemono.js"></script>
 </body>
-</html>
+    </html>
+    
