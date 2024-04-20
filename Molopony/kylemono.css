@@ -1,101 +1,46 @@
-/* Reset CSS */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Global Styles */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  color: #333;
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+#board {
+    position: relative;
+    margin: 50px auto;
+    width: 600px; /* Adjust according to your image size */
+    height: 600px; /* Adjust according to your image size */
 }
 
-header {
-  background-color: #333;
-  padding: 20px 0;
+#monopolyBoard {
+    width: 100%;
+    height: 100%;
 }
 
-header .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+#playerToken {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #ff6347; /* Coral */
+    border-radius: 50%; /* Make it round */
+    top: 570px; /* Adjust according to your image size and player token size */
+    left: 0; /* Initial position */
+    transition: left 0.5s ease; /* Smooth transition */
 }
 
-header h1 {
-  color: #fff;
+button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4caf50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-nav ul {
-  list-style: none;
-}
-
-nav ul li {
-  display: inline;
-  margin-left: 20px;
-}
-
-nav ul li a {
-  color: #fff;
-  text-decoration: none;
-}
-
-#hero {
-  text-align: center;
-  padding: 100px 0;
-  background-color: #f8f8f8;
-}
-
-#hero h2 {
-  margin-bottom: 20px;
-}
-
-.btn {
-  display: inline-block;
-  background-color: #333;
-  color: #fff;
-  padding: 10px 20px;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-.btn:hover {
-  background-color: #555;
-}
-
-section {
-  padding: 80px 0;
-}
-
-section h2 {
-  margin-bottom: 40px;
-}
-
-.game {
-  margin-bottom: 40px;
-}
-
-.game img {
-  width: 100%;
-  max-width: 300px;
-  border-radius: 5px;
-}
-
-footer {
-  background-color: #333;
-  color: #fff;
-  padding: 60px 0;
-  text-align: center;
-}
-
-footer p {
-  margin-bottom: 20px;
+button:hover {
+    background-color: #45a049; /* Darker green on hover */
 }
