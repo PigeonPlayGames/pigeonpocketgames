@@ -32,25 +32,23 @@ function updatePlayerInfo() {
 
 // Function to get X position based on player position
 function getPositionX(position) {
-    // Calculate X position based on the section of the board
-    if (position < 10 || position >= 30) {
-        return 50 + ((position % 10) * 54); // Bottom or top row
+    if (position < 10 || (position >= 20 && position < 30)) {
+        return 50 + ((position % 10) * 54); // Regular tile or left side corner tile
     } else if (position >= 10 && position < 20) {
-        return 570; // Right column
+        return 570; // Top side corner tile
     } else {
-        return 570 - ((position % 10) * 54); // Left column
+        return 50; // Bottom side corner tile
     }
 }
 
 // Function to get Y position based on player position
 function getPositionY(position) {
-    // Calculate Y position based on the section of the board
     if (position < 10) {
-        return 570; // Bottom row
+        return 570; // Regular tile or bottom side corner tile
     } else if (position >= 10 && position < 20) {
-        return 570 - (((position - 10) % 10) * 54); // Right column
+        return 50 + (((position - 10) % 10) * 54); // Regular tile or top side corner tile
     } else {
-        return 50 + (((position - 20) % 10) * 54); // Left column
+        return 50 + ((position % 10) * 54); // Right side corner tile
     }
 }
 
