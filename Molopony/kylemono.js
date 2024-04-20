@@ -37,7 +37,7 @@ function getPositionX(position) {
     } else if (position >= 10 && position < 20) {
         return 50;
     } else if (position >= 20 && position < 30) {
-        return 50 + ((position - 20) * 55);
+        return 50 + ((position - 20) * 53);
     } else {
         return 570;
     }
