@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const player = {
         position: 0,
         money: 1500, // Starting money
+        ownedProperties: [] // Array to store owned properties
     };
 
     // Function to move player
@@ -42,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function checkPropertyTile() {
         // List of property tiles
         const propertyTiles = [1, 3, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19, 21, 23, 24, 25, 26, 27, 28, 29, 31, 32, 34, 35, 37, 39];
-        if (propertyTiles.includes(player.position)) {
+        if (propertyTiles.includes(player.position) && !player.ownedProperties.includes(player.position)) {
             const propertyDialog = document.getElementById('propertyDialog');
             const propertyNumber = player.position;
             const purchaseCost = 100 + (propertyNumber * 5); // Calculate purchase cost based on property number
@@ -56,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Event listener for the move on button
             document.getElementById('moveOn').addEventListener('click', moveOn);
         } else {
-            hidePropertyDialog(); // Hide the dialog if the player didn't land on a property tile
+            hidePropertyDialog(); // Hide the dialog if the player didn't land on a property tile or property is already owned
         }
     }
 
@@ -64,6 +65,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function buyProperty(propertyNumber, purchaseCost) {
         // Deduct purchase cost from player's money
         player.money -= purchaseCost;
+        // Add property to player's owned properties
+        player.ownedProperties.push(propertyNumber);
+        // Add marker on board to indicate owned property
+        addPropertyMarker(propertyNumber);
         // Additional logic for property ownership can be added here
         hidePropertyDialog();
         updatePlayerInfo(); // Update player info after buying
@@ -78,6 +83,15 @@ document.addEventListener('DOMContentLoaded', function() {
     function hidePropertyDialog() {
         const propertyDialog = document.getElementById('propertyDialog');
         propertyDialog.classList.add('hidden');
+    }
+
+    // Function to add marker on board to indicate owned property
+    function addPropertyMarker(propertyNumber) {
+        const marker = document.createElement('div');
+        marker.className = 'propertyMarker';
+        marker.style.left = `${getPositionX(propertyNumber)}px`;
+        marker.style.top = `${getPositionY(propertyNumber)}px`;
+        document.getElementById('board').appendChild(marker);
     }
 
     // Function to get X position based on player position
@@ -130,4 +144,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize player position
     renderPlayer();
 });
-        
+                                                       
