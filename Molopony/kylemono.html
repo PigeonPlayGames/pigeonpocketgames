@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monopoly-like Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Monopoly-like Game</h1>
+        <div id="board">
+            <img src="kylemonopolyboard.png" alt="Monopoly Board" id="monopolyBoard">
+            <div id="playerToken"></div> <!-- This will represent the player's position -->
+        </div>
+
+        <button id="rollDice">Roll Dice</button>
+        <div id="playerInfo">
+            <h2>Player Info</h2>
+            <p>Position: <span id="playerPosition">0</span></p>
+            <p>Money: $<span id="playerMoney">1500</span></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
