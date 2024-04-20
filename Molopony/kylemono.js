@@ -33,11 +33,11 @@ function updatePlayerInfo() {
 // Function to get X position based on player position
 function getPositionX(position) {
     if (position < 10) {
-        return 570 - (position * 55);
+        return 570 - (position * 60);
     } else if (position >= 10 && position < 20) {
         return 50;
     } else if (position >= 20 && position < 30) {
-        return 50 + ((position - 20) * 46);
+        return 50 + ((position - 20) * 48);
     } else {
         return 570;
     }
