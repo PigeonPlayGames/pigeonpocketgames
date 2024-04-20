@@ -45,14 +45,12 @@ function getPositionX(position) {
 
 // Function to get Y position based on player position
 function getPositionY(position) {
-    if (position < 10) {
+    if (position < 10 || position >= 30) {
         return 570;
     } else if (position >= 10 && position < 20) {
         return 570 - ((position - 10) * 54);
-    } else if (position >= 20 && position < 30) {
-        return 50;
     } else {
-        return 50 + ((position - 30) * 54);
+        return 50;
     }
 }
 
