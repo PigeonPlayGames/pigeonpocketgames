@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updatePlayerInfo() {
         document.getElementById('playerPosition').textContent = player.position;
         document.getElementById('playerMoney').textContent = player.money;
+        document.getElementById('ownedProperties').textContent = player.ownedProperties.join(', ');
     }
 
     // Function to check if player landed on a property tile
@@ -144,4 +145,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize player position
     renderPlayer();
 });
-                                                       
+            
