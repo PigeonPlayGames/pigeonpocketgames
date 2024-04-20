@@ -3,7 +3,7 @@ const boardSize = 40;
 
 // Define player object
 const player = {
-    position: 0.2,
+    position: -1,
     money: 1500, // Starting money
 };
 
