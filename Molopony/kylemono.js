@@ -42,9 +42,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const propertyTiles = [1, 3, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19, 21, 23, 24, 25, 26, 27, 28, 29, 31, 32, 34, 35, 37, 39];
         if (propertyTiles.includes(player.position)) {
             const propertyDialog = document.getElementById('propertyDialog');
+            const propertyNumber = player.position;
+            const purchaseCost = 100 + (propertyNumber * 5); // Calculate purchase cost based on property number
+            document.getElementById('propertyNumber').textContent = propertyNumber;
+            document.getElementById('purchaseCost').textContent = purchaseCost;
             propertyDialog.classList.remove('hidden');
             // Event listener for the buy property button
-            document.getElementById('buyProperty').addEventListener('click', buyProperty);
+            document.getElementById('buyProperty').addEventListener('click', function() {
+                buyProperty(propertyNumber, purchaseCost);
+            });
             // Event listener for the move on button
             document.getElementById('moveOn').addEventListener('click', moveOn);
         } else {
@@ -53,10 +59,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Function to handle buying a property
-    function buyProperty() {
-        // For demonstration purposes, deduct $200 from player's money
-        player.money -= 200;
-        // You can add more logic here to handle property ownership
+    function buyProperty(propertyNumber, purchaseCost) {
+        // Deduct purchase cost from player's money
+        player.money -= purchaseCost;
+        // Additional logic for property ownership can be added here
         hidePropertyDialog();
     }
 
