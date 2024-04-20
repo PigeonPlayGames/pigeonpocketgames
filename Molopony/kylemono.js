@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to move player
     function movePlayer(spaces) {
+        // Hide property dialog before moving player
+        hidePropertyDialog();
         player.position += spaces;
         player.position %= boardSize; // Ensure player wraps around the board
         // Check if player passed Go (position 0) and award $200
@@ -127,4 +129,3 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize player position
     renderPlayer();
 });
-                                
