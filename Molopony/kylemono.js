@@ -3,7 +3,7 @@ const boardSize = 40;
 
 // Define player object
 const player = {
-    position: -1,
+    position: 0,
     money: 1500, // Starting money
 };
 
@@ -33,7 +33,7 @@ function updatePlayerInfo() {
 // Function to get X position based on player position
 function getPositionX(position) {
     if (position < 10) {
-        return 570 - (position * 60);
+        return 570 - (position * 55);
     } else if (position >= 10 && position < 20) {
         return 50;
     } else if (position >= 20 && position < 30) {
