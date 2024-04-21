@@ -44,3 +44,9 @@ button {
 button:hover {
     background-color: #45a049; /* Darker green on hover */
 }
+
+/* Additional CSS to hide buttons */
+.btn-buy,
+.btn-move-on {
+    display: none;
+}
