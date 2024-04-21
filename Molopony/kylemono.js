@@ -59,6 +59,9 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('propertyNumber').textContent = propertyNumber;
             document.getElementById('purchaseCost').textContent = purchaseCost;
             propertyDialog.classList.remove('hidden');
+            // Show buy and move on buttons
+            document.getElementById('buyProperty').classList.remove('hidden');
+            document.getElementById('moveOn').classList.remove('hidden');
             // Event listener for the buy property button
             document.getElementById('buyProperty').addEventListener('click', function() {
                 buyProperty(propertyNumber, purchaseCost);
@@ -67,9 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('moveOn').addEventListener('click', moveOn);
         } else {
             hidePropertyDialog(); // Hide the dialog if the player didn't land on a property tile or property is already owned
-            // Hide buy and move on buttons if not needed
-            document.getElementById('buyProperty').classList.add('hidden');
-            document.getElementById('moveOn').classList.add('hidden');
         }
     }
 
@@ -95,6 +95,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function hidePropertyDialog() {
         const propertyDialog = document.getElementById('propertyDialog');
         propertyDialog.classList.add('hidden');
+        // Hide buy and move on buttons
+        document.getElementById('buyProperty').classList.add('hidden');
+        document.getElementById('moveOn').classList.add('hidden');
     }
 
     // Function to add marker on board to indicate owned property
