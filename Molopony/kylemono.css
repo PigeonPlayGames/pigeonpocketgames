@@ -45,8 +45,13 @@ button:hover {
     background-color: #45a049; /* Darker green on hover */
 }
 
-/* Additional CSS to hide buttons */
-.btn-buy,
-.btn-move-on {
+/* Hide property dialog initially */
+#propertyDialog {
     display: none;
+}
+
+/* Show buy and move on buttons when property dialog is displayed */
+#propertyDialog.show-dialog .btn-buy,
+#propertyDialog.show-dialog .btn-move-on {
+    display: block;
 }
