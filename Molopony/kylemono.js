@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const player = {
         position: 0,
         money: 1500, // Starting money
-        ownedProperties: [] // Array to store owned properties
+        ownedProperties: [], // Array to store owned properties
+        poisonTurns: 0 // Counter for poison turns
     };
 
     // Function to move player
@@ -18,6 +19,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Check if player passed Go (position 0) and award $200
         if (player.position < spaces) {
             player.money += 200;
+        }
+        if (player.position === 30 && player.poisonTurns === 0) {
+            player.position = 10; // Move player to position 10 if they land on poison
+            player.poisonTurns = 3; // Set poison turns counter
+            displayPoisonEffect(); // Display poison effect message
+        } else if (player.poisonTurns > 0) {
+            player.poisonTurns--; // Decrease poison turns counter
         }
         renderPlayer();
         checkPropertyTile();
@@ -37,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updatePlayerInfo() {
         document.getElementById('playerPosition').textContent = player.position;
         document.getElementById('playerMoney').textContent = player.money;
+        document.getElementById('poisonTurns').textContent = player.poisonTurns;
     }
 
     // Function to check if player landed on a property tile
@@ -49,61 +58,25 @@ document.addEventListener('DOMContentLoaded', function() {
             const purchaseCost = 100 + (propertyNumber * 5); // Calculate purchase cost based on property number
             document.getElementById('propertyNumber').textContent = propertyNumber;
             document.getElementById('purchaseCost').textContent = purchaseCost;
-            propertyDialog.classList.remove('hidden');
-            // Show buy and move on buttons
-            document.getElementById('buyProperty').classList.remove('hidden');
-            document.getElementById('moveOn').classList.remove('hidden');
+            propertyDialog.classList.add('show-dialog'); // Show the property dialog
         } else {
             hidePropertyDialog(); // Hide the dialog if the player didn't land on a property tile or property is already owned
         }
     }
 
-    // Function to handle buying a property
-    function buyProperty(propertyNumber, purchaseCost) {
-        // Deduct purchase cost from player's money
-        player.money -= purchaseCost;
-        // Add property to player's owned properties
-        player.ownedProperties.push(propertyNumber);
-        // Additional logic for property ownership can be added here
-        hidePropertyDialog();
-        updatePlayerInfo(); // Update player info after buying
-    }
-
-    // Function to hide the property dialog and buttons
+    // Function to hide the property dialog
     function hidePropertyDialog() {
         const propertyDialog = document.getElementById('propertyDialog');
-        propertyDialog.classList.add('hidden');
-        // Hide buy and move on buttons
-        document.getElementById('buyProperty').classList.add('hidden');
-        document.getElementById('moveOn').classList.add('hidden');
+        propertyDialog.classList.remove('show-dialog'); // Hide the property dialog
     }
 
-    // Function to get X position based on player position
-    function getPositionX(position) {
-        if (position < 5) {
-            return 550 - (position * 55);
-        } else if (position >= 5 && position < 10) {
-            return 570 - (position * 55);
-        } else if (position >= 10 && position < 20) {
-            return 50;
-        } else if (position >= 20 && position < 30) {
-            return 50 + ((position - 20) * 48);
-        } else {
-            return 570;
-        }
-    }
-
-    // Function to get Y position based on player position
-    function getPositionY(position) {
-        if (position < 10) {
-            return 570;
-        } else if (position >= 10 && position < 20) {
-            return 570 - ((position - 10) * 55);
-        } else if (position >= 20 && position < 30) {
-            return 50;
-        } else {
-            return 50 + ((position - 30) * 50);
-        }
+    // Function to display poison effect message
+    function displayPoisonEffect() {
+        const poisonEffect = document.getElementById('poisonEffect');
+        poisonEffect.classList.remove('hidden');
+        setTimeout(function() {
+            poisonEffect.classList.add('hidden');
+        }, 3000); // Hide message after 3 seconds
     }
 
     // Function to roll the dice and move player
@@ -127,7 +100,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize player position
     renderPlayer();
-
-    // Hide the property dialog and buttons initially
-    hidePropertyDialog();
 });
