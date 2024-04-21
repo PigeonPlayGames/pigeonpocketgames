@@ -12,11 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to move player
     function movePlayer(spaces) {
-        // Hide property dialog before moving player
         hidePropertyDialog();
         player.position += spaces;
         player.position %= boardSize; // Ensure player wraps around the board
-        // Check if player passed Go (position 0) and award $200
         if (player.position < spaces) {
             player.money += 200;
         }
@@ -25,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
             player.poisonTurns = 3; // Set poison turns counter
             displayPoisonEffect(); // Display poison effect message
         } else if (player.poisonTurns > 0) {
-            player.poisonTurns--; // Decrease poison turns counter
+            player.poisonTurns--;
         }
         renderPlayer();
         checkPropertyTile();
@@ -50,24 +48,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to check if player landed on a property tile
     function checkPropertyTile() {
-        // List of property tiles
         const propertyTiles = [1, 3, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19, 21, 23, 24, 25, 26, 27, 28, 29, 31, 32, 34, 35, 37, 39];
         if (propertyTiles.includes(player.position) && !player.ownedProperties.includes(player.position)) {
             const propertyDialog = document.getElementById('propertyDialog');
             const propertyNumber = player.position;
-            const purchaseCost = 100 + (propertyNumber * 5); // Calculate purchase cost based on property number
+            const purchaseCost = 100 + (propertyNumber * 5);
             document.getElementById('propertyNumber').textContent = propertyNumber;
             document.getElementById('purchaseCost').textContent = purchaseCost;
-            propertyDialog.classList.add('show-dialog'); // Show the property dialog
+            propertyDialog.classList.add('show-dialog');
         } else {
-            hidePropertyDialog(); // Hide the dialog if the player didn't land on a property tile or property is already owned
+            hidePropertyDialog();
         }
     }
 
     // Function to hide the property dialog
     function hidePropertyDialog() {
         const propertyDialog = document.getElementById('propertyDialog');
-        propertyDialog.classList.remove('show-dialog'); // Hide the property dialog
+        propertyDialog.classList.remove('show-dialog');
     }
 
     // Function to display poison effect message
@@ -83,17 +80,16 @@ document.addEventListener('DOMContentLoaded', function() {
     function rollDice(numDice) {
         let diceValue = 0;
         for (let i = 0; i < numDice; i++) {
-            diceValue += Math.floor(Math.random() * 6) + 1; // Roll a single six-sided die
+            diceValue += Math.floor(Math.random() * 6) + 1;
         }
         movePlayer(diceValue);
     }
 
-    // Event listener for rolling two dice
+    // Event listeners for dice rolls
     document.getElementById('rollDice').addEventListener('click', function() {
         rollDice(2);
     });
 
-    // Event listener for rolling three dice
     document.getElementById('rollThreeDice').addEventListener('click', function() {
         rollDice(3);
     });
