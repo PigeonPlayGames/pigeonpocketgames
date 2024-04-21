@@ -67,6 +67,9 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('moveOn').addEventListener('click', moveOn);
         } else {
             hidePropertyDialog(); // Hide the dialog if the player didn't land on a property tile or property is already owned
+            // Hide buy and move on buttons if not needed
+            document.getElementById('buyProperty').classList.add('hidden');
+            document.getElementById('moveOn').classList.add('hidden');
         }
     }
 
