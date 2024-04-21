@@ -1,10 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Define board size
     const boardSize = 40;
-    const boardWidth = 600; // Width of the board in pixels
-    const boardHeight = 600; // Height of the board in pixels
-    const positionsPerSide = 10; // Number of positions per side of the board
-    const tokenOffset = 30; // Offset to center the token within a cell
 
     // Define player object
     const player = {
@@ -16,26 +12,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Get X position for the player's token
     function getPositionX(position) {
-        if (position < positionsPerSide) { // Bottom row (right to left)
-            return boardWidth - (position * (boardWidth / positionsPerSide)) - tokenOffset;
-        } else if (position < positionsPerSide * 2) { // Right column (bottom to top)
-            return tokenOffset;
-        } else if (position < positionsPerSide * 3) { // Top row (left to right)
-            return (position - positionsPerSide * 2) * (boardWidth / positionsPerSide) + tokenOffset;
+        let segmentLength = 600 / 10; // Assuming each side of the board has 10 positions
+        let segment = Math.floor(position / 10);
+        let offset = (position % 10) * segmentLength;
+
+        if (segment === 0) {
+            return 600 - offset; // Bottom row, moving right to left
+        } else if (segment === 1) {
+            return 0; // Right column, moving upwards
+        } else if (segment === 2) {
+            return offset; // Top row, moving left to right
+        } else {
+            return 600; // Left column, moving downwards
         }
-        return boardWidth - tokenOffset; // Left column (top to bottom)
     }
 
     // Get Y position for the player's token
     function getPositionY(position) {
-        if (position < positionsPerSide) { // Bottom row
-            return boardHeight - tokenOffset;
-        } else if (position < positionsPerSide * 2) { // Right column
-            return boardHeight - ((position - positionsPerSide) * (boardHeight / positionsPerSide)) - tokenOffset;
-        } else if (position < positionsPerSide * 3) { // Top row
-            return tokenOffset;
+        let segmentLength = 600 / 10; // Assuming each side of the board has 10 positions
+        let segment = Math.floor(position / 10);
+        let offset = (position % 10) * segmentLength;
+
+        if (segment === 0) {
+            return 600; // Bottom row
+        } else if (segment === 1) {
+            return 600 - offset; // Right column, moving upwards
+        } else if (segment === 2) {
+            return 0; // Top row
+        } else {
+            return offset; // Left column, moving downwards
         }
-        return (position - positionsPerSide * 3) * (boardHeight / positionsPerSide) + tokenOffset; // Left column
     }
 
     // Function to move player
@@ -74,10 +80,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (propertyTiles.includes(player.position) && !player.ownedProperties.includes(player.position)) {
             const propertyDialog = document.getElementById('propertyDialog');
             const propertyNumber = player.position;
-            const purchaseCost = 100 + (propertyNumber * 5);
+            const purchaseCost = 100 + (propertyNumber * 5); // Example cost calculation
             document.getElementById('propertyNumber').textContent = propertyNumber;
             document.getElementById('purchaseCost').textContent = purchaseCost;
             propertyDialog.classList.add('show-dialog');
+        } else {
+            hidePropertyDialog();
         }
     }
 
