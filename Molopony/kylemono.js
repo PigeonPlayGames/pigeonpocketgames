@@ -50,6 +50,9 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('propertyNumber').textContent = propertyNumber;
             document.getElementById('purchaseCost').textContent = purchaseCost;
             propertyDialog.classList.remove('hidden');
+            // Show buy and move on buttons
+            document.getElementById('buyProperty').classList.remove('hidden');
+            document.getElementById('moveOn').classList.remove('hidden');
         } else {
             hidePropertyDialog(); // Hide the dialog if the player didn't land on a property tile or property is already owned
         }
@@ -66,10 +69,13 @@ document.addEventListener('DOMContentLoaded', function() {
         updatePlayerInfo(); // Update player info after buying
     }
 
-    // Function to hide the property dialog
+    // Function to hide the property dialog and buttons
     function hidePropertyDialog() {
         const propertyDialog = document.getElementById('propertyDialog');
         propertyDialog.classList.add('hidden');
+        // Hide buy and move on buttons
+        document.getElementById('buyProperty').classList.add('hidden');
+        document.getElementById('moveOn').classList.add('hidden');
     }
 
     // Function to get X position based on player position
@@ -121,4 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize player position
     renderPlayer();
+
+    // Hide the property dialog and buttons initially
+    hidePropertyDialog();
 });
