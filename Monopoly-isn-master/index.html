@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Game</title>
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="rank">
+        <ul>
+        </ul>
+    </div>
+    <div id="game"> 
+
+        <div id="cell21" class="corner cell top free-parking" data-owner="">
+            <div class="content"></div>
+        </div>
+        <div id="cell22" class="property available cell top india" data-owner="" data-name="india" data-group="group5">
+            <div class="content"></div>
+            <div class="title"></div>
+        </div>
+        <div id="cell23" class="top cell chance">
+            <div class="content">
+            </div>
+        </div>
+        <div id="cell24" class="property available cell top japan" data-owner="" data-name="japan" data-group="group5">
+            <div class="content"></div>
+            <div class="title"></div>
+        </div>
+        <div id="cell25" class="property available cell top china" data-owner="" data-name="china" data-group="group5">
+            <div class="content">
+
+            </div>
+            <div class="title"></div>
+        </div>
+        <div id="cell26" class="top cell airport property available" data-owner="">
+            <div class="content">
+                
+            </div>
+        </div>
+        <div id="cell27" class="property available cell top mexique" data-owner="" data-name="mexique" data-group="group6">
+            <div class="content"></div>
+            <div class="title"></div>
+        </div>
+        <div id="cell28" class="property available cell top canada" data-owner="" data-name="canada" data-group="group6">
+            <div class="content"></div>
+            <div class="title"></div>
+        </div>
+        <div id="cell29" class="top cell property available energy water" data-owner="" data-group="company">
+            <div class="content"></div>
+        </div>
+        <div id="cell30" class="property available cell top usa" data-owner="" data-name="usa" data-group="group6">
+            <div class="content"></div>
+            <div class="title"></div>
+        </div>
+        <div id="cell31" class="corner cell top go-to-jail">
+            <div class="content">
+            </div>
+        </div>
+
+
+        <br>
+        <div id="cell20" class="property available cell left brazil" data-owner="" data-name="brazil" data-group="group4">
+            <div class="content"></div>
+            <div class="title"></div>
+        </div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div id="cell32" class="property available cell right germany" data-owner="" data-name="germany" data-group="group7">
+            <div class="title"></div>
+            <div class="content"></div>
+        </div>
+ 
+        <br>
+        <div id="cell19" class="property available left cell argentina" data-owner="" data-name="argentina" data-group="group4">
+            <div class="content"></div>
+            <div class="title"></div>
+        </div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+		<div class="void cell"></div>
+        <div id="dice_1" class="void cell dice"></div>
+        <div class="void cell"></div>
+        <div id="dice_2" class="void cell dice"></div>
+        <div class="void cell"></div>
+        
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div id="cell33" class="property available right cell british" data-owner="" data-name="british" data-group="group7">
+            <div class="title"></div>
+            <div class="content"></div>
+        </div>
+
+        <br>
+        <div id="cell18" class="left community-chest cell">
+            <div class="content"></div>
+        </div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div id="cell34" class="right community-chest cell">
+            <div class="content"></div>
+        </div>
+
+        <br>
+        <div id="cell17" class="property available left cell venezuela" data-owner="" data-name="venezuela" data-group="group4">
+            <div class="content"></div>
+            <div class="title"></div>
+        </div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div id="cell35" class="property available right cell france" data-owner="" data-name="france" data-group="group7">
+            <div class="title"></div>
+            <div class="content">
+            </div>
+        </div>
+
+        <br>
+        <div id="cell16" class="left cell airport property available" data-owner="">
+            <div class="content"></div>
+        </div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div id="cell36" class="right cell airport property available" data-owner="">
+            <div class="content"></div>
+        </div>
+
+        <br>
+        <div id="cell15" class="property available left cell australia" data-owner="" data-name="australia" data-group="group3">
+            <div class="content"></div>
+            <div class="title"></div>
+        </div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div id="cell37" class="right cell chance">
+            <div class="content"></div>
+        </div>
+
+        <br>
+        <div id="cell14" class="property available left cell new-zeeland" data-owner="" data-name="new-zeeland" data-group="group3">
+            <div class="content">
+            </div>
+            <div class="title"></div>
+        </div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div id="cell38" class="property available right cell moon" data-owner="" data-name="moon" data-group="group8">
+            <div class="title"></div>
+            <div class="content"></div>
+        </div>
+
+        <br>
+        <div id="cell13" class="left property available energy electric cell" data-owner="" data-group="company">
+            <div class="content"></div>
+        </div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div id="cell39" class="right tax2 tax cell">
+            <div class="content"></div>
+        </div>
+
+        <br>
+        <div id="cell12" class="property available left cell papua-new-guinea" data-owner="" data-name="papua-new-guinea" data-group="group3">
+            <div class="content">
+            </div>
+            <div class="title"></div>
+        </div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div class="void cell"></div>
+        <div id="cell40" class="property available right cell mars" data-owner="" data-name="mars" data-group="group8">
+            <div class="title"></div>
+            <div class="content"></div>
+        </div>
+
+        <br>
+
+        <div id="cell11" class="corner jail cell">
+            <div class="content"></div>
+        </div>
+        <div id="cell10" class="property available bottom cell nigeria" data-owner="" data-name="nigeria" data-group="group2">
+            <div class="title"></div> 
+            <div class="content"></div>
+        </div>
+        <div id="cell9" class="property available bottom cell south-africa" data-owner="" data-name="south-africa" data-group="group2">
+            <div class="title"></div>
+            <div class="content"></div>
+        </div>
+        <div id="cell8" class="cell bottom chance">
+            <div class="content"></div>
+        </div>
+        <div id="cell7" class="property available bottom cell egypt" data-owner="" data-name="egypt" data-group="group2">
+            <div class="title"></div>
+            <div class="content"></div>
+        </div>
+        <div id="cell6" class="cell bottom airport property available" data-owner="">
+            <div class="content"></div>
+        </div>
+        <div id="cell5" class="cell bottom tax1 tax">
+            <div class="content"></div>
+        </div>
+        <div id="cell4" class="property available bottom cell north-korea" data-owner="" data-name="north-korea" data-group="group1">
+            <div class="title"></div>
+            <div class="content"></div>
+        </div>
+        <div id="cell3" class="cell bottom community-chest">
+            <div class="content"></div>
+        </div>
+        <div id="cell2" class="property available bottom cell turkmenistan" data-owner="" data-group="group1">
+            <div class="title"></div>
+            <div class="content"></div>
+        </div>
+        <div id="cell1" class="corner start cell">
+            <div class="content">
+            </div>
+
+        </div>
+        
+        
+    </div>
+
+
+    <div id="modal-player" class="modal" tabindex="-1" role="dialog" data-keyboard="false"
+        data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nombre de Joueur : </h5>
+                </div>
+                <div class="modal-body">
+                    <form id="form-nbrPlayer" class="form-group " action="">
+                        <label for="nbrPlayer">Nombre Joueur (2 à 5)</label><input id="nbrPlayer" class="form-control"
+                            type="number" name="">
+                        <button style="margin-top: 5px" id="button-nbrPlayer" type="button"
+                            class="btn btn-success">Valider</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-player-name" class="modal" tabindex="-1" role="dialog" data-keyboard="false"
+        data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pseudo des Joueurs : </h5>
+                </div>
+                <div class="modal-body">
+                    <form id="form-name-player" class="form-group " action="">
+                        <button style="margin-top: 5px" id="button-name-player" type="button"
+                            class="btn btn-success">Valider</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-buyProperty" class="modal" tabindex="-1" role="dialog" data-keyboard="false"
+        data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                </div>
+                <div class="modal-body">
+                    <img src="" alt="">
+                    <p id="money" class="d-inline-block float-right"></p>
+                    <p id="buy"></p>
+                    <p id="sell"></p>
+                    <p id="rent"></p>
+                    <br>
+                    <p id="error"></p>
+                    <button style="margin-top: 5px" id="button-buyProperty" type="button"class="btn btn-success">Acheter</button>
+                    <button style="margin-top: 5px" id="button-quit" type="button"class="btn btn-danger float-right">Quitter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-chance" class="modal" tabindex="-1" role="dialog" data-keyboard="false"
+        data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                </div>
+                <div class="modal-body">
+                    <p id="money" class="d-inline-block float-right"></p>
+                    <p id="name"></p>
+                    <p id="presentation"></p>
+                    <p id="action"></p>
+                    <br>
+                    <p id="error"></p>
+                    <button style="margin-top: 5px" id="button-validate" type="button"class="btn btn-success"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-tryLeaveJail" class="modal" tabindex="-1" role="dialog" data-keyboard="false"
+        data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                </div>
+                <div class="modal-body">
+                    <p id="money" class="d-inline-block float-right"></p>
+                    <p> Voulez vous lancer les dés ou bien payer 50 € ?</p>
+                    <p id="info"></p>
+                    <br>
+                    <button style="margin-top: 5px" id="button-buyJail" type="button"class="btn btn-success">Payer 50 €</button>
+                    <button style="margin-top: 5px" id="button-Dice" type="button"class="btn btn-primary">Lancer les dés</button>
+                    <button style="margin-top: 5px" id="button-quit" type="button"class="btn btn-danger">quitter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-payRent" class="modal" tabindex="-1" role="dialog" data-keyboard="false"
+        data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                </div>
+                <div class="modal-body">
+                    <img src="" alt="">
+                    <p id="money" class="d-inline-block float-right"></p>
+                    <p id="rent"></p>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <p id="info" style="z-index: 1;"></p>
+                    <button style="margin-top: 5px" id="button-payRent" type="button"class="btn btn-success">Payer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-upgradeProperty" class="modal" tabindex="-1" role="dialog" data-keyboard="false"
+        data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                </div>
+                <div class="modal-body">
+                    <img src="" alt="">
+                    <p id="money" class="d-inline-block float-right"></p>
+                    <p id="level"></p>
+                    <button style="display: inline;" id="button-upgradeProperty" type="button"class="btn btn-success">Améliorer</button><p id="upgrade" style="display: inline;"></p>
+                    <button style="display: inline;" id="button-downgradeProperty" type="button"class="btn btn-danger">Désaméliorer</button><p id="downgrade" style="display: inline;"></p>
+                    <br>
+                    <p id="error"></p>
+                    <button style="margin-top: 5px" id="button-sell" type="button"class="btn btn-danger">Vendre la propriété</button><p id="sell style="display: inline;""></p>
+                    <button style="margin-top: 5px" id="button-quit" type="button"class="btn btn-danger float-right">Quitter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-sellProperty" class="modal" tabindex="-1" role="dialog" data-keyboard="false"
+        data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                </div>
+                <div class="modal-body">
+                    <img src="" alt="">
+                    <p id="money" class="d-inline-block float-right"></p>
+                    <p id="level"></p>
+                    <button style="display: inline-blocks;" id="button-downgradeProperty" type="button"class="btn btn-danger">Désaméliorer</button>
+                    <p id="downgrade" style="display: inline-block;"></p>
+                    <br>
+                    <p id="error"></p>
+                    
+                    <button style="margin-top: 5px" style="display: inline-block;" id="button-sell" type="button"class="btn btn-danger">Vendre la propriété</button>
+                    <p id="sell" style="display: inline-block;"></p>
+                    <button style="margin-top: 5px" id="button-quit" type="button"class="btn btn-danger float-right">Quitter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-gameOver" class="modal" tabindex="-1" role="dialog" data-keyboard="false"
+        data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Game-Over</h5>
+                </div>
+                <div class="modal-body">
+                    <p id="player"></p>
+                    <button style="margin-top: 5px" id="button-quit" type="button"class="btn btn-danger float-right">Quitter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-changeTurnPlayer" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title"></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Jouer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="modal-win" class="modal" tabindex="-1" role="dialog" data-keyboard="false"
+        data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Vainqueur</h5>
+                </div>
+                <div class="modal-body">
+                    <p id="player"></p>
+                    <button style="margin-top: 5px" id="button-replay" type="button"class="btn btn-success float-right">Rejouer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>

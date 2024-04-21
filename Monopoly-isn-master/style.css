@@ -1,0 +1,481 @@
+﻿body {
+    background-color: rgb(218, 233, 212);
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Style du plateau de jeu */
+#game {
+    text-align: center;
+    margin: auto;
+    background-color: rgb(218, 233, 212);
+    font-size: 0px;
+}
+
+
+
+/* Style d'une cellule */
+#game .cell {
+    width: 65px;
+    height: 140px;
+    display: inline-block;
+    border: 1px solid black;
+    margin: 2px;
+    text-align: start;
+    vertical-align: top;
+
+
+}
+
+/* Style d'une cellule vide*/
+#game .cell.void {
+    height: 65px;
+    border-color: rgb(218, 233, 212);
+}
+
+
+/* Style d'une cellule à droite ou a gauche*/
+#game .cell.right,
+#game .cell.left {
+    width: 140px;
+    height: 65px;
+}
+
+/* Style d'une cellule à un coin */
+#game .cell.corner {
+    width: 140px;
+}
+
+
+
+/*Background des cases à fonctions */
+
+#game .jail {
+    background-image: url('pictures/jail.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+
+
+}
+
+#game .start {
+    background-image: url('pictures/go.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#game .property.left.electric {
+    background-image: url('pictures/electric.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .property.top.water {
+    background-image: url('pictures/water.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .corner.top.go-to-jail {
+    background-image: url('pictures/go-to-jail.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#game .right.community-chest {
+    background-image: url('pictures/community-chest-right.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
+#game .left.community-chest {
+    background-image: url('pictures/community-chest-left.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#game .bottom.community-chest {
+    background-image: url('pictures/community-chest-bottom.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#game .top.chance {
+    background-image: url('pictures/chance-top.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
+#game .right.chance {
+    background-image: url('pictures/chance-right.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#game .bottom.chance {
+    background-image: url('pictures/chance-bottom.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#game .bottom.tax1 {
+    background-image: url('pictures/tax1.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .right.tax2 {
+    background-image: url('pictures/tax2.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .corner.top.free-parking {
+    background-image: url('pictures/free-parking.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Style des div title propriété en haut */
+#game .cell.top .title {
+    height: 20%;
+    border-top: 1px solid black;
+    width: 100%;
+}
+
+/* Style des div content propriété en haut */
+#game .cell.top .content {
+    height: 80%;
+    width: 100%;
+}
+
+/* Style des div title propriété en bas */
+#game .cell.bottom .title {
+    height: 20%;
+    border-bottom: 1px solid black;
+    width: 100%;
+}
+
+/* Style des div content propriété en bas */
+#game .cell.bottom .content {
+    height: 80%;
+    width: 100%;
+}
+
+/* Défénir les cases titles et content à droite et à gauche */
+#game .cell.left .title,
+#game .cell.left .content,
+#game .cell.right .title,
+#game .cell.right .content {
+    display: inline-block;
+}
+
+/* Style des cases title a gauche */
+#game .cell.left .title {
+    height: 100%;
+    border-left: 1px solid black;
+    width: 20%;
+}
+
+/* Style des cases content a gauche */
+#game .cell.left .content {
+    height: 100%;
+    width: 80%;
+}
+
+/* Style des cases title a droite */
+#game .cell.right .title {
+    height: 100%;
+    border-right: 1px solid black;
+    width: 20%;
+}
+
+/* Style des cases content a doirte */
+#game .cell.right .content {
+    height: 100%;
+    width: 80%;
+}
+
+/* Style des cases content*/
+#game .cell .content {
+    vertical-align: top;
+}
+
+#game .void.dice{
+    cursor: pointer;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game #dice_1{
+    background-image: url("pictures/dice/dice_6.gif");
+}
+
+#game #dice_2{
+    background-image: url("pictures/dice/dice_6.gif");
+}
+
+
+
+/* Style des éléments avec la classe title enfant d'élement avec la classe property_group_1 enfant d'élément avec l'id game */
+#game [data-group='group1'] .title {
+    background-color: brown;
+}
+
+#game [data-group='group2'] .title {
+    background-color: aquamarine;
+}
+
+#game [data-group='group3'] .title {
+    background-color: pink;
+}
+
+#game [data-group='group4'] .title {
+    background-color: orange;
+}
+
+#game [data-group='group5'] .title {
+    background-color: red;
+}
+
+#game [data-group='group6'] .title {
+    background-color: yellow;
+}
+
+#game [data-group='group7'] .title {
+    background-color: green;
+}
+
+#game [data-group='group8'] .title {
+    background-color: blue;
+}
+
+/* Style d'un joueur */
+div#player1{
+    background-image: url('pictures/cheval_1.png');
+}
+div#player2{
+    background-image: url('pictures/cheval_2.png');
+}
+div#player3{
+    background-image: url('pictures/cheval_3.png');
+}
+div#player3{
+    background-image: url('pictures/cheval_3.png');
+}
+div#player3{
+    background-image: url('pictures/cheval_3.png');
+}
+div.player {
+    display: inline-block;
+    margin: 2px;
+    height: 40px;
+    width: 40px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+
+img#background{
+    position: absolute;
+    z-index: 1;
+    top: 30%;
+    left: 40%;
+    width: 20%;
+}
+
+
+#game .cell.property.france .content{
+    background-image: url('pictures/pais/france.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.usa .content{
+    background-image: url('pictures/pais/usa.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.canada .content{
+    background-image: url('pictures/pais/canada.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.mexique .content{
+    background-image: url('pictures/pais/mexique.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+#game .cell.property.germany .content{
+    background-image: url('pictures/pais/germany.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.british .content{
+    background-image: url('pictures/pais/british.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.moon .content{
+    background-image: url('pictures/pais/moon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.mars .content{
+    background-image: url('pictures/pais/mars.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.china .content{
+    background-image: url('pictures/pais/china.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.india .content{
+    background-image: url('pictures/pais/india.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.japan .content{
+    background-image: url('pictures/pais/japan.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.brazil .content{
+    background-image: url('pictures/pais/brazil.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.argentina .content{
+    background-image: url('pictures/pais/argentina.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.venezuela .content{
+    background-image: url('pictures/pais/venezuela.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.nigeria .content{
+    background-image: url('pictures/pais/nigeria.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.south-africa .content{
+    background-image: url('pictures/pais/south-africa.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.egypt .content{
+    background-image: url('pictures/pais/egypt.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.australia .content{
+    background-image: url('pictures/pais/australia.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.new-zeeland .content{
+    background-image: url('pictures/pais/new-zeeland.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.north-korea .content{
+    background-image: url('pictures/pais/north-korea.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.property.papua-new-guinea .content{
+    background-image: url('pictures/pais/papua-new-guinea.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.airport .content{
+    background-image: url('pictures/pais/airport.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#game .cell.turkmenistan .content{
+    background-image: url('pictures/pais/turkmenistan.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+
+
+/* Style Modal */
+
+.modal img{
+    position: absolute;
+    top: 35px;
+    left: 40%;
+    width: 20%;
+}
+
+/* Style  */ 
+
+div#rank{
+    position: absolute;
+    top: 100px;
+    right: 0px;
+    margin-right: 50px;
+
+}
