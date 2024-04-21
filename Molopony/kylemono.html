@@ -5,24 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jhonny Love loves to play Molopony</title>
     <link rel="stylesheet" href="kylemono.css">
-    <style>
-        /* CSS to hide buttons initially */
-        #propertyDialog .btn-buy,
-        #propertyDialog .btn-move-on {
-            display: none;
-        }
-        #propertyDialog {
-    display: none;
-
-        }
-    </style>
 </head>
 <body>
     <div class="container">
         <h1>Molopony ... nearly as good as cold-lay Mcaddam</h1>
         <div id="board">
             <img src="Images/moloponyboard2.png" alt="Monopoly Board" id="monopolyBoard">
-            <div id="playerToken"></div> <!-- This will represent the player's position -->
+            <div id="playerToken" style="position: absolute; width: 20px; height: 20px; background-color: #ff6347; border-radius: 50%;"></div> <!-- This will represent the player's position -->
         </div>
 
         <div id="playerInfo">
@@ -31,7 +20,7 @@
             <p>Ven: $<span id="playerMoney">1500</span></p>
         </div>
 
-        <div id="propertyDialog" class="hidden">
+        <div id="propertyDialog">
             <div class="propertyCard">
                 <p>This is a property. Would you like to buy it?</p>
                 <p>Property Number: <span id="propertyNumber"></span></p>
