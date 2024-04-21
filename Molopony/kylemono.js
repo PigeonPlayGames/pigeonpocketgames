@@ -6,8 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const player = {
         position: 0,
         money: 1500, // Starting money
-        ownedProperties: [], // Array to store owned properties
-        poisonTurns: 0 // Counter for poison turns
+        ownedProperties: [] // Array to store owned properties
     };
 
     // Get X position for the player's token
@@ -48,13 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function movePlayer(spaces) {
         hidePropertyDialog();
         player.position = (player.position + spaces) % boardSize;
-        if (player.position === 30 && player.poisonTurns === 0) {
-            player.position = 10; // Move player to Jail
-            player.poisonTurns = 3; // Start poison turns
-            displayPoisonEffect();
-        } else if (player.poisonTurns > 0) {
-            player.poisonTurns--;
-        }
         renderPlayer();
         checkPropertyTile();
         updatePlayerInfo();
@@ -71,7 +63,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function updatePlayerInfo() {
         document.getElementById('playerPosition').textContent = player.position;
         document.getElementById('playerMoney').textContent = player.money;
-        document.getElementById('poisonTurns').textContent = player.poisonTurns;
     }
 
     // Function to check if player landed on a property tile
@@ -93,15 +84,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function hidePropertyDialog() {
         const propertyDialog = document.getElementById('propertyDialog');
         propertyDialog.classList.remove('show-dialog');
-    }
-
-    // Function to display poison effect message
-    function displayPoisonEffect() {
-        const poisonEffect = document.getElementById('poisonEffect');
-        poisonEffect.classList.remove('hidden');
-        setTimeout(function() {
-            poisonEffect.classList.add('hidden');
-        }, 3000);
     }
 
     // Function to roll the dice and move player
