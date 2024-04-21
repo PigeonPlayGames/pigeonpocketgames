@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Define board size
+    // Define board size and game settings
     const boardSize = 40;
 
     // Define player object
@@ -9,9 +9,9 @@ document.addEventListener('DOMContentLoaded', function() {
         ownedProperties: [] // Array to store owned properties
     };
 
-    // Get X position for the player's token
+    // Calculate the position of the player token
     function getPositionX(position) {
-        let segmentLength = 600 / 10; // Assuming each side of the board has 10 positions
+        let segmentLength = 600 / 10; // Assuming 10 positions per board side
         let segment = Math.floor(position / 10);
         let offset = (position % 10) * segmentLength;
 
@@ -26,9 +26,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Get Y position for the player's token
     function getPositionY(position) {
-        let segmentLength = 600 / 10; // Assuming each side of the board has 10 positions
+        let segmentLength = 600 / 10;
         let segment = Math.floor(position / 10);
         let offset = (position % 10) * segmentLength;
 
@@ -43,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to move player
+    // Move player around the board
     function movePlayer(spaces) {
         hidePropertyDialog();
         player.position = (player.position + spaces) % boardSize;
@@ -52,26 +51,26 @@ document.addEventListener('DOMContentLoaded', function() {
         updatePlayerInfo();
     }
 
-    // Function to render player's position on the board
+    // Update the player's display on the board
     function renderPlayer() {
         const playerToken = document.getElementById('playerToken');
         playerToken.style.left = `${getPositionX(player.position)}px`;
         playerToken.style.top = `${getPositionY(player.position)}px`;
     }
 
-    // Function to update player info display
+    // Update the player info display (position, money)
     function updatePlayerInfo() {
         document.getElementById('playerPosition').textContent = player.position;
         document.getElementById('playerMoney').textContent = player.money;
     }
 
-    // Function to check if player landed on a property tile
+    // Check if the player has landed on a property
     function checkPropertyTile() {
         const propertyTiles = [1, 3, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19, 21, 23, 24, 25, 26, 27, 28, 29, 31, 32, 34, 35, 37, 39];
         if (propertyTiles.includes(player.position) && !player.ownedProperties.includes(player.position)) {
             const propertyDialog = document.getElementById('propertyDialog');
             const propertyNumber = player.position;
-            const purchaseCost = 100 + (propertyNumber * 5); // Example cost calculation
+            const purchaseCost = 100 + (propertyNumber * 5); // Calculate purchase cost
             document.getElementById('propertyNumber').textContent = propertyNumber;
             document.getElementById('purchaseCost').textContent = purchaseCost;
             propertyDialog.classList.add('show-dialog');
@@ -80,19 +79,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to hide the property dialog
+    // Hide the property dialog
     function hidePropertyDialog() {
         const propertyDialog = document.getElementById('propertyDialog');
         propertyDialog.classList.remove('show-dialog');
     }
 
-    // Function to roll the dice and move player
-    function rollDice(numDice) {
-        let diceValue = 0;
-        for (let i = 0; i < numDice; i++) {
-            diceValue += Math.floor(Math.random() * 6) + 1;
+    // Buy a property
+    function buyProperty() {
+        const purchaseCost = parseInt(document.getElementById('purchaseCost').textContent, 10);
+        if (player.money >= purchaseCost) {
+            player.money -= purchaseCost;
+            player.ownedProperties.push(player.position);
+            updatePlayerInfo();
         }
-        movePlayer(diceValue);
+        hidePropertyDialog();
     }
 
     // Event listeners for dice rolls
@@ -104,6 +105,21 @@ document.addEventListener('DOMContentLoaded', function() {
         rollDice(3);
     });
 
-    // Initialize player position
+    // Event listener for buying a property
+    document.getElementById('buyProperty').addEventListener('click', buyProperty);
+
+    // Event listener for moving on without buying
+    document.getElementById('moveOn').addEventListener('click', hidePropertyDialog);
+
+    // Roll dice and move player
+    function rollDice(numDice) {
+        let diceValue = 0;
+        for (let i = 0; i < numDice; i++) {
+            diceValue += Math.floor(Math.random() * 6) + 1;
+        }
+        movePlayer(diceValue);
+    }
+
+    // Initialize the player's position on the board
     renderPlayer();
 });
