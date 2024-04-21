@@ -43,9 +43,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to update player info display
     function updatePlayerInfo() {
-        document.getElementById('playerPosition').textContent = player.position;
-        document.getElementById('playerMoney').textContent = player.money;
-        document.getElementById('poisonTurns').textContent = player.poisonTurns;
+        const playerPositionElement = document.getElementById('playerPosition');
+        if (playerPositionElement) {
+            playerPositionElement.textContent = player.position;
+        }
+
+        const playerMoneyElement = document.getElementById('playerMoney');
+        if (playerMoneyElement) {
+            playerMoneyElement.textContent = player.money;
+        }
+
+        const poisonTurnsElement = document.getElementById('poisonTurns');
+        if (poisonTurnsElement) {
+            poisonTurnsElement.textContent = player.poisonTurns;
+        }
     }
 
     // Function to check if player landed on a property tile
