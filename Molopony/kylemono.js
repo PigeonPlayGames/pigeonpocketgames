@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Define board size
     const boardSize = 40;
+    const boardWidth = 600; // Width of the board in pixels
+    const boardHeight = 600; // Height of the board in pixels
+    const positionsPerSide = 10; // Number of positions per side of the board
+    const tokenOffset = 30; // Offset to center the token within a cell
 
     // Define player object
     const player = {
@@ -10,18 +14,42 @@ document.addEventListener('DOMContentLoaded', function() {
         poisonTurns: 0 // Counter for poison turns
     };
 
+    // Get X position for the player's token
+    function getPositionX(position) {
+        if (position < positionsPerSide) {
+            return position * (boardWidth / positionsPerSide) + tokenOffset;
+        } else if (position < positionsPerSide * 2) {
+            return boardWidth - tokenOffset;
+        } else if (position < positionsPerSide * 3) {
+            return boardWidth - (position - positionsPerSide * 2) * (boardWidth / positionsPerSide) - tokenOffset;
+        }
+        return tokenOffset;
+    }
+
+    // Get Y position for the player's token
+    function getPositionY(position) {
+        if (position < positionsPerSide) {
+            return boardHeight - tokenOffset;
+        } else if (position < positionsPerSide * 2) {
+            return (position - positionsPerSide) * (boardHeight / positionsPerSide) + tokenOffset;
+        } else if (position < positionsPerSide * 3) {
+            return tokenOffset;
+        }
+        return boardHeight - (position - positionsPerSide * 3) * (boardHeight / positionsPerSide) - tokenOffset;
+    }
+
     // Function to move player
     function movePlayer(spaces) {
         hidePropertyDialog();
         player.position += spaces;
         player.position %= boardSize; // Ensure player wraps around the board
         if (player.position < spaces) {
-            player.money += 200;
+            player.money += 200; // Passed 'Go'
         }
         if (player.position === 30 && player.poisonTurns === 0) {
-            player.position = 10; // Move player to position 10 if they land on poison
-            player.poisonTurns = 3; // Set poison turns counter
-            displayPoisonEffect(); // Display poison effect message
+            player.position = 10; // Move player to Jail
+            player.poisonTurns = 3; // Poison effect
+            displayPoisonEffect();
         } else if (player.poisonTurns > 0) {
             player.poisonTurns--;
         }
@@ -33,10 +61,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to render player's position on the board
     function renderPlayer() {
         const playerToken = document.getElementById('playerToken');
-        const positionX = getPositionX(player.position);
-        const positionY = getPositionY(player.position);
-        playerToken.style.left = `${positionX}px`;
-        playerToken.style.top = `${positionY}px`;
+        playerToken.style.left = `${getPositionX(player.position)}px`;
+        playerToken.style.top = `${getPositionY(player.position)}px`;
     }
 
     // Function to update player info display
@@ -73,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
         poisonEffect.classList.remove('hidden');
         setTimeout(function() {
             poisonEffect.classList.add('hidden');
-        }, 3000); // Hide message after 3 seconds
+        }, 3000);
     }
 
     // Function to roll the dice and move player
