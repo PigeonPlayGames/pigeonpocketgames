@@ -16,39 +16,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Get X position for the player's token
     function getPositionX(position) {
-        if (position < positionsPerSide) {
-            return position * (boardWidth / positionsPerSide) + tokenOffset;
-        } else if (position < positionsPerSide * 2) {
-            return boardWidth - tokenOffset;
-        } else if (position < positionsPerSide * 3) {
-            return boardWidth - (position - positionsPerSide * 2) * (boardWidth / positionsPerSide) - tokenOffset;
+        if (position < positionsPerSide) { // Bottom row (right to left)
+            return boardWidth - (position * (boardWidth / positionsPerSide)) - tokenOffset;
+        } else if (position < positionsPerSide * 2) { // Right column (bottom to top)
+            return tokenOffset;
+        } else if (position < positionsPerSide * 3) { // Top row (left to right)
+            return (position - positionsPerSide * 2) * (boardWidth / positionsPerSide) + tokenOffset;
         }
-        return tokenOffset;
+        return boardWidth - tokenOffset; // Left column (top to bottom)
     }
 
     // Get Y position for the player's token
     function getPositionY(position) {
-        if (position < positionsPerSide) {
+        if (position < positionsPerSide) { // Bottom row
             return boardHeight - tokenOffset;
-        } else if (position < positionsPerSide * 2) {
-            return (position - positionsPerSide) * (boardHeight / positionsPerSide) + tokenOffset;
-        } else if (position < positionsPerSide * 3) {
+        } else if (position < positionsPerSide * 2) { // Right column
+            return boardHeight - ((position - positionsPerSide) * (boardHeight / positionsPerSide)) - tokenOffset;
+        } else if (position < positionsPerSide * 3) { // Top row
             return tokenOffset;
         }
-        return boardHeight - (position - positionsPerSide * 3) * (boardHeight / positionsPerSide) - tokenOffset;
+        return (position - positionsPerSide * 3) * (boardHeight / positionsPerSide) + tokenOffset; // Left column
     }
 
     // Function to move player
     function movePlayer(spaces) {
         hidePropertyDialog();
-        player.position += spaces;
-        player.position %= boardSize; // Ensure player wraps around the board
-        if (player.position < spaces) {
-            player.money += 200; // Passed 'Go'
-        }
+        player.position = (player.position + spaces) % boardSize;
         if (player.position === 30 && player.poisonTurns === 0) {
             player.position = 10; // Move player to Jail
-            player.poisonTurns = 3; // Poison effect
+            player.poisonTurns = 3; // Start poison turns
             displayPoisonEffect();
         } else if (player.poisonTurns > 0) {
             player.poisonTurns--;
@@ -82,8 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('propertyNumber').textContent = propertyNumber;
             document.getElementById('purchaseCost').textContent = purchaseCost;
             propertyDialog.classList.add('show-dialog');
-        } else {
-            hidePropertyDialog();
         }
     }
 
