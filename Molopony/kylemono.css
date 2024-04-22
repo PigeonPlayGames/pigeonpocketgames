@@ -5,6 +5,10 @@ body {
     padding: 0;
 }
 
+.container {
+    text-align: center;
+}
+
 #board {
     position: relative;
     margin: 50px auto;
@@ -60,6 +64,10 @@ button:hover {
 
 #propertyDialog.show-dialog {
     display: block; /* Show property dialog when class is added */
+}
+
+#propertyDialog .propertyCard {
+    text-align: center;
 }
 
 #propertyDialog .btn-buy,
