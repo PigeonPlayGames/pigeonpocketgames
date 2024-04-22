@@ -68,6 +68,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const purchaseCost = 100 + (propertyNumber * 5); // Calculate purchase cost
             document.getElementById('propertyNumber').textContent = propertyNumber;
             document.getElementById('purchaseCost').textContent = purchaseCost;
+
+            // Display property dialog with image, buy, and move on buttons
             propertyDialog.classList.add('show-dialog');
 
             // Display property image
@@ -76,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 propertyImage.src = `Images/property${propertyNumber}.jpg`;
                 propertyImage.alt = `Property ${propertyNumber}`;
             }
+
         } else {
             hidePropertyDialog();
         }
