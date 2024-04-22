@@ -9,36 +9,31 @@ document.addEventListener('DOMContentLoaded', function() {
         ownedProperties: [] // Array to store owned properties
     };
 
-    // Calculate the position of the player token
+    // Function to get X position based on player position
     function getPositionX(position) {
-        let segmentLength = 600 / 10; // Assuming 10 positions per board side
-        let segment = Math.floor(position / 10);
-        let offset = (position % 10) * segmentLength;
-
-        if (segment === 0) {
-            return 600 - offset; // Bottom row, moving right to left
-        } else if (segment === 1) {
-            return 0; // Right column, moving upwards
-        } else if (segment === 2) {
-            return offset; // Top row, moving left to right
+        if (position < 5) {
+            return 550 - (position * 55);
+        } else if (position >= 5 && position < 10) {
+            return 570 - (position * 55);
+        } else if (position >= 10 && position < 20) {
+            return 50;
+        } else if (position >= 20 && position < 30) {
+            return 50 + ((position - 20) * 48);
         } else {
-            return 600; // Left column, moving downwards
+            return 570;
         }
     }
 
+    // Function to get Y position based on player position
     function getPositionY(position) {
-        let segmentLength = 600 / 10;
-        let segment = Math.floor(position / 10);
-        let offset = (position % 10) * segmentLength;
-
-        if (segment === 0) {
-            return 600; // Bottom row
-        } else if (segment === 1) {
-            return 600 - offset; // Right column, moving upwards
-        } else if (segment === 2) {
-            return 0; // Top row
+        if (position < 10) {
+            return 570;
+        } else if (position >= 10 && position < 20) {
+            return 570 - ((position - 10) * 55);
+        } else if (position >= 20 && position < 30) {
+            return 50;
         } else {
-            return offset; // Left column, moving downwards
+            return 50 + ((position - 30) * 50);
         }
     }
 
