@@ -69,6 +69,11 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('propertyNumber').textContent = propertyNumber;
             document.getElementById('purchaseCost').textContent = purchaseCost;
             propertyDialog.classList.add('show-dialog');
+
+            // Display property image
+            const propertyImage = document.getElementById('propertyImage');
+            propertyImage.src = `Images/property${propertyNumber}.jpg`;
+            propertyImage.alt = `Property ${propertyNumber}`;
         } else {
             hidePropertyDialog();
         }
