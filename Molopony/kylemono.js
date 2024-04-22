@@ -72,8 +72,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Display property image
             const propertyImage = document.getElementById('propertyImage');
-            propertyImage.src = `Images/property${propertyNumber}.jpg`;
-            propertyImage.alt = `Property ${propertyNumber}`;
+            if (propertyImage) {
+                propertyImage.src = `Images/property${propertyNumber}.jpg`;
+                propertyImage.alt = `Property ${propertyNumber}`;
+            }
         } else {
             hidePropertyDialog();
         }
