@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Define board size and game settings
     const boardSize = 40;
-
-    // Define player object
     const player = {
         position: 0,
         money: 2000, // Starting money
@@ -11,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
         turnsInJail: 0 // Counts how many turns the player has been in jail
     };
 
-    // Function to get X position based on player position
     function getPositionX(position) {
         if (position < 5) {
             return 550 - (position * 55);
@@ -26,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to get Y position based on player position
     function getPositionY(position) {
         if (position < 10) {
             return 570;
@@ -39,14 +35,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Update the player's display on the board
     function renderPlayer() {
         const playerToken = document.getElementById('playerToken');
         playerToken.style.left = `${getPositionX(player.position)}px`;
         playerToken.style.top = `${getPositionY(player.position)}px`;
     }
 
-    // Move player around the board, taking into account jail rules
     function movePlayer(spaces) {
         if (!player.inJail) {
             player.position = (player.position + spaces) % boardSize;
@@ -58,14 +52,12 @@ document.addEventListener('DOMContentLoaded', function() {
         updatePlayerInfo();
     }
 
-    // Check for special tiles like "Go to Jail"
     function checkSpecialTiles() {
         if (player.position === 30) {
             sendToJail();
         }
     }
 
-    // Send player to jail
     function sendToJail() {
         player.position = 10; // Jail is at tile 10
         player.inJail = true;
@@ -73,36 +65,11 @@ document.addEventListener('DOMContentLoaded', function() {
         alert("Woah Pothole! Gonna need to fix the Van!");
     }
 
-    // Check if the player has landed on a chance card tile
-    function checkChanceTile() {
-        const chanceTiles = [7, 22, 36];
-        if (chanceTiles.includes(player.position)) {
-            showChanceDialog();
-        }
-    }
-
-    // Display a random chance card
-    function showChanceDialog() {
-        const chanceNumber = Math.floor(Math.random() * 15) + 1; // Generates a random number between 1 and 15
-        const propertyDialog = document.getElementById('propertyDialog');
-        const propertyImage = document.getElementById('propertyImage');
-
-        propertyImage.src = `Images/lottery${chanceNumber}.jpg`;
-        propertyImage.alt = `Chance Card ${chanceNumber}`;
-
-        document.getElementById('propertyNumber').textContent = "Lottery Card";
-        document.getElementById('purchaseCost').textContent = "Good Luck!";
-
-        propertyDialog.classList.add('show-dialog');
-    }
-
-    // Update the player info display (position, money)
     function updatePlayerInfo() {
         document.getElementById('playerPosition').textContent = player.position;
         document.getElementById('playerMoney').textContent = player.money;
     }
 
-    // Check if the player has landed on a property
     function checkPropertyTile() {
         const propertyTiles = [1, 3, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19, 21, 23, 24, 25, 26, 27, 28, 29, 31, 32, 34, 35, 37, 39];
         if (propertyTiles.includes(player.position) && !player.ownedProperties.includes(player.position)) {
@@ -116,30 +83,36 @@ document.addEventListener('DOMContentLoaded', function() {
             propertyImage.src = `Images/property${propertyNumber}.jpg`;
             propertyImage.alt = `Property ${propertyNumber}`;
 
-            propertyDialog.classList.add('show-dialog');
+            propertyDialog.style.display = 'block';
         } else {
             hidePropertyDialog();
         }
     }
 
-    // Hide the property dialog
     function hidePropertyDialog() {
         const propertyDialog = document.getElementById('propertyDialog');
-        propertyDialog.classList.remove('show-dialog');
+        propertyDialog.style.display = 'none';
     }
 
-    // Buy a property
-    function buyProperty() {
-        const purchaseCost = parseInt(document.getElementById('purchaseCost').textContent, 10);
-        if (player.money >= purchaseCost) {
-            player.money -= purchaseCost;
-            player.ownedProperties.push(player.position);
-            updatePlayerInfo();
+    function checkChanceTile() {
+        const chanceTiles = [7, 22, 36];
+        if (chanceTiles.includes(player.position)) {
+            showChanceDialog();
         }
-        hidePropertyDialog();
     }
 
-    // Roll dice and manage jail turns
+    function showChanceDialog() {
+        const chanceNumber = Math.floor(Math.random() * 15) + 1;
+        const chanceDialog = document.getElementById('chanceCardDialog');
+        const chanceImage = document.getElementById('chanceCardImage');
+
+        chanceImage.src = `Images/chancecard${chanceNumber}.jpg`;
+        chanceImage.alt = `Chance Card ${chanceNumber}`;
+
+        document.getElementById('chanceCardNumber').textContent = chanceNumber;
+        chanceDialog.style.display = 'block';
+    }
+
     function rollDice(numDice) {
         let diceValue = 0;
         for (let i = 0; i < numDice; i++) {
@@ -165,7 +138,6 @@ document.addEventListener('DOMContentLoaded', function() {
         movePlayer(diceValue);
     }
 
-    // Event listeners for dice rolls and property interactions
     document.getElementById('rollDice').addEventListener('click', function() {
         rollDice(2);
     });
@@ -175,8 +147,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('buyProperty').addEventListener('click', buyProperty);
-    document.getElementById('moveOn').addEventListener('click', hidePropertyDialog);
+    document.getElementById('moveOn').addEventListener('click', function() {
+        hidePropertyDialog(); // Also closes the chance card dialog
+        const chanceDialog = document.getElementById('chanceCardDialog');
+        chanceDialog.style.display = 'none';
+    });
 
-    // Initialize the player's position on the board
     renderPlayer();
 });
