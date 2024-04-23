@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('purchaseCost').textContent = purchaseCost;
             
             const propertyImage = document.getElementById('propertyImage');
-            propertyImage.src = `https://pigeonpocketgames.github.io/Molopony/Images/property${propertyNumber}.jpg`;
+            propertyImage.src = `https://pigeonpocketgames.art/Molopony/Images/property${propertyNumber}.jpg`;
             propertyImage.alt = `Property ${propertyNumber}`;
 
 
