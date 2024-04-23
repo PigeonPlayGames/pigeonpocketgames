@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('purchaseCost').textContent = purchaseCost;
             
             const propertyImage = document.getElementById('propertyImage');
-            propertyImage.src = `Images/property${propertyNumber}.jpg`;
+            propertyImage.src = `Molopony/Images/property${propertyNumber}.jpg`;
             propertyImage.alt = `Property ${propertyNumber}`;
 
             propertyDialog.classList.add('show-dialog');
