@@ -87,11 +87,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const propertyDialog = document.getElementById('propertyDialog');
         const propertyImage = document.getElementById('propertyImage');
 
-        propertyImage.src = `Images/chancecard${chanceNumber}.jpg`;
+        propertyImage.src = `Images/lottery${chanceNumber}.jpg`;
         propertyImage.alt = `Chance Card ${chanceNumber}`;
 
-        document.getElementById('propertyNumber').textContent = "Chance Card";
-        document.getElementById('purchaseCost').textContent = "What will happen?";
+        document.getElementById('propertyNumber').textContent = "Lottery Card";
+        document.getElementById('purchaseCost').textContent = "Good Luck!";
 
         propertyDialog.classList.add('show-dialog');
     }
