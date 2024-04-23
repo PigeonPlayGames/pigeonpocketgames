@@ -50,8 +50,8 @@ button:hover, button:focus {
     outline: none; /* Optional: consider a custom outline style for accessibility */
 }
 
-#propertyDialog {
-    display: none; /* Hide property dialog initially */
+#propertyDialog, #chanceCardDialog {
+    display: none; /* Hide dialogs initially */
     position: absolute;
     top: 50%; /* Center vertically */
     left: 50%; /* Center horizontally */
@@ -61,31 +61,36 @@ button:hover, button:focus {
     border: 2px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    z-index: 10; /* Ensure it is above other board elements */
+    z-index: 10; /* Ensure they are above other board elements */
 }
 
-#propertyDialog.show-dialog {
-    display: block; /* Show property dialog when class is added */
-}
-
-#propertyDialog .propertyCard {
+.propertyCard, .chanceCard {
     text-align: center;
 }
 
-#propertyDialog p {
+#propertyDialog p, #chanceCardDialog p {
     margin: 10px 0; /* Adds space around paragraphs for better readability */
-    font-size: 1.1em; /* Slightly larger text within the dialog */
+    font-size: 1.1em; /* Slightly larger text within the dialogs */
 }
 
-#propertyImage {
+#propertyImage, #chanceCardImage {
     max-width: 100%; /* Ensures the image does not overflow the dialog box */
     height: auto; /* Maintains aspect ratio */
     margin-bottom: 20px; /* Provides spacing between the image and the buttons */
 }
 
-#propertyDialog .btn-buy,
-#propertyDialog .btn-move-on {
+#propertyDialog .btn-buy, #propertyDialog .btn-move-on, #chanceCardDialog .btn-close {
     display: block; /* Ensure buttons are shown when dialog is visible */
     width: auto;
     margin: 10px auto;
+    background-color: #4caf50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#chanceCardDialog .btn-close:hover, #chanceCardDialog .btn-close:focus {
+    background-color: #e05347; /* Darker coral on hover and focus */
 }
