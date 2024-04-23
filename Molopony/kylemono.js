@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (propertyImage) {
                 propertyImage.src = `Images/property${propertyNumber}.jpg`;
                 propertyImage.alt = `Property ${propertyNumber}`;
+                propertyImage.style.zIndex = '9999'; // Ensure the image is on top
             }
 
         } else {
