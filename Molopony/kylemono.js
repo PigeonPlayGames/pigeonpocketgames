@@ -46,6 +46,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function movePlayer(spaces) {
         hidePropertyDialog();
         player.position = (player.position + spaces) % boardSize;
+
+        // Check if player lands on tile 30, send to jail at tile 10
+        if (player.position === 30) {
+            alert("Landed on tile 30! Going directly to Jail!");
+            player.position = 10; // Send player to tile 10 (Jail)
+        }
+
         renderPlayer();
         checkPropertyTile();
         updatePlayerInfo();
@@ -70,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const propertyImage = document.getElementById('propertyImage');
             propertyImage.src = `https://pigeonpocketgames.art/Molopony/Images/property${propertyNumber}.jpg`;
             propertyImage.alt = `Property ${propertyNumber}`;
-
 
             propertyDialog.classList.add('show-dialog');
         } else {
