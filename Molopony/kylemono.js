@@ -5,25 +5,28 @@ document.addEventListener('DOMContentLoaded', function() {
     // Define player object
     const player = {
         position: 0,
-        money: 1500, // Starting money
+        money: 2000, // Starting money
         ownedProperties: [], // Array to store owned properties
         inJail: false, // Indicates if the player is currently in jail
         turnsInJail: 0 // Counts how many turns the player has been in jail
     };
 
-    // Function to get X and Y positions based on player position
+    // Function to get X position based on player position
     function getPositionX(position) {
-        if (position < 10) {
+        if (position < 5) {
+            return 550 - (position * 55);
+        } else if (position >= 5 && position < 10) {
             return 570 - (position * 55);
         } else if (position >= 10 && position < 20) {
             return 50;
         } else if (position >= 20 && position < 30) {
-            return 50 + ((position - 20) * 55);
+            return 50 + ((position - 20) * 48);
         } else {
             return 570;
         }
     }
 
+    // Function to get Y position based on player position
     function getPositionY(position) {
         if (position < 10) {
             return 570;
@@ -32,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (position >= 20 && position < 30) {
             return 50;
         } else {
-            return 50 + ((position - 30) * 55);
+            return 50 + ((position - 30) * 50);
         }
     }
 
@@ -43,12 +46,11 @@ document.addEventListener('DOMContentLoaded', function() {
         playerToken.style.top = `${getPositionY(player.position)}px`;
     }
 
-    // Move player around the board, taking into account jail and lottery rules
+    // Move player around the board, taking into account jail rules
     function movePlayer(spaces) {
         if (!player.inJail) {
             player.position = (player.position + spaces) % boardSize;
             checkSpecialTiles();
-            checkLotteryTile(); // Check if landed on a lottery tile
         }
         renderPlayer();
         checkPropertyTile();
@@ -64,33 +66,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Send player to jail
     function sendToJail() {
-        player.position = 10;
+        player.position = 10; // Jail is at tile 10
         player.inJail = true;
         player.turnsInJail = 0;
-        alert("Landed on tile 30! Gonna nned to get the van fixed");
-    }
-
-    // Check if the player has landed on a lottery tile
-    function checkLotteryTile() {
-        const lotteryTiles = [7, 22, 36];
-        if (lotteryTiles.includes(player.position)) {
-            showLotteryDialog();
-        }
-    }
-
-    // Display a random lottery card
-    function showLotteryDialog() {
-        const lotteryNumber = Math.floor(Math.random() * 15) + 1; // Random number from 1 to 15
-        const propertyDialog = document.getElementById('propertyDialog');
-        const propertyImage = document.getElementById('propertyImage');
-
-        propertyImage.src = `Images/lottery${lotteryNumber}.jpg`;
-        propertyImage.alt = `Lottery Card ${lotteryNumber}`;
-
-        document.getElementById('propertyNumber').textContent = "Lottery Ticket";
-        document.getElementById('purchaseCost').textContent = "Good Luck!";
-
-        propertyDialog.classList.add('show-dialog');
+        alert("Woah Pothole! Gonna need to fix the Van!");
     }
 
     // Update the player info display (position, money)
@@ -99,17 +78,43 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('playerMoney').textContent = player.money;
     }
 
+    // Check if the player has landed on a property
     function checkPropertyTile() {
-        // Handling of normal properties, unchanged
+        if (!player.inJail) {
+            const propertyTiles = [1, 3, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19, 21, 23, 24, 25, 26, 27, 28, 29, 31, 32, 34, 35, 37, 39];
+            if (propertyTiles.includes(player.position) && !player.ownedProperties.includes(player.position)) {
+                const propertyDialog = document.getElementById('propertyDialog');
+                const propertyNumber = player.position;
+                const purchaseCost = 100 + (propertyNumber * 5); // Calculate purchase cost
+                document.getElementById('propertyNumber').textContent = propertyNumber;
+                document.getElementById('purchaseCost').textContent = purchaseCost;
+                
+                const propertyImage = document.getElementById('propertyImage');
+                propertyImage.src = `Images/property${propertyNumber}.jpg`;
+                propertyImage.alt = `Property ${propertyNumber}`;
+    
+                propertyDialog.classList.add('show-dialog');
+            } else {
+                hidePropertyDialog();
+            }
+        }
     }
 
+    // Hide the property dialog
     function hidePropertyDialog() {
         const propertyDialog = document.getElementById('propertyDialog');
         propertyDialog.classList.remove('show-dialog');
     }
 
+    // Buy a property
     function buyProperty() {
-        // Buying a property functionality, unchanged
+        const purchaseCost = parseInt(document.getElementById('purchaseCost').textContent, 10);
+        if (player.money >= purchaseCost) {
+            player.money -= purchaseCost;
+            player.ownedProperties.push(player.position);
+            updatePlayerInfo();
+        }
+        hidePropertyDialog();
     }
 
     // Roll dice and manage jail turns
@@ -122,15 +127,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (player.inJail) {
             player.turnsInJail++;
             if (diceValue === 6 || diceValue === 7 || diceValue === 8) {
-                alert(`Rolled a Phat ${diceValue}! Whey The Van's Fixed!`);
+                alert(`Rolled a phat ${diceValue}! Whey the Van's Fixed!`);
                 player.inJail = false;
                 player.turnsInJail = 0;
             } else if (player.turnsInJail >= 3) {
-                alert("Finaly The Van's Fixed!");
+                alert("Arf! Finaly the Van's Fixed");
                 player.inJail = false;
                 player.turnsInJail = 0;
             } else {
-                alert(`Bummer The van's still broke. Rolled a ${diceValue}.`);
+                alert(`Bugger The van's still broke! Rolled a ${diceValue}.`);
                 return; // Skip moving if still in jail
             }
         }
@@ -138,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
         movePlayer(diceValue);
     }
 
-    // Event listeners for dice rolls and other actions
+    // Event listeners for dice rolls
     document.getElementById('rollDice').addEventListener('click', function() {
         rollDice(2);
     });
@@ -147,8 +152,12 @@ document.addEventListener('DOMContentLoaded', function() {
         rollDice(3);
     });
 
+    // Event listener for buying a property
     document.getElementById('buyProperty').addEventListener('click', buyProperty);
+
+    // Event listener for moving on without buying
     document.getElementById('moveOn').addEventListener('click', hidePropertyDialog);
 
+    // Initialize the player's position on the board
     renderPlayer();
 });
