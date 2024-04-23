@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Define player object
     const player = {
         position: 0,
-        money: 1500, // Starting money
+        money: 2000, // Starting money
         ownedProperties: [], // Array to store owned properties
         inJail: false, // Indicates if the player is currently in jail
         turnsInJail: 0 // Counts how many turns the player has been in jail
@@ -125,15 +125,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (player.inJail) {
             player.turnsInJail++;
             if (diceValue === 6 || diceValue === 7 || diceValue === 8) {
-                alert(`Rolled ${diceValue}! Free from jail!`);
+                alert(`Rolled a phat ${diceValue}! Whey the Van's Fixed!`);
                 player.inJail = false;
                 player.turnsInJail = 0;
             } else if (player.turnsInJail >= 3) {
-                alert("Released from jail after 3 turns!");
+                alert("Arf! Finaly the Van's Fixed");
                 player.inJail = false;
                 player.turnsInJail = 0;
             } else {
-                alert(`Still in jail. Rolled ${diceValue}.`);
+                alert(`Bugger The van's still broke! Rolled a ${diceValue}.`);
                 return; // Skip moving if still in jail
             }
         }
