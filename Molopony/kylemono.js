@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Define board size and game settings
     const boardSize = 40;
+    const passGoMoney = 200; // Money collected when passing 'Go'
     const player = {
         position: 0,
         money: 2000, // Starting money
@@ -42,8 +42,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function movePlayer(spaces) {
+        const oldPosition = player.position;
+        player.position = (player.position + spaces) % boardSize;
+        
+        // Check if player passes 'Go'
+        if (oldPosition + spaces >= boardSize) {
+            player.money += passGoMoney;
+            alert("You passed GO! Collect $200.");
+        }
+
         if (!player.inJail) {
-            player.position = (player.position + spaces) % boardSize;
             checkSpecialTiles();
             checkChanceTile();
         }
@@ -77,8 +85,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const propertyNumber = player.position;
             const purchaseCost = 100 + (propertyNumber * 5);
             document.getElementById('propertyNumber').textContent = propertyNumber;
-            document.getElementById('purchaseCost').textContent = purchaseCost;
-            
+            document.getElementById('purchaseCost').textContent = `\$${purchaseCost}`;
+
             const propertyImage = document.getElementById('propertyImage');
             propertyImage.src = `Images/property${propertyNumber}.jpg`;
             propertyImage.alt = `Property ${propertyNumber}`;
@@ -90,8 +98,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function hidePropertyDialog() {
-        const propertyDialog = document.getElementById('propertyDialog');
-        propertyDialog.style.display = 'none';
+        document.getElementById('propertyDialog').style.display = 'none';
+        document.getElementById('chanceCardDialog').style.display = 'none';
     }
 
     function checkChanceTile() {
@@ -106,11 +114,24 @@ document.addEventListener('DOMContentLoaded', function() {
         const chanceDialog = document.getElementById('chanceCardDialog');
         const chanceImage = document.getElementById('chanceCardImage');
 
-        chanceImage.src = `Images/chancecard${chanceNumber}.jpg`;
+        chanceImage.src = `Images/lottery${chanceNumber}.jpg`;
         chanceImage.alt = `Chance Card ${chanceNumber}`;
 
-        document.getElementById('chanceCardNumber').textContent = chanceNumber;
+        document.getElementById('chanceCardNumber').textContent = `Chance Card ${chanceNumber}`;
         chanceDialog.style.display = 'block';
+    }
+
+    function buyProperty() {
+        const purchaseCost = parseInt(document.getElementById('purchaseCost').textContent, 10);
+        if (player.money >= purchaseCost) {
+            player.money -= purchaseCost;
+            player.ownedProperties.push(player.position);
+            updatePlayerInfo();
+            alert('Property purchased!');
+            hidePropertyDialog();
+        } else {
+            alert("Not enough money to buy this property!");
+        }
     }
 
     function rollDice(numDice) {
@@ -122,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (player.inJail) {
             player.turnsInJail++;
             if (diceValue === 6 || diceValue === 7 || diceValue === 8) {
-                alert(`Rolled a phat ${diceValue}! Whey the Van's Fixed!`);
+                alert(`Rolled a ${diceValue}! Whey the Van's Fixed!`);
                 player.inJail = false;
                 player.turnsInJail = 0;
             } else if (player.turnsInJail >= 3) {
@@ -148,9 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('buyProperty').addEventListener('click', buyProperty);
     document.getElementById('moveOn').addEventListener('click', function() {
-        hidePropertyDialog(); // Also closes the chance card dialog
-        const chanceDialog = document.getElementById('chanceCardDialog');
-        chanceDialog.style.display = 'none';
+        hidePropertyDialog();
     });
 
     renderPlayer();
