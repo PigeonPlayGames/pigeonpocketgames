@@ -6,7 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const player = {
         position: 0,
         money: 1500, // Starting money
-        ownedProperties: [] // Array to store owned properties
+        ownedProperties: [], // Array to store owned properties
+        inJail: false, // Indicates if the player is currently in jail
+        turnsInJail: 0 // Counts how many turns the player has been in jail
     };
 
     // Function to get X position based on player position
@@ -42,20 +44,30 @@ document.addEventListener('DOMContentLoaded', function() {
         playerToken.style.top = `${getPositionY(player.position)}px`;
     }
 
-    // Move player around the board
+    // Move player around the board, taking into account jail rules
     function movePlayer(spaces) {
-        hidePropertyDialog();
-        player.position = (player.position + spaces) % boardSize;
-
-        // Check if player lands on tile 30, send to jail at tile 10
-        if (player.position === 30) {
-            alert("Landed on tile 30! Going directly to Jail!");
-            player.position = 10; // Send player to tile 10 (Jail)
+        if (!player.inJail) {
+            player.position = (player.position + spaces) % boardSize;
+            checkSpecialTiles();
         }
-
         renderPlayer();
         checkPropertyTile();
         updatePlayerInfo();
+    }
+
+    // Check for special tiles like "Go to Jail"
+    function checkSpecialTiles() {
+        if (player.position === 30) {
+            sendToJail();
+        }
+    }
+
+    // Send player to jail
+    function sendToJail() {
+        player.position = 10; // Jail is at tile 10
+        player.inJail = true;
+        player.turnsInJail = 0;
+        alert("Landed on tile 30! Going directly to Jail!");
     }
 
     // Update the player info display (position, money)
@@ -66,21 +78,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Check if the player has landed on a property
     function checkPropertyTile() {
-        const propertyTiles = [1, 3, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19, 21, 23, 24, 25, 26, 27, 28, 29, 31, 32, 34, 35, 37, 39];
-        if (propertyTiles.includes(player.position) && !player.ownedProperties.includes(player.position)) {
-            const propertyDialog = document.getElementById('propertyDialog');
-            const propertyNumber = player.position;
-            const purchaseCost = 100 + (propertyNumber * 5); // Calculate purchase cost
-            document.getElementById('propertyNumber').textContent = propertyNumber;
-            document.getElementById('purchaseCost').textContent = purchaseCost;
-            
-            const propertyImage = document.getElementById('propertyImage');
-            propertyImage.src = `https://pigeonpocketgames.art/Molopony/Images/property${propertyNumber}.jpg`;
-            propertyImage.alt = `Property ${propertyNumber}`;
-
-            propertyDialog.classList.add('show-dialog');
-        } else {
-            hidePropertyDialog();
+        if (!player.inJail) {
+            const propertyTiles = [1, 3, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19, 21, 23, 24, 25, 26, 27, 28, 29, 31, 32, 34, 35, 37, 39];
+            if (propertyTiles.includes(player.position) && !player.ownedProperties.includes(player.position)) {
+                const propertyDialog = document.getElementById('propertyDialog');
+                const propertyNumber = player.position;
+                const purchaseCost = 100 + (propertyNumber * 5); // Calculate purchase cost
+                document.getElementById('propertyNumber').textContent = propertyNumber;
+                document.getElementById('purchaseCost').textContent = purchaseCost;
+                
+                const propertyImage = document.getElementById('propertyImage');
+                propertyImage.src = `Images/property${propertyNumber}.jpg`;
+                propertyImage.alt = `Property ${propertyNumber}`;
+    
+                propertyDialog.classList.add('show-dialog');
+            } else {
+                hidePropertyDialog();
+            }
         }
     }
 
@@ -101,12 +115,29 @@ document.addEventListener('DOMContentLoaded', function() {
         hidePropertyDialog();
     }
 
-    // Roll dice and move player
+    // Roll dice and manage jail turns
     function rollDice(numDice) {
         let diceValue = 0;
         for (let i = 0; i < numDice; i++) {
             diceValue += Math.floor(Math.random() * 6) + 1;
         }
+
+        if (player.inJail) {
+            player.turnsInJail++;
+            if (diceValue === 6 || diceValue === 7 || diceValue === 8) {
+                alert(`Rolled ${diceValue}! Free from jail!`);
+                player.inJail = false;
+                player.turnsInJail = 0;
+            } else if (player.turnsInJail >= 3) {
+                alert("Released from jail after 3 turns!");
+                player.inJail = false;
+                player.turnsInJail = 0;
+            } else {
+                alert(`Still in jail. Rolled ${diceValue}.`);
+                return; // Skip moving if still in jail
+            }
+        }
+
         movePlayer(diceValue);
     }
 
