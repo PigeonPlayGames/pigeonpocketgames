@@ -13,12 +13,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to get X position based on player position
     function getPositionX(position) {
-        if (position < 10) {
+        if (position < 5) {
+            return 550 - (position * 55);
+        } else if (position >= 5 && position < 10) {
             return 570 - (position * 55);
         } else if (position >= 10 && position < 20) {
             return 50;
         } else if (position >= 20 && position < 30) {
-            return 50 + ((position - 20) * 55);
+            return 50 + ((position - 20) * 48);
         } else {
             return 570;
         }
@@ -33,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (position >= 20 && position < 30) {
             return 50;
         } else {
-            return 50 + ((position - 30) * 55);
+            return 50 + ((position - 30) * 50);
         }
     }
 
@@ -67,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         player.position = 10; // Jail is at tile 10
         player.inJail = true;
         player.turnsInJail = 0;
-        alert("Landed on tile 30! Going directly to Jail!");
+        alert("Woah Pothole! Gonna need to fix the Van!");
     }
 
     // Update the player info display (position, money)
