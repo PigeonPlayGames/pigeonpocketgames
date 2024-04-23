@@ -11,14 +11,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to get X position based on player position
     function getPositionX(position) {
-        if (position < 5) {
-            return 550 - (position * 55);
-        } else if (position >= 5 && position < 10) {
+        if (position < 10) {
             return 570 - (position * 55);
         } else if (position >= 10 && position < 20) {
             return 50;
         } else if (position >= 20 && position < 30) {
-            return 50 + ((position - 20) * 48);
+            return 50 + ((position - 20) * 55);
         } else {
             return 570;
         }
@@ -33,8 +31,15 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (position >= 20 && position < 30) {
             return 50;
         } else {
-            return 50 + ((position - 30) * 50);
+            return 50 + ((position - 30) * 55);
         }
+    }
+
+    // Update the player's display on the board
+    function renderPlayer() {
+        const playerToken = document.getElementById('playerToken');
+        playerToken.style.left = `${getPositionX(player.position)}px`;
+        playerToken.style.top = `${getPositionY(player.position)}px`;
     }
 
     // Move player around the board
@@ -44,13 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
         renderPlayer();
         checkPropertyTile();
         updatePlayerInfo();
-    }
-
-    // Update the player's display on the board
-    function renderPlayer() {
-        const playerToken = document.getElementById('playerToken');
-        playerToken.style.left = `${getPositionX(player.position)}px`;
-        playerToken.style.top = `${getPositionY(player.position)}px`;
     }
 
     // Update the player info display (position, money)
@@ -68,18 +66,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const purchaseCost = 100 + (propertyNumber * 5); // Calculate purchase cost
             document.getElementById('propertyNumber').textContent = propertyNumber;
             document.getElementById('purchaseCost').textContent = purchaseCost;
-
-            // Display property dialog with image, buy, and move on buttons
-            propertyDialog.classList.add('show-dialog');
-
-            // Display property image
+            
             const propertyImage = document.getElementById('propertyImage');
-            if (propertyImage) {
-                propertyImage.src = `Images/property${propertyNumber}.jpg`;
-                propertyImage.alt = `Property ${propertyNumber}`;
-                propertyImage.style.zIndex = '9999'; // Ensure the image is on top
-            }
+            propertyImage.src = `Images/property${propertyNumber}.jpg`;
+            propertyImage.alt = `Property ${propertyNumber}`;
 
+            propertyDialog.classList.add('show-dialog');
         } else {
             hidePropertyDialog();
         }
@@ -102,6 +94,15 @@ document.addEventListener('DOMContentLoaded', function() {
         hidePropertyDialog();
     }
 
+    // Roll dice and move player
+    function rollDice(numDice) {
+        let diceValue = 0;
+        for (let i = 0; i < numDice; i++) {
+            diceValue += Math.floor(Math.random() * 6) + 1;
+        }
+        movePlayer(diceValue);
+    }
+
     // Event listeners for dice rolls
     document.getElementById('rollDice').addEventListener('click', function() {
         rollDice(2);
@@ -116,15 +117,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Event listener for moving on without buying
     document.getElementById('moveOn').addEventListener('click', hidePropertyDialog);
-
-    // Roll dice and move player
-    function rollDice(numDice) {
-        let diceValue = 0;
-        for (let i = 0; i < numDice; i++) {
-            diceValue += Math.floor(Math.random() * 6) + 1;
-        }
-        movePlayer(diceValue);
-    }
 
     // Initialize the player's position on the board
     renderPlayer();
