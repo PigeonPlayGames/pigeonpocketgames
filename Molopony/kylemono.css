@@ -32,6 +32,11 @@ body {
     transition: all 0.5s ease; /* Smooth transition for movement */
 }
 
+#diceCanvasContainer {
+    text-align: center;
+    margin: 20px auto;
+}
+
 button {
     display: block;
     margin: 20px auto;
