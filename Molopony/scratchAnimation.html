@@ -176,38 +176,23 @@
         setRandomText();
     };
 
-    const h3Texts = [
-        "You left your van window open and someone stole your mobile",
-        "You found a rare collectible tea set at a village market. Sell it to collectors",
-        "Your favourite football team looses the championship.. you bet at the bookies lost!",
-        "Your garden party impresses your neighbours with your homemade scones.",
-        "Your homemade jam wins first prize at the fair.",
-        "You attend university in Oxford because of your academic achievements.",
-        "Your stuck in London traffic during rush hour.",
-        "You visit Stonehenge and experience its magic. For your spiritual journey.",
-        "You Encounter a sudden downpour during a countryside stroll. You must seek shelter from the rain.",
-       
-        // Add more texts here...
-    ];
-
-    const h4Texts = [
-        "Pay v100",
-        "Collect V50",
-        "Pay V30.",
-        "Collect V50 in donations",
-        "Collect V100 and a blue ribbon",
-        "Move forward 3 spaces",
-        "Move back 3 spaces",
-        "Advance to launch!",
-        "Move back 3 spaces",
-        // Add more texts here...
+    const textPairs = [
+        { h3: "You left your van window open and someone stole your mobile", h4: "Pay v100" },
+        { h3: "You found a rare collectible tea set at a village market. Sell it to collectors", h4: "Collect V50" },
+        { h3: "Your favourite football team looses the championship.. you bet at the bookies lost!", h4: "Pay V30." },
+        { h3: "Your garden party impresses your neighbours with your homemade scones.", h4: "Collect V50 in donations" },
+        { h3: "Your homemade jam wins first prize at the fair.", h4: "Collect V100 and a blue ribbon" },
+        { h3: "You attend university in Oxford because of your academic achievements.", h4: "Move forward 3 spaces" },
+        { h3: "Your stuck in London traffic during rush hour.", h4: "Move back 3 spaces" },
+        { h3: "You visit Stonehenge and experience its magic. For your spiritual journey.", h4: "Advance to launch!" },
+        { h3: "You Encounter a sudden downpour during a countryside stroll. You must seek shelter from the rain.", h4: "Move back 3 spaces" },
+        // Add more pairs here...
     ];
 
     const setRandomText = () => {
-        const randomIndexH3 = Math.floor(Math.random() * h3Texts.length);
-        const randomIndexH4 = Math.floor(Math.random() * h4Texts.length);
-        document.getElementById("h3Text").textContent = h3Texts[randomIndexH3];
-        document.getElementById("h4Text").textContent = h4Texts[randomIndexH4];
+        const randomIndex = Math.floor(Math.random() * textPairs.length);
+        document.getElementById("h3Text").textContent = textPairs[randomIndex].h3;
+        document.getElementById("h4Text").textContent = textPairs[randomIndex].h4;
     };
 </script>
 </body>
