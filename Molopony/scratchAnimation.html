@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scratch Card</title>
+    <title>Enhanced Scratch Card for Touch and Mouse</title>
     <style>
         body, html {
             height: 100%;
@@ -18,6 +18,7 @@
             position: relative;
             width: 300px;
             height: 200px;
+            overflow: hidden;
         }
 
         #scratchCanvas {
@@ -26,12 +27,14 @@
             left: 0;
             width: 100%;
             height: 100%;
+            background: linear-gradient(135deg, #cfd9df 0%, #e2ebf0 100%);
         }
 
         .hidden-content {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: opacity 1s ease;
         }
     </style>
 </head>
@@ -45,37 +48,55 @@
             var canvas = document.getElementById('scratchCanvas');
             var ctx = canvas.getContext('2d');
             var rect = canvas.getBoundingClientRect();
+            var isScratching = false;
             canvas.width = rect.width;
             canvas.height = rect.height;
 
-            // Cover the image with a gray rectangle
             ctx.fillStyle = '#cccccc';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            var isScratching = false;
-
-            canvas.addEventListener('mousedown', function(e) {
-                isScratching = true;
-            });
-
-            canvas.addEventListener('mouseup', function(e) {
-                isScratching = false;
-            });
-
-            canvas.addEventListener('mousemove', function(e) {
-                if (isScratching) {
-                    var x = e.clientX - rect.left;
-                    var y = e.clientY - rect.top;
-                    ctx.globalCompositeOperation = 'destination-out';
-                    ctx.beginPath();
-                    ctx.arc(x, y, 10, 0, Math.PI * 2, false);
-                    ctx.fill();
+            function getEventPosition(e) {
+                if (e.touches) {
+                    e = e.touches[0];
                 }
-            });
+                return {
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top
+                };
+            }
 
-            canvas.addEventListener('mouseleave', function(e) {
+            function scratchStart(e) {
+                isScratching = true;
+                scratch(e);
+            }
+
+            function scratchEnd(e) {
                 isScratching = false;
-            });
+            }
+
+            function scratchMove(e) {
+                if (isScratching) {
+                    scratch(e);
+                }
+            }
+
+            function scratch(e) {
+                var pos = getEventPosition(e);
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, 10, 0, Math.PI * 2, false);
+                ctx.fill();
+            }
+
+            canvas.addEventListener('mousedown', scratchStart);
+            canvas.addEventListener('mousemove', scratchMove);
+            canvas.addEventListener('mouseup', scratchEnd);
+            canvas.addEventListener('mouseleave', scratchEnd);
+
+            canvas.addEventListener('touchstart', scratchStart);
+            canvas.addEventListener('touchmove', scratchMove);
+            canvas.addEventListener('touchend', scratchEnd);
+            canvas.addEventListener('touchcancel', scratchEnd);
         };
     </script>
 </body>
