@@ -26,8 +26,7 @@
         left: 50%;
         border-radius: 0.6em;
     }
-    .base,
-    #scratch {
+    .base {
         height: 200px;
         width: 200px;
         position: absolute;
@@ -37,15 +36,18 @@
         text-align: center;
         cursor: grabbing;
         border-radius: 0.3em;
+        background-image: url('lotteryScratch2.png');
+        background-size: cover;
     }
-    .base {
-        background-color: #ffffff;
-        font-family: "Poppins", sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 1.2em 2.5em rgba(16, 2, 96, 0.15);
+    #scratch {
+        height: 200px;
+        width: 200px;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        cursor: grabbing;
+        border-radius: 0.3em;
     }
     .base h3 {
         font-weight: 600;
@@ -105,10 +107,10 @@
 
     let deviceType = "";
 
-    //Detech touch device
+    //Detect touch device
     const isTouchDevice = () => {
         try {
-            //We try to create TouchEvent. It would fail for desktops and throw error.
+            //We try to create TouchEvent. It would fail for desktops and throw an error.
             document.createEvent("TouchEvent");
             deviceType = "touch";
             return true;
