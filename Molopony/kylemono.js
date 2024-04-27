@@ -178,4 +178,55 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('moveOn').addEventListener('click', hidePropertyDialog);
 
     renderPlayer();
+
+    // Lottery card functionality
+    const lotteryDialog = document.createElement('div');
+    lotteryDialog.id = 'lotteryDialog';
+    lotteryDialog.className = 'lotteryCard';
+
+    const base = document.createElement('div');
+    base.className = 'base';
+    base.innerHTML = `
+        <h3>Lottery Card</h3>
+        <h4>Scratch to Win</h4>
+    `;
+
+    const lotteryCanvas = document.createElement('canvas');
+    lotteryCanvas.id = 'lotteryCanvas';
+    lotteryCanvas.width = 200;
+    lotteryCanvas.height = 200;
+
+    lotteryDialog.appendChild(base);
+    lotteryDialog.appendChild(lotteryCanvas);
+    document.body.appendChild(lotteryDialog);
+
+    const lotteryCtx = lotteryCanvas.getContext('2d');
+
+    let painting = false;
+
+    function startPosition(e) {
+        painting = true;
+        draw(e);
+    }
+
+    function endPosition() {
+        painting = false;
+        lotteryCanvas.removeEventListener('mousemove', draw);
+    }
+
+    function draw(e) {
+        if (!painting) return;
+        lotteryCtx.lineWidth = 10;
+        lotteryCtx.lineCap = 'round';
+        lotteryCtx.strokeStyle = '#000';
+        lotteryCtx.lineTo(e.clientX, e.clientY - 50);
+        lotteryCtx.stroke();
+        lotteryCtx.beginPath();
+        lotteryCtx.moveTo(e.clientX, e.clientY - 50);
+    }
+
+    lotteryCanvas.addEventListener('mousedown', startPosition);
+    lotteryCanvas.addEventListener('mouseup', endPosition);
+    lotteryCanvas.addEventListener('mousemove', draw);
 });
+             
