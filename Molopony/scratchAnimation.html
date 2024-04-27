@@ -35,10 +35,16 @@
             const img = new Image();
             img.src = 'lotteryScratch.png'; // Load your image here
             img.onload = function() {
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                ctx.globalCompositeOperation = 'source-over';
+                canvas.width = img.width; // Set canvas size equal to image size
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0, img.width, img.height); // Draw the image to fill the canvas
+                coverWithGold();
+            };
+
+            function coverWithGold() {
+                ctx.globalCompositeOperation = 'source-over'; // Draw over the image
                 ctx.fillStyle = 'gold'; // Gold dust effect
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillRect(0, 0, canvas.width, canvas.height); // Fill canvas with gold dust
             }
 
             let isScratching = false;
@@ -47,14 +53,14 @@
                 const rect = canvas.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                ctx.globalCompositeOperation = 'destination-out';
+                ctx.globalCompositeOperation = 'destination-out'; // Scratch off mode
+                ctx.beginPath();
                 ctx.arc(x, y, 30, 0, Math.PI * 2, true); // Radius of scratch circle
                 ctx.fill();
             }
 
             canvas.addEventListener('mousedown', () => {
                 isScratching = true;
-                ctx.beginPath();
             });
 
             canvas.addEventListener('mousemove', (e) => {
@@ -70,7 +76,6 @@
             canvas.addEventListener('touchstart', (e) => {
                 e.preventDefault(); // Prevent scrolling on touch devices
                 isScratching = true;
-                ctx.beginPath();
             });
 
             canvas.addEventListener('touchmove', (e) => {
