@@ -16,25 +16,22 @@ document.addEventListener('DOMContentLoaded', function() {
         const size = 20; // Size of each die face
         ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous drawings
 
-        // Determine how many dice to draw based on number
         for (let i = 0; i < number.length; i++) {
             const xOffset = 30 * i;
-            // Draw each die
             ctx.strokeRect(10 + xOffset, 10, size, size);
-            // Draw dots based on the roll
             drawDieDots(10 + xOffset, 10, number[i]);
         }
     }
 
     function drawDieDots(x, y, num) {
         const dotPositions = [
-            [], // No zero index
-            [[x+10, y+10]], // For 1
-            [[x+3, y+3], [x+17, y+17]], // For 2
-            [[x+3, y+3], [x+10, y+10], [x+17, y+17]], // For 3
-            [[x+3, y+3], [x+17, y+3], [x+3, y+17], [x+17, y+17]], // For 4
-            [[x+3, y+3], [x+17, y+3], [x+10, y+10], [x+3, y+17], [x+17, y+17]], // For 5
-            [[x+3, y+3], [x+17, y+3], [x+3, y+10], [x+17, y+10], [x+3, y+17], [x+17, y+17]], // For 6
+            [],
+            [[x+10, y+10]],
+            [[x+3, y+3], [x+17, y+17]],
+            [[x+3, y+3], [x+10, y+10], [x+17, y+17]],
+            [[x+3, y+3], [x+17, y+3], [x+3, y+17], [x+17, y+17]],
+            [[x+3, y+3], [x+17, y+3], [x+10, y+10], [x+3, y+17], [x+17, y+17]],
+            [[x+3, y+3], [x+17, y+3], [x+3, y+10], [x+17, y+10], [x+3, y+17], [x+17, y+17]]
         ];
 
         ctx.fillStyle = 'black';
@@ -47,14 +44,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function rollDice(numDice) {
         let diceValue = 0;
-        let diceRolls = []; // Array to keep track of each dice roll
+        let diceRolls = [];
         for (let i = 0; i < numDice; i++) {
             const roll = Math.floor(Math.random() * 6) + 1;
             diceRolls.push(roll);
             diceValue += roll;
         }
 
-        drawDice(diceRolls); // Draw the rolled dice on the canvas
+        drawDice(diceRolls);
 
         if (player.inJail) {
             player.turnsInJail++;
@@ -86,7 +83,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (!player.inJail) {
             checkSpecialTiles();
-            checkChanceTile();
         }
         renderPlayer();
         checkPropertyTile();
@@ -95,8 +91,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function renderPlayer() {
         const playerToken = document.getElementById('playerToken');
-        playerToken.style.left = `${getPositionX(player.position)}px`;
-        playerToken.style.top = `${getPositionY(player.position)}px`;
+        const positionX = getPositionX(player.position);
+        const positionY = getPositionY(player.position);
+
+        playerToken.style.left = `${positionX}px`;
+        playerToken.style.top = `${positionY}px`;
     }
 
     function getPositionX(position) {
@@ -114,9 +113,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function getPositionY(position) {
         if (position < 10) {
             return 570;
-        } else if (position >= 10 && position < 20) {
+        } else if (position >= 10 and position < 20) {
             return 570 - ((position - 10) * 55);
-        } else if (position >= 20 && position < 30) {
+        } else if (position >= 20 and position < 30) {
             return 50;
         } else {
             return 50 + ((position - 30) * 55);
@@ -164,25 +163,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('propertyDialog').style.display = 'none';
     }
 
-    function checkChanceTile() {
-        const chanceTiles = [7, 22, 36];
-        if (chanceTiles.includes(player.position)) {
-            showChanceDialog();
-        }
-    }
-
-    function showChanceDialog() {
-        const chanceNumber = Math.floor(Math.random() * 15) + 1; // Get a random chance card number
-        const chanceDialog = document.getElementById('chanceCardDialog');
-        const chanceImage = document.getElementById('chanceCardImage');
-
-        chanceImage.src = `Images/chancecard${chanceNumber}.jpg`;
-        chanceImage.alt = `Chance Card ${chanceNumber}`;
-        document.getElementById('chanceCardNumber').textContent = `Chance Card ${chanceNumber}`;
-
-        chanceDialog.style.display = 'block';
-    }
-
     function buyProperty() {
         const purchaseCost = parseInt(document.getElementById('purchaseCost').textContent.replace('$', ''), 10);
         if (player.money >= purchaseCost) {
@@ -190,10 +170,19 @@ document.addEventListener('DOMContentLoaded', function() {
             player.ownedProperties.push(player.position);
             updatePlayerInfo();
             alert('Property purchased!');
+            displayOwnedProperty(player.position);
             hidePropertyDialog();
         } else {
             alert("Not enough money to buy this property!");
         }
+    }
+
+    function displayOwnedProperty(propertyIndex) {
+        const propertiesList = document.getElementById('propertiesList');
+        const propertyCard = document.createElement('div');
+        propertyCard.className = 'ownedPropertyCard';
+        propertyCard.textContent = `Property ${propertyIndex}`;
+        propertiesList.appendChild(propertyCard);
     }
 
     document.getElementById('rollDice').addEventListener('click', function() {
