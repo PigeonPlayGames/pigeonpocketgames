@@ -11,21 +11,21 @@
         <h1>Molopony ... nearly as good as Cold-lay Mcaddam</h1>
         <div id="board">
             <img src="Images/moloponyboard2.png" alt="Monopoly Board" id="monopolyBoard">
-            <div id="playerToken" style="position: absolute; width: 20px; height: 20px; background-color: #ff6347; border-radius: 50%;"></div> <!-- This will represent the player's position -->
+            <div id="playerToken" style="position: absolute; width: 20px; height: 20px; background-color: #ff6347; border-radius: 50%;"></div>
         </div>
 
         <div id="playerInfo">
             <h2>Player Info</h2>
             <p>Position: <span id="playerPosition">0</span></p>
-            <p>Ven: $<span id="playerMoney">1500</span></p>
+            <p>Ven: $ <span id="playerMoney">1500</span></p>
         </div>
 
         <div id="propertyDialog">
             <div class="propertyCard">
                 <p>This is a property. Would you like to buy it?</p>
                 <p>Property Number: <span id="propertyNumber"></span></p>
-                <p>Purchase Cost: $<span id="purchaseCost"></span></p>
-                <img id="propertyImage" src="" alt="Property Image" style="width:100%; max-height:200px;"> <!-- Added image element -->
+                <p>Purchase Cost: $ <span id="purchaseCost"></span></p>
+                <img id="propertyImage" src="" alt="Property Image" style="width:100%; max-height:200px;">
                 <button id="buyProperty" class="btn-buy">Buy</button>
                 <button id="moveOn" class="btn-move-on">Move On</button>
             </div>
@@ -34,9 +34,14 @@
         <div id="diceCanvasContainer">
             <canvas id="diceCanvas" width="120" height="60"></canvas>
         </div>
-        
+
         <button id="rollDice">Roll Dice (2)</button>
         <button id="rollThreeDice">Roll Dice (3)</button>
+
+        <div id="ownedProperties">
+            <h3>Owned Properties</h3>
+            <div id="propertiesList"></div>
+        </div>
     </div>
 
     <script src="kylemono.js"></script>
