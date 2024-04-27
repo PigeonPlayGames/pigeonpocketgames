@@ -10,6 +10,7 @@
         #lotteryDialog {
             position: relative; /* Ensure positioning relative to the parent */
             top: 20px; /* Adjust this value to lower or raise the position */
+            display: none; /* Initially hide the lottery dialog */
         }
     </style>
 </head>
@@ -38,8 +39,8 @@
             </div>
         </div>
 
-        <!-- Placeholder for Lottery Dialog -->
-        <div id="lotteryDialog" class="lotteryCard">
+        <!-- Placeholder for Lottery Dialog (initially hidden) -->
+        <div id="lotteryDialog" class="lotteryCard" style="display: none;">
             <div class="base">
                 <h4 id="h4Text"></h4>
                 <h3 id="h3Text"></h3>
@@ -156,9 +157,17 @@
         context.fill();
     };
 
+    // Function to handle landing on a lottery tile
+    function handleLotteryTile() {
+        // Show the lottery dialog
+        document.getElementById("lotteryDialog").style.display = "block";
+
+        // Call setRandomText() to update the text pairs
+        setRandomText();
+    }
+
     window.onload = () => {
         init();
-        setRandomText();
     };
 
     const textPairs = [
@@ -185,7 +194,7 @@
         document.getElementById("h3Text").textContent = textPairs[randomIndex].h3;
         document.getElementById("h4Text").textContent = textPairs[randomIndex].h4;
     };
-</script> 
+    </script> 
     <!-- Add the JavaScript logic here -->
         <!-- Ensure to integrate the lottery card logic with the existing JavaScript -->
 </body>
