@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         renderPlayer();
         checkPropertyTile();
+        checkLotteryTile(); // Check if player landed on a lottery tile
         updatePlayerInfo();
     }
 
@@ -107,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function getPositionY(position) {
         if (position < 10) {
             return 570;
-                } else if (position >= 10 && position < 20) {
+        } else if (position >= 10 && position < 20) {
             return 570 - ((position - 10) * 55);
         } else if (position >= 20 && position < 30) {
             return 50;
@@ -166,6 +167,20 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('playerMoney').textContent = player.money;
     }
 
+    // Function to check if player has landed on a lottery tile
+    function checkLotteryTile() {
+        const lotteryTiles = [7, 22, 36];
+        if (lotteryTiles.includes(player.position)) {
+            // Player has landed on a lottery tile
+            const lotteryDialog = document.getElementById('lotteryDialog');
+            lotteryDialog.style.display = 'block';
+        } else {
+            // Player has not landed on a lottery tile
+            const lotteryDialog = document.getElementById('lotteryDialog');
+            lotteryDialog.style.display = 'none';
+        }
+    }
+
     document.getElementById('rollDice').addEventListener('click', function() {
         rollDice(2);
     });
@@ -178,55 +193,5 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('moveOn').addEventListener('click', hidePropertyDialog);
 
     renderPlayer();
-
-    // Lottery card functionality
-    const lotteryDialog = document.createElement('div');
-    lotteryDialog.id = 'lotteryDialog';
-    lotteryDialog.className = 'lotteryCard';
-
-    const base = document.createElement('div');
-    base.className = 'base';
-    base.innerHTML = `
-        <h3>Lottery Card</h3>
-        <h4>Scratch to Win</h4>
-    `;
-
-    const lotteryCanvas = document.createElement('canvas');
-    lotteryCanvas.id = 'lotteryCanvas';
-    lotteryCanvas.width = 200;
-    lotteryCanvas.height = 200;
-
-    lotteryDialog.appendChild(base);
-    lotteryDialog.appendChild(lotteryCanvas);
-    document.body.appendChild(lotteryDialog);
-
-    const lotteryCtx = lotteryCanvas.getContext('2d');
-
-    let painting = false;
-
-    function startPosition(e) {
-        painting = true;
-        draw(e);
-    }
-
-    function endPosition() {
-        painting = false;
-        lotteryCanvas.removeEventListener('mousemove', draw);
-    }
-
-    function draw(e) {
-        if (!painting) return;
-        lotteryCtx.lineWidth = 10;
-        lotteryCtx.lineCap = 'round';
-        lotteryCtx.strokeStyle = '#000';
-        lotteryCtx.lineTo(e.clientX, e.clientY - 50);
-        lotteryCtx.stroke();
-        lotteryCtx.beginPath();
-        lotteryCtx.moveTo(e.clientX, e.clientY - 50);
-    }
-
-    lotteryCanvas.addEventListener('mousedown', startPosition);
-    lotteryCanvas.addEventListener('mouseup', endPosition);
-    lotteryCanvas.addEventListener('mousemove', draw);
 });
              
