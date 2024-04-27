@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let oldPosition = player.position;
         player.position = (player.position + spaces) % boardSize;
         
-        if (oldPosition + spaces >= boardSize) {
+        if (oldPosition - spaces < 0) {
             player.money += passGoMoney;
             alert("You passed GO! Collect $200.");
         }
@@ -94,13 +94,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function getPositionX(position) {
         if (position < 10) {
-            return 570 - (position * 55);
+            return 50 + (position * 55);
         } else if (position >= 10 && position < 20) {
-            return 50;
-        } else if (position >= 20 && position < 30) {
-            return 50 + ((position - 20) * 55);
-        } else {
             return 570;
+        } else if (position >= 20 && position < 30) {
+            return 570 - ((position - 20) * 55);
+        } else {
+            return 50;
         }
     }
 
@@ -108,11 +108,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (position < 10) {
             return 570;
         } else if (position >= 10 && position < 20) {
-            return 570 - ((position - 10) * 55);
+            return 50 + ((position - 10) * 55);
         } else if (position >= 20 && position < 30) {
             return 50;
         } else {
-            return 50 + ((position - 30) * 55);
+            return 570 - ((position - 30) * 55);
         }
     }
 
@@ -166,17 +166,15 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('playerMoney').textContent = player.money;
     }
 
-    // Function to initialize and show the scratch card
-    function showScratchCard() {
-        window.open('scratchAnimation.HTML', '_blank');
-        // Alternatively, load the scratch card animation in an iframe within your existing HTML document
-        // Example: document.getElementById('scratchCardFrame').src = 'scratchAnimation.HTML';
+    // Function to load the scratch card animation in an iframe within the existing HTML document
+    function loadScratchCard() {
+        document.getElementById('scratchCardFrame').src = 'scratchAnimation.HTML';
     }
 
-    // Function to check if the player lands on tiles 7, 22, and 36
+    // Function to check if the player lands on tiles 7, 22, and 36 and load the scratch card
     function checkSpecialTiles() {
         if (player.position === 7 || player.position === 22 || player.position === 36) {
-            showScratchCard();
+            loadScratchCard();
         }
     }
 
