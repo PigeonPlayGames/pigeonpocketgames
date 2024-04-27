@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const passGoMoney = 200; // Money awarded for passing 'Go'
     const player = {
         position: 0,
-        money: 2000, // Starting money
+        money: 1500, // Starting money
         ownedProperties: [], // Array to store owned properties
         inJail: false, // Indicates if the player is currently in jail
         turnsInJail: 0 // Counts how many turns the player has been in jail
@@ -26,12 +26,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function drawDieDots(x, y, num) {
         const dotPositions = [
             [],
-            [[x+10, y+10]],
-            [[x+3, y+3], [x+17, y+17]],
-            [[x+3, y+3], [x+10, y+10], [x+17, y+17]],
-            [[x+3, y+3], [x+17, y+3], [x+3, y+17], [x+17, y+17]],
-            [[x+3, y+3], [x+17, y+3], [x+10, y+10], [x+3, y+17], [x+17, y+17]],
-            [[x+3, y+3], [x+17, y+3], [x+3, y+10], [x+17, y+10], [x+3, y+17], [x+17, y+17]]
+            [[x+10, y+10]], // For 1
+            [[x+3, y+3], [x+17, y+17]], // For 2
+            [[x+3, y+3], [x+10, y+10], [x+17, y+17]], // For 3
+            [[x+3, y+3], [x+17, y+3], [x+3, y+17], [x+17, y+17]], // For 4
+            [[x+3, y+3], [x+17, y+3], [x+10, y+10], [x+3, y+17], [x+17, y+17]], // For 5
+            [[x+3, y+3], [x+17, y+3], [x+3, y+10], [x+17, y+10], [x+3, y+17], [x+17, y+17]], // For 6
         ];
 
         ctx.fillStyle = 'black';
@@ -81,9 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
             alert("You passed GO! Collect $200.");
         }
 
-        if (!player.inJail) {
-            checkSpecialTiles();
-        }
         renderPlayer();
         checkPropertyTile();
         updatePlayerInfo();
@@ -91,11 +88,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function renderPlayer() {
         const playerToken = document.getElementById('playerToken');
-        const positionX = getPositionX(player.position);
-        const positionY = getPositionY(player.position);
-
-        playerToken.style.left = `${positionX}px`;
-        playerToken.style.top = `${positionY}px`;
+        playerToken.style.left = `${getPositionX(player.position)}px`;
+        playerToken.style.top = `${getPositionY(player.position)}px`;
     }
 
     function getPositionX(position) {
@@ -113,31 +107,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function getPositionY(position) {
         if (position < 10) {
             return 570;
-        } else if (position >= 10 and position < 20) {
+                } else if (position >= 10 && position < 20) {
             return 570 - ((position - 10) * 55);
-        } else if (position >= 20 and position < 30) {
+        } else if (position >= 20 && position < 30) {
             return 50;
         } else {
             return 50 + ((position - 30) * 55);
         }
-    }
-
-    function checkSpecialTiles() {
-        if (player.position === 30) {
-            sendToJail();
-        }
-    }
-
-    function sendToJail() {
-        player.position = 10;
-        player.inJail = true;
-        player.turnsInJail = 0;
-        alert("Sent to jail!");
-    }
-
-    function updatePlayerInfo() {
-        document.getElementById('playerPosition').textContent = player.position;
-        document.getElementById('playerMoney').textContent = player.money;
     }
 
     function checkPropertyTile() {
@@ -183,6 +159,11 @@ document.addEventListener('DOMContentLoaded', function() {
         propertyCard.className = 'ownedPropertyCard';
         propertyCard.textContent = `Property ${propertyIndex}`;
         propertiesList.appendChild(propertyCard);
+    }
+
+    function updatePlayerInfo() {
+        document.getElementById('playerPosition').textContent = player.position;
+        document.getElementById('playerMoney').textContent = player.money;
     }
 
     document.getElementById('rollDice').addEventListener('click', function() {
