@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function getPositionY(position) {
         if (position < 10) {
             return 570;
-                } else if (position >= 10 && position < 20) {
+        } else if (position >= 10 && position < 20) {
             return 570 - ((position - 10) * 55);
         } else if (position >= 20 && position < 30) {
             return 50;
@@ -166,6 +166,20 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('playerMoney').textContent = player.money;
     }
 
+    // Function to initialize and show the scratch card
+    function showScratchCard() {
+        init(); // Initialize the scratch card
+        setRandomText(); // Set random text for scratch card
+    }
+
+    // Function to check if the player lands on tiles 7, 22, and 36
+    function checkSpecialTiles() {
+        if (player.position === 7 || player.position === 22 || player.position === 36) {
+            showScratchCard(); // Show the scratch card when landing on special tiles
+        }
+    }
+
+    // Event listeners for rolling dice buttons...
     document.getElementById('rollDice').addEventListener('click', function() {
         rollDice(2);
     });
@@ -174,8 +188,10 @@ document.addEventListener('DOMContentLoaded', function() {
         rollDice(3);
     });
 
+    // Event listeners for property dialog buttons...
     document.getElementById('buyProperty').addEventListener('click', buyProperty);
     document.getElementById('moveOn').addEventListener('click', hidePropertyDialog);
 
-    renderPlayer();
+    // Call checkSpecialTiles initially to check if the player starts on a special tile
+    checkSpecialTiles();
 });
