@@ -168,14 +168,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to initialize and show the scratch card
     function showScratchCard() {
-        init(); // Initialize the scratch card
-        setRandomText(); // Set random text for scratch card
+        window.open('scratchAnimation.HTML', '_blank');
+        // Alternatively, load the scratch card animation in an iframe within your existing HTML document
+        // Example: document.getElementById('scratchCardFrame').src = 'scratchAnimation.HTML';
     }
 
     // Function to check if the player lands on tiles 7, 22, and 36
     function checkSpecialTiles() {
         if (player.position === 7 || player.position === 22 || player.position === 36) {
-            showScratchCard(); // Show the scratch card when landing on special tiles
+            showScratchCard();
         }
     }
 
