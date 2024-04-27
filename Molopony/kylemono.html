@@ -157,18 +157,17 @@
         context.fill();
     };
 
-    // Function to handle landing on a lottery tile
-    function handleLotteryTile() {
-        // Show the lottery dialog
-        document.getElementById("lotteryDialog").style.display = "block";
-
-        // Call setRandomText() to update the text pairs
-        setRandomText();
-    }
-
     window.onload = () => {
         init();
     };
+
+    // Function to handle landing on a property card
+    function handlePropertyCard() {
+        // Call setRandomText() to update the text pairs
+        setRandomText();
+        // Show the lottery dialog
+        document.getElementById("lotteryDialog").style.display = "block";
+    }
 
     const textPairs = [
         { h3: "You left your van window open and someone stole your mobile", h4: "Pay v100" },
@@ -194,8 +193,6 @@
         document.getElementById("h3Text").textContent = textPairs[randomIndex].h3;
         document.getElementById("h4Text").textContent = textPairs[randomIndex].h4;
     };
-    </script> 
-    <!-- Add the JavaScript logic here -->
-        <!-- Ensure to integrate the lottery card logic with the existing JavaScript -->
+    </script>
 </body>
 </html>
