@@ -71,8 +71,8 @@
 <body>
 <div class="container">
   <div class="base">
-    <h4>You Left Your Van Window Open And Someone Stole Your Mobile.</h4>
-    <h3>$ Pay V100</h3>
+    <h4 id="h4Text"></h4>
+    <h3 id="h3Text"></h3>
   </div>
   <canvas id="scratch" width="200" height="200"></canvas>
 </div>
@@ -171,7 +171,29 @@
         context.fill();
     };
 
-    window.onload = init();
+    window.onload = () => {
+        init();
+        setRandomText();
+    };
+
+    const h3Texts = [
+        "Text 1 for h3",
+        "Text 2 for h3",
+        // Add more texts here...
+    ];
+
+    const h4Texts = [
+        "Text 1 for h4",
+        "Text 2 for h4",
+        // Add more texts here...
+    ];
+
+    const setRandomText = () => {
+        const randomIndexH3 = Math.floor(Math.random() * h3Texts.length);
+        const randomIndexH4 = Math.floor(Math.random() * h4Texts.length);
+        document.getElementById("h3Text").textContent = h3Texts[randomIndexH3];
+        document.getElementById("h4Text").textContent = h4Texts[randomIndexH4];
+    };
 </script>
 </body>
 </html>
