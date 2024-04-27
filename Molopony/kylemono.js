@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let oldPosition = player.position;
         player.position = (player.position + spaces) % boardSize;
         
-        if (oldPosition - spaces < 0) {
+        if (oldPosition + spaces >= boardSize) {
             player.money += passGoMoney;
             alert("You passed GO! Collect $200.");
         }
@@ -94,25 +94,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function getPositionX(position) {
         if (position < 10) {
-            return 50 + (position * 55);
+            return 570 - (position * 55);
         } else if (position >= 10 && position < 20) {
-            return 570;
-        } else if (position >= 20 && position < 30) {
-            return 570 - ((position - 20) * 55);
-        } else {
             return 50;
+        } else if (position >= 20 && position < 30) {
+            return 50 + ((position - 20) * 55);
+        } else {
+            return 570;
         }
     }
 
     function getPositionY(position) {
         if (position < 10) {
             return 570;
-        } else if (position >= 10 && position < 20) {
-            return 50 + ((position - 10) * 55);
+                } else if (position >= 10 && position < 20) {
+            return 570 - ((position - 10) * 55);
         } else if (position >= 20 && position < 30) {
             return 50;
         } else {
-            return 570 - ((position - 30) * 55);
+            return 50 + ((position - 30) * 55);
         }
     }
 
@@ -166,19 +166,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('playerMoney').textContent = player.money;
     }
 
-    // Function to load the scratch card animation in an iframe within the existing HTML document
-    function loadScratchCard() {
-        document.getElementById('scratchCardFrame').src = 'scratchAnimation.HTML';
-    }
-
-    // Function to check if the player lands on tiles 7, 22, and 36 and load the scratch card
-    function checkSpecialTiles() {
-        if (player.position === 7 || player.position === 22 || player.position === 36) {
-            loadScratchCard();
-        }
-    }
-
-    // Event listeners for rolling dice buttons...
     document.getElementById('rollDice').addEventListener('click', function() {
         rollDice(2);
     });
@@ -187,10 +174,8 @@ document.addEventListener('DOMContentLoaded', function() {
         rollDice(3);
     });
 
-    // Event listeners for property dialog buttons...
     document.getElementById('buyProperty').addEventListener('click', buyProperty);
     document.getElementById('moveOn').addEventListener('click', hidePropertyDialog);
 
-    // Call checkSpecialTiles initially to check if the player starts on a special tile
-    checkSpecialTiles();
+    renderPlayer();
 });
