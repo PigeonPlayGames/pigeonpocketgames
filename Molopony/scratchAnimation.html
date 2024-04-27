@@ -93,6 +93,10 @@
     let mouseY = 0;
     let isDragged = false;
 
+    //Particles
+    let particles = [];
+    const numParticles = 30;
+
     //Events for touch and mouse
     let events = {
         mouse: {
@@ -132,6 +136,37 @@
         mouseY = (!isTouchDevice() ? e.pageY : e.touches[0].pageY) - rectTop;
     };
 
+    //Create particle
+    const createParticle = (x, y) => {
+        particles.push({
+            x,
+            y,
+            size: Math.random() * 4 + 2, // Random size between 2 and 6
+            color: "#ffffff", // White color
+            angle: Math.random() * 2 * Math.PI, // Random angle in radians
+            speed: Math.random() * 3 + 1, // Random speed between 1 and 4
+        });
+    };
+
+    //Draw particles
+    const drawParticles = () => {
+        particles.forEach((particle, index) => {
+            context.fillStyle = particle.color;
+            context.beginPath();
+            context.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            context.fill();
+            // Update particle position
+            particle.x += Math.cos(particle.angle) * particle.speed;
+            particle.y += Math.sin(particle.angle) * particle.speed;
+            // Reduce particle size over time
+            particle.size -= 0.1;
+            // Remove particle if it becomes too small or leaves the canvas
+            if (particle.size <= 0 || particle.x < 0 || particle.x > canvas.width || particle.y < 0 || particle.y > canvas.height) {
+                particles.splice(index, 1);
+            }
+        });
+    };
+
     isTouchDevice();
     //Start Scratch
     canvas.addEventListener(events[deviceType].down, (event) => {
@@ -169,7 +204,24 @@
         //arc makes circle - x,y,radius,start angle,end angle
         context.arc(x, y, 12, 0, 2 * Math.PI);
         context.fill();
+        // Create particles
+        for (let i = 0; i < numParticles; i++) {
+            createParticle(x, y);
+        }
     };
+
+    // Animation loop
+    const animate = () => {
+        // Clear canvas
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        // Draw particles
+        drawParticles();
+        // Request animation frame
+        requestAnimationFrame(animate);
+    };
+
+    // Start animation loop
+    animate();
 
     window.onload = init();
 </script>
