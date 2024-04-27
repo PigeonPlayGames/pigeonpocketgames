@@ -122,3 +122,60 @@ button:hover, button:focus {
     background-color: white;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
+
+/* Lottery card styling */
+.lotteryCard {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f5f5f5;
+    border-radius: 0.6em;
+    width: 31em;
+    height: 31em;
+    background-image: url('Images/lotterycard3.png');
+}
+
+.lotteryCard .base {
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    cursor: grabbing;
+    border-radius: 0.3em;
+    background-image: url('Images/lottery_inner1.png');
+    background-size: cover;
+}
+
+.lotteryCard #lotteryCanvas {
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    cursor: grabbing;
+    border-radius: 0.3em;
+}
+
+.lotteryCard .base h3 {
+    font-weight: 600;
+    font-size: 1.5em;
+    color: #17013b;
+}
+
+.lotteryCard .base h4 {
+    font-weight: 400;
+    color: #7FFFD4;
+}
+
+.lotteryCard #lotteryCanvas {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    }
+    
