@@ -7,11 +7,7 @@
     <link rel="stylesheet" href="kylemono.css">
     <style>
         /* Add the CSS styles here */
-        #lotteryDialog {
-            position: relative; /* Ensure positioning relative to the parent */
-            top: 20px; /* Adjust this value to lower or raise the position */
-            display: none; /* Initially hide the lottery dialog */
-        }
+        /* Ensure to adjust styles as needed to fit with existing layout */
     </style>
 </head>
 <body>
@@ -39,8 +35,8 @@
             </div>
         </div>
 
-        <!-- Placeholder for Lottery Dialog (initially hidden) -->
-        <div id="lotteryDialog" class="lotteryCard" style="display: none;">
+        <!-- Placeholder for Lottery Dialog -->
+        <div id="lotteryDialog" class="lotteryCard">
             <div class="base">
                 <h4 id="h4Text"></h4>
                 <h3 id="h3Text"></h3>
@@ -159,15 +155,8 @@
 
     window.onload = () => {
         init();
-    };
-
-    // Function to handle landing on a property card
-    function handlePropertyCard() {
-        // Call setRandomText() to update the text pairs
         setRandomText();
-        // Show the lottery dialog
-        document.getElementById("lotteryDialog").style.display = "block";
-    }
+    };
 
     const textPairs = [
         { h3: "You left your van window open and someone stole your mobile", h4: "Pay v100" },
@@ -193,6 +182,9 @@
         document.getElementById("h3Text").textContent = textPairs[randomIndex].h3;
         document.getElementById("h4Text").textContent = textPairs[randomIndex].h4;
     };
-    </script>
+</script> 
+    // Add the JavaScript logic here
+        // Ensure to integrate the lottery card logic with the existing JavaScript
 </body>
-</html>
+    </html>
+                
