@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monopoly Scratch Card</title>
+    <style>
+        .scratch-card {
+            position: relative;
+            width: 300px;
+            height: 100px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+        }
+
+        .hidden-message {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+
+        #scratchCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+        }
+    </style>
+</head>
+<body>
+    <div id="scratchCard" class="scratch-card">
+        <canvas id="scratchCanvas"></canvas>
+        <div class="hidden-message">Congratulations! Advance to Go!</div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const canvas = document.getElementById('scratchCanvas');
+            const ctx = canvas.getContext('2d');
+            const rect = canvas.getBoundingClientRect();
+            const scratchSize = 30; // Radius of the scratch circle
+
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+
+            // Fill the canvas with a 'scratchable' surface
+            ctx.fillStyle = '#cccccc';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            let isScratching = false;
+
+            const scratch = (e) => {
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.arc(x, y, scratchSize, 0, Math.PI * 2, true);
+                ctx.fill();
+            };
+
+            canvas.addEventListener('mousedown', (e) => {
+                isScratching = true;
+                ctx.beginPath();
+            });
+
+            canvas.addEventListener('mousemove', (e) => {
+                if (isScratching) {
+                    scratch(e);
+                }
+            });
+
+            canvas.addEventListener('mouseup', () => {
+                isScratching = false;
+            });
+
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault(); // Prevent scrolling on touch devices
+                isScratching = true;
+                ctx.beginPath();
+            });
+
+            canvas.addEventListener('touchmove', (e) => {
+                if (isScratching) {
+                    const touch = e.touches[0];
+                    scratch(touch);
+                }
+            });
+
+            canvas.addEventListener('touchend', () => {
+                isScratching = false;
+            });
+        });
+    </script>
+</body>
+</html>
