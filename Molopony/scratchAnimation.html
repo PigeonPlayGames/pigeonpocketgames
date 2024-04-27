@@ -7,8 +7,8 @@
     <style>
         .scratch-card {
             position: relative;
-            width: 300px;
-            height: 200px; /* Adjust based on the aspect ratio of your image */
+            width: 300px; /* Set this to fit your desired size */
+            height: 200px; /* Set this to fit your desired size */
             border: 1px solid #ccc;
             overflow: hidden;
         }
@@ -33,18 +33,19 @@
             const canvas = document.getElementById('scratchCanvas');
             const ctx = canvas.getContext('2d');
             const img = new Image();
-            img.src = 'lotteryScratch.png'; // Load your image here
+            img.src = 'lotteryScratch.png'; // Make sure this path is correct
             img.onload = function() {
-                canvas.width = img.width; // Set canvas size equal to image size
-                canvas.height = img.height;
-                ctx.drawImage(img, 0, 0, img.width, img.height); // Draw the image to fill the canvas
+                // Adjust canvas size to match the image if necessary
+                canvas.width = 300; // Adjust to match the .scratch-card size
+                canvas.height = 200; // Adjust to match the .scratch-card size
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Draw the image on the canvas
                 coverWithGold();
             };
 
             function coverWithGold() {
-                ctx.globalCompositeOperation = 'source-over'; // Draw over the image
-                ctx.fillStyle = 'gold'; // Gold dust effect
-                ctx.fillRect(0, 0, canvas.width, canvas.height); // Fill canvas with gold dust
+                ctx.globalCompositeOperation = 'source-over'; // Ensures the gold covers the image
+                ctx.fillStyle = 'gold'; // Set the color for the dust
+                ctx.fillRect(0, 0, canvas.width, canvas.height); // Cover the image with gold
             }
 
             let isScratching = false;
@@ -53,9 +54,9 @@
                 const rect = canvas.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                ctx.globalCompositeOperation = 'destination-out'; // Scratch off mode
+                ctx.globalCompositeOperation = 'destination-out'; // Setup to scratch off the gold layer
                 ctx.beginPath();
-                ctx.arc(x, y, 30, 0, Math.PI * 2, true); // Radius of scratch circle
+                ctx.arc(x, y, 30, 0, Math.PI * 2, true); // Define the circle radius for scratching
                 ctx.fill();
             }
 
@@ -74,7 +75,7 @@
             });
 
             canvas.addEventListener('touchstart', (e) => {
-                e.preventDefault(); // Prevent scrolling on touch devices
+                e.preventDefault(); // Prevent default behavior on touch devices
                 isScratching = true;
             });
 
