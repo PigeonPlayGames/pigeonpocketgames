@@ -3,41 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scratch Card Test</title>
+    <title>Scratch Card</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        .scratch-card {
+            position: relative;
+            width: 300px;
+            height: 200px;
+        }
+
+        #scratchCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hidden-content {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
 </head>
 <body>
-    <canvas id="scratchCanvas" width="300" height="200"></canvas> <!-- Adjust width and height as needed -->
+    <div class="scratch-card">
+        <canvas id="scratchCanvas"></canvas>
+        <img src="lotteryScratch.png2" alt="Hidden Content" class="hidden-content">
+    </div>
     <script>
-        const canvas = document.getElementById('scratchCanvas');
-        const ctx = canvas.getContext('2d');
-        const img = new Image();
-        
-        img.onload = function() {
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            addOverlay();
-        };
-        img.onerror = function() {
-            console.error("Failed to load image");
-        };
-        img.src = 'lotteryScratch2.png'; // Check this path carefully
+        window.onload = function() {
+            var canvas = document.getElementById('scratchCanvas');
+            var ctx = canvas.getContext('2d');
+            var rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
 
-        function addOverlay() {
-            ctx.fillStyle = 'gold';
+            // Cover the image with a gray rectangle
+            ctx.fillStyle = '#cccccc';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
 
-        canvas.addEventListener('mousemove', function(e) {
-            if (e.buttons === 1) { // Only scratch if the mouse button is being pressed
-                scratch(e.offsetX, e.offsetY);
-            }
-        });
+            var isScratching = false;
 
-        function scratch(x, y) {
-            ctx.globalCompositeOperation = 'destination-out';
-            ctx.beginPath();
-            ctx.arc(x, y, 20, 0, 2 * Math.PI); // Scratch circle radius
-            ctx.fill();
-        }
+            canvas.addEventListener('mousedown', function(e) {
+                isScratching = true;
+            });
+
+            canvas.addEventListener('mouseup', function(e) {
+                isScratching = false;
+            });
+
+            canvas.addEventListener('mousemove', function(e) {
+                if (isScratching) {
+                    var x = e.clientX - rect.left;
+                    var y = e.clientY - rect.top;
+                    ctx.globalCompositeOperation = 'destination-out';
+                    ctx.beginPath();
+                    ctx.arc(x, y, 10, 0, Math.PI * 2, false);
+                    ctx.fill();
+                }
+            });
+
+            canvas.addEventListener('mouseleave', function(e) {
+                isScratching = false;
+            });
+        };
     </script>
 </body>
 </html>
