@@ -1,11 +1,3 @@
-/* Reset styles */
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-/* Body styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
@@ -13,12 +5,10 @@ body {
     padding: 0;
 }
 
-/* Container styles */
 .container {
     text-align: center;
 }
 
-/* Monopoly board styles */
 #board {
     position: relative;
     margin: 50px auto;
@@ -31,7 +21,6 @@ body {
     height: 100%;
 }
 
-/* Player token styles */
 #playerToken {
     position: absolute;
     width: 20px;
@@ -43,13 +32,11 @@ body {
     transition: all 0.5s ease; /* Smooth transition for movement */
 }
 
-/* Dice canvas container styles */
 #diceCanvasContainer {
     text-align: center;
     margin: 20px auto;
 }
 
-/* Button styles */
 button {
     display: block;
     margin: 20px auto;
@@ -68,7 +55,6 @@ button:hover, button:focus {
     outline: none; /* Optional: consider a custom outline style for accessibility */
 }
 
-/* Property dialog styles */
 #propertyDialog {
     display: none; /* Hide property dialog initially */
     position: absolute;
@@ -109,7 +95,6 @@ button:hover, button:focus {
     margin: 10px auto;
 }
 
-/* Owned properties styles */
 #ownedProperties {
     margin: 20px auto;
     width: 80%;
@@ -192,4 +177,5 @@ button:hover, button:focus {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;
-}
+    }
+    
