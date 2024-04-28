@@ -12,6 +12,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const canvas = document.getElementById('diceCanvas');
     const ctx = canvas.getContext('2d');
 
+    // Define the array of text pairs with outcomes
+    const textPairs = [
+        { h3: "Someone stole your mobile", h4: "Pay $100", outcome: function() { adjustMoney(-100); } },
+        { h3: "You found a rare collectible", h4: "Collect $50", outcome: function() { adjustMoney(50); } },
+        { h3: "Your team lost the championship", h4: "Pay $30", outcome: function() { adjustMoney(-30); } },
+        { h3: "Impress neighbours", h4: "Collect $50 in donations", outcome: function() { adjustMoney(50); } },
+        { h3: "Win a prize at the fair", h4: "Collect $100 and a blue ribbon", outcome: function() { adjustMoney(100); } },
+        // Add more pairs as needed
+    ];
+
+    // Function to adjust player money
+    function adjustMoney(amount) {
+        player.money += amount;
+        updatePlayerInfo();
+    }
+
+    // Modified function to set random text and execute outcome
+    const setRandomOutcome = () => {
+        const randomIndex = Math.floor(Math.random() * textPairs.length);
+        const pair = textPairs[randomIndex];
+        document.getElementById("h3Text").textContent = pair.h3;
+        document.getElementById("h4Text").textContent = pair.h4;
+        pair.outcome(); // Execute the outcome function
+    };
+
     function drawDice(number) {
         const size = 20; // Size of each die face
         ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous drawings
@@ -96,9 +121,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function getPositionX(position) {
         if (position < 10) {
             return 570 - (position * 55);
-        } else if (position >= 10 && position < 20) {
+        } else if (position >= 10 and position < 20) {
             return 50;
-        } else if (position >= 20 && position < 30) {
+        } else if (position >= 20 and position < 30) {
             return 50 + ((position - 20) * 55);
         } else {
             return 570;
@@ -108,9 +133,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function getPositionY(position) {
         if (position < 10) {
             return 570;
-        } else if (position >= 10 && position < 20) {
+        } else if (position >= 10 and position < 20) {
             return 570 - ((position - 10) * 55);
-        } else if (position >= 20 && position < 30) {
+        } else if (position >= 20 and position < 30) {
             return 50;
         } else {
             return 50 + ((position - 30) * 55);
@@ -174,38 +199,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Player has landed on a lottery tile
             const lotteryDialog = document.getElementById('lotteryDialog');
             lotteryDialog.style.display = 'block';
-            setRandomText(); // Set random text for the lottery card
+            setRandomOutcome(); // Set random outcome for the lottery card
         } else {
             // Player has not landed on a lottery tile
             const lotteryDialog = document.getElementById('lotteryDialog');
             lotteryDialog.style.display = 'none';
         }
     }
-
-    // Function to set random text for the lottery card
-    const setRandomText = () => {
-        const textPairs = [
-            { h3: "You left your van window open and someone stole your mobile", h4: "Pay $100" },
-            { h3: "You found a rare collectible tea set at a village market. Sell it to collectors", h4: "Collect $50" },
-            { h3: "Your favourite football team looses the championship.. you bet at the bookies lost!", h4: "Pay V30." },
-            { h3: "Your garden party impresses your neighbours with your homemade scones.", h4: "Collect V50 in donations" },
-            { h3: "Your homemade jam wins first prize at the fair.", h4: "Collect V100 and a blue ribbon" },
-            { h3: "You attend university in Oxford because of your academic achievements.", h4: "Move forward 3 spaces" },
-            { h3: "Your stuck in London traffic during rush hour.", h4: "Move back 3 spaces" },
-            { h3: "You visit Stonehenge and experience its magic. For your spiritual journey.", h4: "Advance to launch!" },
-            { h3: "Attend a traditional English tea ceremony at Harrods for a delightful afternoon treat.", h4: "Move forward three spaces" },
-            { h3: "Take a scenic train ride through the Lake District and find a 50 Ven note on the train!", h4: "Collect V50!" },
-            { h3: "Tea Import Duty: You've been caught with an illegal shipment of tea at the docks.", h4: "Pay V50 to each player as a customs duty!" },
-            { h3: "Historic Castle Repair: One of your historic castles needs urgent repairs after a storm. Other players come to your aid with supplies and workers.", h4: "Pay V50 to each player!" },
-            { h3: "You organize a fundraiser for the National Well-being Service (NWS). Healthcare services fee.", h4: "Collect V50 from each player!" },
-            { h3: "You bump into a Local Celebrity, gain influence ", h4: "1 Free Pothole Repair" },
-            { h3: "You Encounter a sudden downpour during a countryside stroll. You must seek shelter from the rain.", h4: "Move back 3 spaces" },
-            // Add more pairs here...
-        ];
-        const randomIndex = Math.floor(Math.random() * textPairs.length);
-        document.getElementById("h3Text").textContent = textPairs[randomIndex].h3;
-        document.getElementById("h4Text").textContent = textPairs[randomIndex].h4;
-    };
 
     // Event listeners for buttons
     document.getElementById('rollDice').addEventListener('click', function() {
