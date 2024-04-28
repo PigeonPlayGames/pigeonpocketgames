@@ -75,17 +75,19 @@ document.addEventListener('DOMContentLoaded', function() {
     function movePlayer(spaces) {
         let oldPosition = player.position;
         player.position = (player.position + spaces) % boardSize;
-        
-        if (oldPosition + spaces >= boardSize) {
+        if (player.position < 0) player.position += boardSize; 
+        // Adjust for negative movement
+        if (oldPosition > player.position && spaces > 0) {    
             player.money += passGoMoney;
-            alert("You passed GO! Collect $200.");
+            alert("You passed GO! Collect £200.");  
         }
 
-        renderPlayer();
-        checkPropertyTile();
-        checkLotteryTile(); // Check if player landed on a lottery tile
-        updatePlayerInfo();
-    }
+    renderPlayer();
+    checkPropertyTile();
+    checkLotteryTile();
+    updatePlayerInfo();
+}
+
 
     function renderPlayer() {
         const playerToken = document.getElementById('playerToken');
@@ -164,8 +166,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updatePlayerInfo() {
         document.getElementById('playerPosition').textContent = player.position;
-        document.getElementById('playerMoney').textContent = player.money;
+        document.getElementById('playerMoney').textContent = `£${player.money}`;
     }
+
 
     // Function to check if player has landed on a lottery tile
     function checkLotteryTile() {
@@ -185,27 +188,47 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to set random text for the lottery card
     const setRandomText = () => {
         const textPairs = [
-            { h3: "You left your van window open and someone stole your mobile", h4: "Pay $100" },
-            { h3: "You found a rare collectible tea set at a village market. Sell it to collectors", h4: "Collect $50" },
-            { h3: "Your favourite football team looses the championship.. you bet at the bookies lost!", h4: "Pay V30." },
-            { h3: "Your garden party impresses your neighbours with your homemade scones.", h4: "Collect V50 in donations" },
-            { h3: "Your homemade jam wins first prize at the fair.", h4: "Collect V100 and a blue ribbon" },
-            { h3: "You attend university in Oxford because of your academic achievements.", h4: "Move forward 3 spaces" },
-            { h3: "Your stuck in London traffic during rush hour.", h4: "Move back 3 spaces" },
-            { h3: "You visit Stonehenge and experience its magic. For your spiritual journey.", h4: "Advance to launch!" },
-            { h3: "Attend a traditional English tea ceremony at Harrods for a delightful afternoon treat.", h4: "Move forward three spaces" },
-            { h3: "Take a scenic train ride through the Lake District and find a 50 Ven note on the train!", h4: "Collect V50!" },
-            { h3: "Tea Import Duty: You've been caught with an illegal shipment of tea at the docks.", h4: "Pay V50 to each player as a customs duty!" },
-            { h3: "Historic Castle Repair: One of your historic castles needs urgent repairs after a storm. Other players come to your aid with supplies and workers.", h4: "Pay V50 to each player!" },
-            { h3: "You organize a fundraiser for the National Well-being Service (NWS). Healthcare services fee.", h4: "Collect V50 from each player!" },
-            { h3: "You bump into a Local Celebrity, gain influence ", h4: "1 Free Pothole Repair" },
-            { h3: "You Encounter a sudden downpour during a countryside stroll. You must seek shelter from the rain.", h4: "Move back 3 spaces" },
+            { h3: "You left your van window open and someone stole your mobile", h4: "Pay £100", effect: -100 },
+            { h3: "You found a rare collectible tea set at a village market. Sell it to collectors", h4: "Collect £50", effect: 50 },
+            { h3: "You attend university in Oxford because of your academic achievements.", h4: "Move forward 3 spaces", effect: 'moveForward3' },
+            { h3: "Your stuck in London traffic during rush hour.", h4: "Move back 3 spaces", effect: 'moveBack3' },
+            { h3: "You visit Stonehenge and experience its magic.", h4: "Advance to launch!", effect: 'goToLaunch' },
             // Add more pairs here...
         ];
+        
+        const setRandomText = () => {
         const randomIndex = Math.floor(Math.random() * textPairs.length);
-        document.getElementById("h3Text").textContent = textPairs[randomIndex].h3;
-        document.getElementById("h4Text").textContent = textPairs[randomIndex].h4;
+        const selectedPair = textPairs[randomIndex];
+
+        document.getElementById("h3Text").textContent = selectedPair.h3;
+        document.getElementById("h4Text").textContent = selectedPair.h4;
+
+        // Check if the effect is a number (financial change) or a string (special action)
+        if (typeof selectedPair.effect === 'number') {
+            player.money += selectedPair.effect;
+            updatePlayerInfo();
+        } else if (typeof selectedPair.effect === 'string') {
+            handleSpecialEffect(selectedPair.effect);
+        }
     };
+        function handleSpecialEffect(effect) {
+            switch (effect) {
+                    case 'moveForward3':
+                    movePlayer(3);
+                    break;
+            case 'moveBack3':
+                movePlayer(-3); // Ensure movePlayer can handle negative values correctly
+                break;
+            case 'goToLaunch':
+                player.position = 0; // Assuming position 0 is 'Launch'
+                renderPlayer();
+                break;
+            default:
+                console.log('No effect');
+        }
+    }
+
+
 
     // Event listeners for buttons
     document.getElementById('rollDice').addEventListener('click', function() {
