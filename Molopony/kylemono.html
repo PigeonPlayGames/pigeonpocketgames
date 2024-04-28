@@ -6,10 +6,8 @@
     <title>Jhonny Love loves to play Molopony</title>
     <link rel="stylesheet" href="kylemono.css">
     <style>
-       /* Add the CSS styles here */
-/* Ensure to adjust styles as needed to fit with existing layout */
 
-.container {
+    .container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
@@ -110,7 +108,110 @@ button:hover {
 .btn-move-on:hover {
     background-color: #bd2130;
 }
-        
+       /* Add the CSS styles here */
+        /* Ensure to adjust styles as needed to fit with existing layout */
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        #board {
+            position: relative;
+            width: 600px;
+            height: 600px;
+        }
+
+        #playerToken {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff6347;
+            border-radius: 50%;
+        }
+
+        #playerInfo {
+            margin-top: 20px;
+        }
+
+        #propertyDialog {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .propertyCard {
+            text-align: center;
+        }
+
+        .lotteryCard {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .lotteryCard .base {
+            text-align: center;
+        }
+
+        #diceCanvasContainer {
+            margin-top: 20px;
+        }
+
+        #ownedProperties {
+            margin-top: 20px;
+        }
+
+        #propertiesList {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .ownedPropertyCard {
+            margin-right: 10px;
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-buy {
+            margin-right: 10px;
+        }
+
+        .btn-move-on {
+            background-color: #dc3545;
+        }
+
+        .btn-move-on:hover {
+            background-color: #bd2130;
+        }
     </style>
 </head>
 <body>
@@ -271,55 +372,39 @@ button:hover {
             document.getElementById("h3Text").textContent = textPairs[randomIndex].h3;
             document.getElementById("h4Text").textContent = textPairs[randomIndex].h4;
         };
+    </script>
 
-        // Your existing JavaScript code
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const boardSize = 40;
+            const passGoMoney = 200; // Money awarded for passing 'Go'
+            const player = {
+                position: 0,
+                money: 1500, // Starting money
+                ownedProperties: [], // Array to store owned properties
+                inJail: false, // Indicates if the player is currently in jail
+                turnsInJail: 0 // Counts how many turns the player has been in jail
+            };
 
-        // Function to check if player has landed on a lottery tile
-        function checkLotteryTile() {
-            // Check if player has landed on a lottery tile (e.g., position 7, 22, 36)
-            const lotteryTiles = [7, 22, 36];
-            if (lotteryTiles.includes(player.position)) {
-                // Display the lottery dialog
-                document.getElementById('lotteryDialog').style.display = 'block';
-                // Set random text pair
-                setRandomText();
-            } else {
-                // Hide the lottery dialog if player is not on a lottery tile
-                document.getElementById('lotteryDialog').style.display = 'none';
-            }
-        }
+            // Other JavaScript code...
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const boardSize = 40;
-        const passGoMoney = 200; // Money awarded for passing 'Go'
-        const player = {
-            position: 0,
-            money: 1500, // Starting money
-            ownedProperties: [], // Array to store owned properties
-            inJail: false, // Indicates if the player is currently in jail
-            turnsInJail: 0 // Counts how many turns the player has been in jail
-        };
+            function movePlayer(spaces) {
+                let oldPosition = player.position;
+                player.position = (player.position + spaces) % boardSize;
 
-        // Other JavaScript code...
+                if (oldPosition + spaces >= boardSize) {
+                    player.money += passGoMoney;
+                    alert("You passed GO! Collect $200.");
+                }
 
-        function movePlayer(spaces) {
-            let oldPosition = player.position;
-            player.position = (player.position + spaces) % boardSize;
-
-            if (oldPosition + spaces >= boardSize) {
-                player.money += passGoMoney;
-                alert("You passed GO! Collect $200.");
+                renderPlayer();
+                checkPropertyTile();
+                checkLotteryTile(); // Call checkLotteryTile function after moving player
+                updatePlayerInfo();
             }
 
-            renderPlayer();
-            checkPropertyTile();
-            checkLotteryTile(); // Call checkLotteryTile function after moving player
-            updatePlayerInfo();
-        }
-
-        // Other JavaScript code...
-    });
-
+            // Other JavaScript code...
+        });
     </script>
 </body>
 </html>
