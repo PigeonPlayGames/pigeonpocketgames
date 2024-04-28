@@ -101,7 +101,7 @@
         <h1>Molopony ... nearly as good as Cold-lay Mcaddam</h1>
         <div id="board">
             <img src="Images/moloponyboard2.png" alt="Monopoly Board" id="monopolyBoard">
-            <div id="playerToken" style="position: absolute; width: 20px; height: 20px; background-color: #ff6347; border-radius: 50%;"></div>
+            <div id="playerToken"></div> <!-- Removed inline styles -->
         </div>
 
         <div id="playerInfo">
@@ -240,58 +240,18 @@
             context.fill();
         };
 
+        // Function to set random text for the lottery card
+        const setRandomText = () => {
+            const randomIndex = Math.floor(Math.random() * textPairs.length);
+            document.getElementById("h3Text").textContent = textPairs[randomIndex].h3;
+            document.getElementById("h4Text").textContent = textPairs[randomIndex].h4;
+        };
+
+        // Call the setRandomText function after the window has loaded
         window.onload = () => {
             init();
             setRandomText();
         };
-
-        const textPairs = [
-            { h3: "You left your van window open and someone stole your mobile", h4: "Pay v100" },
-            { h3: "You found a rare collectible tea set at a village market. Sell it to collectors", h4: "Collect V50" },
-            // Add more pairs here...
-        ];
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const boardSize = 40;
-            const passGoMoney = 200; // Money awarded for passing 'Go'
-            const player = {
-                position: 0,
-                money: 1500, // Starting money
-                ownedProperties: [], // Array to store owned properties
-                inJail: false, // Indicates if the player is currently in jail
-                turnsInJail: 0 // Counts how many turns the player has been in jail
-            };
-
-            // Other JavaScript code...
-
-            function movePlayer(spaces) {
-                let oldPosition = player.position;
-                player.position = (player.position + spaces) % boardSize;
-
-                if (oldPosition + spaces >= boardSize) {
-                    player.money += passGoMoney;
-                    alert("You passed GO! Collect $200.");
-                }
-
-                renderPlayer();
-                checkPropertyTile();
-                checkLotteryTile(); // Call checkLotteryTile function after moving player
-                updatePlayerInfo();
-            }
-
-            // Function to set random text for the lottery card
-            const setRandomText = () => {
-                const randomIndex = Math.floor(Math.random() * textPairs.length);
-                document.getElementById("h3Text").textContent = textPairs[randomIndex].h3;
-                document.getElementById("h4Text").textContent = textPairs[randomIndex].h4;
-            };
-
-            // Call the setRandomText function after the window has loaded
-            window.onload = () => {
-                init();
-                setRandomText();
-            };
-        });
     </script>
 </body>
 </html>
