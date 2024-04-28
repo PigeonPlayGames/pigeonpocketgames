@@ -243,4 +243,4 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('moveOn').addEventListener('click', hidePropertyDialog);
 
     renderPlayer(); // Render player token initially
-    });
+    
