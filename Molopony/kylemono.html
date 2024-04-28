@@ -240,12 +240,28 @@
             context.fill();
         };
 
-        // Function to set random text for the lottery card
-        const setRandomText = () => {
-            const randomIndex = Math.floor(Math.random() * textPairs.length);
-            document.getElementById("h3Text").textContent = textPairs[randomIndex].h3;
-            document.getElementById("h4Text").textContent = textPairs[randomIndex].h4;
-        };
+        document.addEventListener('DOMContentLoaded', function() {
+    // Define the array of text pairs
+    const textPairs = [
+        { h3: "You left your van window open and someone stole your mobile", h4: "Pay $100" },
+        { h3: "You found a rare collectible tea set at a village market. Sell it to collectors", h4: "Collect $50" },
+        // Add more pairs here as needed
+    ];
+
+    // Function to set random text for the lottery card
+    const setRandomText = () => {
+        const randomIndex = Math.floor(Math.random() * textPairs.length);
+        document.getElementById("h3Text").textContent = textPairs[randomIndex].h3;
+        document.getElementById("h4Text").textContent = textPairs[randomIndex].h4;
+    };
+
+    // Example of setting the text when a particular action occurs, such as clicking a button
+    const lotteryButton = document.getElementById('showLottery');
+    lotteryButton.addEventListener('click', setRandomText);
+});
+
+// Ensure you have a button with id 'showLottery' in your HTML to use the above event listener.
+
 
         // Call the setRandomText function after the window has loaded
         window.onload = () => {
