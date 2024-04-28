@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const canvas = document.getElementById('diceCanvas');
     const ctx = canvas.getContext('2d');
 
+    // Function to draw dice on the canvas
     function drawDice(number) {
         const size = 20; // Size of each die face
         ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous drawings
@@ -23,15 +24,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Helper function to draw dots on the dice
     function drawDieDots(x, y, num) {
         const dotPositions = [
             [],
-            [[x+10, y+10]], // For 1
-            [[x+3, y+3], [x+17, y+17]], // For 2
-            [[x+3, y+3], [x+10, y+10], [x+17, y+17]], // For 3
-            [[x+3, y+3], [x+17, y+3], [x+3, y+17], [x+17, y+17]], // For 4
-            [[x+3, y+3], [x+17, y+3], [x+10, y+10], [x+3, y+17], [x+17, y+17]], // For 5
-            [[x+3, y+3], [x+17, y+3], [x+3, y+10], [x+17, y+10], [x+3, y+17], [x+17, y+17]], // For 6
+            [[x + 10, y + 10]], // For 1
+            [[x + 3, y + 3], [x + 17, y + 17]], // For 2
+            [[x + 3, y + 3], [x + 10, y + 10], [x + 17, y + 17]], // For 3
+            [[x + 3, y + 3], [x + 17, y + 3], [x + 3, y + 17], [x + 17, y + 17]], // For 4
+            [[x + 3, y + 3], [x + 17, y + 3], [x + 10, y + 10], [x + 3, y + 17], [x + 17, y + 17]], // For 5
+            [[x + 3, y + 3], [x + 17, y + 3], [x + 3, y + 10], [x + 17, y + 10], [x + 3, y + 17], [x + 17, y + 17]] // For 6
         ];
 
         ctx.fillStyle = 'black';
@@ -42,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Function to handle dice rolling logic
     function rollDice(numDice) {
         let diceValue = 0;
         let diceRolls = [];
@@ -72,35 +75,37 @@ document.addEventListener('DOMContentLoaded', function() {
         movePlayer(diceValue);
     }
 
+    // Function to move the player around the board
     function movePlayer(spaces) {
         let oldPosition = player.position;
         player.position = (player.position + spaces) % boardSize;
-        if (player.position < 0) player.position += boardSize; 
-        // Adjust for negative movement
-        if (oldPosition > player.position && spaces > 0) {    
+        if (player.position < 0) player.position += boardSize; // Adjust for negative movement
+
+        if (oldPosition > player.position && spaces > 0) {
             player.money += passGoMoney;
-            alert("You passed GO! Collect £200.");  
+            alert("You passed GO! Collect £200.");
         }
 
-    renderPlayer();
-    checkPropertyTile();
-    checkLotteryTile();
-    updatePlayerInfo();
-}
+        renderPlayer();
+        checkPropertyTile();
+        checkLotteryTile(); // Check if player landed on a lottery tile
+        updatePlayerInfo();
+    }
 
-
+    // Function to update the rendering of the player's token on the board
     function renderPlayer() {
         const playerToken = document.getElementById('playerToken');
         playerToken.style.left = `${getPositionX(player.position)}px`;
         playerToken.style.top = `${getPositionY(player.position)}px`;
     }
 
+    // Helper functions to calculate player's position
     function getPositionX(position) {
         if (position < 10) {
             return 570 - (position * 55);
         } else if (position >= 10 && position < 20) {
             return 50;
-        } else if (position >= 20 && position < 30) {
+        } else if (position >= 20 and position < 30) {
             return 50 + ((position - 20) * 55);
         } else {
             return 570;
@@ -110,15 +115,16 @@ document.addEventListener('DOMContentLoaded', function() {
     function getPositionY(position) {
         if (position < 10) {
             return 570;
-        } else if (position >= 10 && position < 20) {
+        } else if (position >= 10 and position < 20) {
             return 570 - ((position - 10) * 55);
-        } else if (position >= 20 && position < 30) {
+        } else if (position >= 20 and position < 30) {
             return 50;
         } else {
             return 50 + ((position - 30) * 55);
         }
     }
 
+    // Property checking logic
     function checkPropertyTile() {
         const propertyTiles = [1, 3, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19, 21, 23, 24, 25, 26, 27, 28, 29, 31, 32, 34, 35, 37, 39];
         if (propertyTiles.includes(player.position) && !player.ownedProperties.includes(player.position)) {
@@ -142,6 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('propertyDialog').style.display = 'none';
     }
 
+    // Function to handle property purchase
     function buyProperty() {
         const purchaseCost = parseInt(document.getElementById('purchaseCost').textContent.replace('$', ''), 10);
         if (player.money >= purchaseCost) {
@@ -156,6 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Display owned properties
     function displayOwnedProperty(propertyIndex) {
         const propertiesList = document.getElementById('propertiesList');
         const propertyCard = document.createElement('div');
@@ -164,13 +172,13 @@ document.addEventListener('DOMContentLoaded', function() {
         propertiesList.appendChild(propertyCard);
     }
 
+    // Update player info on UI
     function updatePlayerInfo() {
         document.getElementById('playerPosition').textContent = player.position;
         document.getElementById('playerMoney').textContent = `£${player.money}`;
     }
 
-
-    // Function to check if player has landed on a lottery tile
+    // Check for landing on lottery tiles
     function checkLotteryTile() {
         const lotteryTiles = [7, 22, 36];
         if (lotteryTiles.includes(player.position)) {
@@ -185,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to set random text for the lottery card
+    // Set random text and effects for lottery cards
     const setRandomText = () => {
         const textPairs = [
             { h3: "You left your van window open and someone stole your mobile", h4: "Pay £100", effect: -100 },
@@ -195,8 +203,6 @@ document.addEventListener('DOMContentLoaded', function() {
             { h3: "You visit Stonehenge and experience its magic.", h4: "Advance to launch!", effect: 'goToLaunch' },
             // Add more pairs here...
         ];
-        
-        const setRandomText = () => {
         const randomIndex = Math.floor(Math.random() * textPairs.length);
         const selectedPair = textPairs[randomIndex];
 
@@ -211,11 +217,13 @@ document.addEventListener('DOMContentLoaded', function() {
             handleSpecialEffect(selectedPair.effect);
         }
     };
-        function handleSpecialEffect(effect) {
-            switch (effect) {
-                    case 'moveForward3':
-                    movePlayer(3);
-                    break;
+
+    // Handle special effects like movement or going to a specific place
+    function handleSpecialEffect(effect) {
+        switch (effect) {
+            case 'moveForward3':
+                movePlayer(3);
+                break;
             case 'moveBack3':
                 movePlayer(-3); // Ensure movePlayer can handle negative values correctly
                 break;
@@ -228,9 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-
-
-    // Event listeners for buttons
+    // Event listeners for dice rolling and property actions
     document.getElementById('rollDice').addEventListener('click', function() {
         rollDice(2);
     });
@@ -243,4 +249,4 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('moveOn').addEventListener('click', hidePropertyDialog);
 
     renderPlayer(); // Render player token initially
-    
+});
