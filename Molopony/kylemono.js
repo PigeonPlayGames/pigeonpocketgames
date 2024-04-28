@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function movePlayer(spaces) {
         let oldPosition = player.position;
         player.position = (player.position + spaces) % boardSize;
-        
+
         if (oldPosition + spaces >= boardSize) {
             player.money += passGoMoney;
             alert("You passed GO! Collect $200.");
@@ -181,6 +181,38 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Call the setRandomText function after the window has loaded
+    window.onload = () => {
+        init();
+        setRandomText();
+    };
+
+    // Function to set random text for the lottery card
+    const setRandomText = () => {
+        const textPairs = [
+            { h3: "You left your van window open and someone stole your mobile", h4: "Pay v100" },
+            { h3: "You found a rare collectible tea set at a village market. Sell it to collectors", h4: "Collect V50" },
+            { h3: "Your favourite football team looses the championship.. you bet at the bookies lost!", h4: "Pay V30." },
+            { h3: "Your garden party impresses your neighbours with your homemade scones.", h4: "Collect V50 in donations" },
+            { h3: "Your homemade jam wins first prize at the fair.", h4: "Collect V100 and a blue ribbon" },
+            { h3: "You attend university in Oxford because of your academic achievements.", h4: "Move forward 3 spaces" },
+            { h3: "Your stuck in London traffic during rush hour.", h4: "Move back 3 spaces" },
+            { h3: "You visit Stonehenge and experience its magic. For your spiritual journey.", h4: "Advance to launch!" },
+            { h3: "Attend a traditional English tea ceremony at Harrods for a delightful afternoon treat.", h4: "Move forward three spaces" },
+            { h3: "Take a scenic train ride through the Lake District and find a 50 Ven note on the train!", h4: "Collect V50!" },
+            { h3: "Tea Import Duty: You've been caught with an illegal shipment of tea at the docks.", h4: "Pay V50 to each player as a customs duty!" },
+            { h3: "Historic Castle Repair: One of your historic castles needs urgent repairs after a storm. Other players come to your aid with supplies and workers.", h4: "Pay V50 to each player!" },
+            { h3: "You organize a fundraiser for the National Well-being Service (NWS). Healthcare services fee.", h4: "Collect V50 from each player!" },
+            { h3: "You bump into a Local Celebrity, gain influence ", h4: "1 Free Pothole Repair" },
+            { h3: "You Encounter a sudden downpour during a countryside stroll. You must seek shelter from the rain.", h4: "Move back 3 spaces" }
+            // Add more pairs here...
+        ];
+        const randomIndex = Math.floor(Math.random() * textPairs.length);
+        document.getElementById("h3Text").textContent = textPairs[randomIndex].h3;
+        document.getElementById("h4Text").textContent = textPairs[randomIndex].h4;
+    };
+
+    // Event listeners for rolling dice and buying property
     document.getElementById('rollDice').addEventListener('click', function() {
         rollDice(2);
     });
@@ -194,4 +226,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
     renderPlayer();
 });
-             
