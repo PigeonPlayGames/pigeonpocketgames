@@ -1,79 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Monopoly Game</title>
-<link rel="stylesheet" href="kylemono.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jhonny Love loves to play Molopony</title>
+    <link rel="stylesheet" href="kylemono.css">
+    <style>
+        /* Add the CSS styles here */
+        /* Ensure to adjust styles as needed to fit with existing layout */
+    </style>
 </head>
 <body>
-<div class="container">
-    <canvas id="board" width="600" height="600"></canvas>
-    <div id="playerToken"></div>
-    <div id="diceCanvasContainer">
-        <canvas id="diceCanvas" width="100" height="50"></canvas>
-        <button id="rollDice">Roll Dice</button>
-        <button id="rollThreeDice">Roll Three Dice</button>
-    </div>
-    <div id="propertyDialog">
-        <div class="propertyCard">
-            <h2>Property Information</h2>
-            <p>Property Number: <span id="propertyNumber"></span></p>
-            <p>Purchase Cost: <span id="purchaseCost"></span></p>
-            <img id="propertyImage" src="" alt="Property">
-            <button class="btn-buy" id="buyProperty">Buy Property</button>
-            <button class="btn-move-on" id="moveOn">Move On</button>
+    <div class="container">
+        <h1>Molopony ... nearly as good as Cold-lay Mcaddam</h1>
+        <div id="board">
+            <img src="Images/moloponyboard2.png" alt="Monopoly Board" id="monopolyBoard">
+            <div id="playerToken" style="position: absolute; width: 20px; height: 20px; background-color: #ff6347; border-radius: 50%;"></div>
+        </div>
+
+        <div id="playerInfo">
+            <h2>Player Info</h2>
+            <p>Position: <span id="playerPosition">0</span></p>
+            <p>Ven: $ <span id="playerMoney">1500</span></p>
+        </div>
+
+        <div id="propertyDialog">
+            <div class="propertyCard">
+                <p>This is a property. Would you like to buy it?</p>
+                <p>Property Number: <span id="propertyNumber"></span></p>
+                <p>Purchase Cost: $ <span id="purchaseCost"></span></p>
+                <img id="propertyImage" src="" alt="Property Image" style="width:100%; max-height:200px;">
+                <button id="buyProperty" class="btn-buy">Buy</button>
+                <button id="moveOn" class="btn-move-on">Move On</button>
+            </div>
+        </div>
+
+        <!-- Placeholder for Lottery Dialog -->
+        <div id="lotteryDialog" class="lotteryCard">
+            <div class="base">
+                <h4 id="h4Text"></h4>
+                <h3 id="h3Text"></h3>
+            </div>
+            <canvas id="scratch" width="200" height="200"></canvas>
+        </div>
+
+        <div id="diceCanvasContainer">
+            <canvas id="diceCanvas" width="120" height="60"></canvas>
+        </div>
+
+        <button id="rollDice">Roll Dice (2)</button>
+        <button id="rollThreeDice">Roll Dice (3)</button>
+
+        <div id="ownedProperties">
+            <h3>Owned Properties</h3>
+            <div id="propertiesList"></div>
         </div>
     </div>
-    <div id="ownedProperties">
-        <h2>Owned Properties</h2>
-        <div id="propertiesList"></div>
-    </div>
-    <div class="lotteryCard">
-        <div class="base">
-            <h4 id="h4Text"></h4>
-            <h3 id="h3Text"></h3>
-        </div>
-        <canvas id="lotteryCanvas" width="200" height="200"></canvas>
-    </div>
-</div>
-<script>
-    const propertyTextPairs = [
-        { h3: "You landed on a property tile and it's your lucky day!", h4: "Collect $50" },
-        { h3: "This property is up for sale!", h4: "Buy it for $100" },
-        { h3: "You found a hidden treasure on this property!", h4: "Collect $200" },
+
+    <script src="kylemono.js"></script>
+    <script>
+    let canvas = document.getElementById("scratch");
+    let context = canvas.getContext("2d");
+
+    const init = () => {
+        let gradientColor = context.createLinearGradient(0, 0, 135, 135);
+        gradientColor.addColorStop(0, "#c3a3f1");
+        gradientColor.addColorStop(1, "#6414e9");
+        context.fillStyle = gradientColor;
+        context.fillRect(0, 0, 200, 200);
+    };
+
+    //initially mouse X and mouse Y positions are 0
+    let mouseX = 0;
+    let mouseY = 0;
+    let isDragged = false;
+
+    //Events for touch and mouse
+    let events = {
+        mouse: {
+            down: "mousedown",
+            move: "mousemove",
+            up: "mouseup",
+        },
+        touch: {
+            down: "touchstart",
+            move: "touchmove",
+            up: "touchend",
+        },
+    };
+
+    let deviceType = "";
+
+    //Detect touch device
+    const isTouchDevice = () => {
+        try {
+            //We try to create TouchEvent. It would fail for desktops and throw an error.
+            document.createEvent("TouchEvent");
+            deviceType = "touch";
+            return true;
+        } catch (e) {
+            deviceType = "mouse";
+            return false;
+        }
+    };
+
+    //Get left and top of canvas
+    let rectLeft = canvas.getBoundingClientRect().left;
+    let rectTop = canvas.getBoundingClientRect().top;
+
+    //Exact x and y position of mouse/touch
+    const getXY = (e) => {
+        mouseX = (!isTouchDevice() ? e.pageX : e.touches[0].pageX) - rectLeft;
+        mouseY = (!isTouchDevice() ? e.pageY : e.touches[0].pageY) - rectTop;
+    };
+
+    isTouchDevice();
+    //Start Scratch
+    canvas.addEventListener(events[deviceType].down, (event) => {
+        isDragged = true;
+        //Get x and y position
+        getXY(event);
+        scratch(mouseX, mouseY);
+    });
+
+    //mousemove/touchmove
+    canvas.addEventListener(events[deviceType].move, (event) => {
+        if (!isTouchDevice()) {
+            event.preventDefault();
+        }
+        if (isDragged) {
+            getXY(event);
+            scratch(mouseX, mouseY);
+        }
+    });
+
+    //stop drawing
+    canvas.addEventListener(events[deviceType].up, () => {
+        isDragged = false;
+    });
+
+    //If mouse leaves the square
+    canvas.addEventListener("mouseleave", () => {
+        isDragged = false;
+    });
+
+    const scratch = (x, y) => {
+        //destination-out draws new shapes behind the existing canvas content
+        context.globalCompositeOperation = "destination-out";
+        context.beginPath();
+        //arc makes circle - x,y,radius,start angle,end angle
+        context.arc(x, y, 12, 0, 2 * Math.PI);
+        context.fill();
+    };
+
+    window.onload = () => {
+        init();
+        setRandomText();
+    };
+
+    const textPairs = [
+        { h3: "You left your van window open and someone stole your mobile", h4: "Pay v100" },
+        { h3: "You found a rare collectible tea set at a village market. Sell it to collectors", h4: "Collect V50" },
+        { h3: "Your favourite football team looses the championship.. you bet at the bookies lost!", h4: "Pay V30." },
+        { h3: "Your garden party impresses your neighbours with your homemade scones.", h4: "Collect V50 in donations" },
+        { h3: "Your homemade jam wins first prize at the fair.", h4: "Collect V100 and a blue ribbon" },
+        { h3: "You attend university in Oxford because of your academic achievements.", h4: "Move forward 3 spaces" },
+        { h3: "Your stuck in London traffic during rush hour.", h4: "Move back 3 spaces" },
+        { h3: "You visit Stonehenge and experience its magic. For your spiritual journey.", h4: "Advance to launch!" },
+        { h3: "Attend a traditional English tea ceremony at Harrods for a delightful afternoon treat.", h4: "Move forward three spaces" },
+        { h3: "Take a scenic train ride through the Lake District and find a 50 Ven note on the train!", h4: "Collect V50!" },
+        { h3: "Tea Import Duty: You've been caught with an illegal shipment of tea at the docks.", h4: "Pay V50 to each player as a customs duty!" },
+        { h3: "Historic Castle Repair: One of your historic castles needs urgent repairs after a storm. Other players come to your aid with supplies and workers.", h4: "Pay V50 to each player!" },
+        { h3: "You organize a fundraiser for the National Well-being Service (NWS). Healthcare services fee.", h4: "Collect V50 from each player!" },
+        { h3: "You bump into a Local Celebrity, gain influence ", h4: "1 Free Pothole Repair" },
+        { h3: "You Encounter a sudden downpour during a countryside stroll. You must seek shelter from the rain.", h4: "Move back 3 spaces" },
         // Add more pairs here...
     ];
 
-    function getRandomPropertyTextPair() {
-        const randomIndex = Math.floor(Math.random() * propertyTextPairs.length);
-        return propertyTextPairs[randomIndex];
-    }
-
-    function displayRandomPropertyText() {
-        const pair = getRandomPropertyTextPair();
-        document.getElementById("h3Text").textContent = pair.h3;
-        document.getElementById("h4Text").textContent = pair.h4;
-    }
-
-    document.getElementById("rollDice").addEventListener("click", function() {
-        rollDice(2);
-    });
-
-    document.getElementById("rollThreeDice").addEventListener("click", function() {
-        rollDice(3);
-    });
-
-    function checkPropertyTile() {
-        const propertyTiles = [1, 3, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19, 21, 23, 24, 25, 26, 27, 28, 29, 31, 32, 34, 35, 37, 39];
-        if (propertyTiles.includes(player.position) && !player.ownedProperties.includes(player.position)) {
-            displayRandomPropertyText();
-            document.getElementById("propertyDialog").style.display = "block";
-        } else {
-            hidePropertyDialog();
-        }
-    }
-</script>
-<script src="kylemono.js"></script>
+    const setRandomText = () => {
+        const randomIndex = Math.floor(Math.random() * textPairs.length);
+        document.getElementById("h3Text").textContent = textPairs[randomIndex].h3;
+        document.getElementById("h4Text").textContent = textPairs[randomIndex].h4;
+    };
+</script> 
+    // Add the JavaScript logic here
+        // Ensure to integrate the lottery card logic with the existing JavaScript
 </body>
-</html>
+    </html>
+                
