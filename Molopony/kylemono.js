@@ -98,19 +98,36 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function movePlayer(spaces) {
-        let oldPosition = player.position;
-        player.position = (player.position + spaces) % boardSize;
-        
-        if (oldPosition + spaces >= boardSize) {
-            player.money += passGoMoney;
-            alert("You passed GO! Collect $200.");
-        }
+    let oldPosition = player.position;
+    player.position = (player.position + spaces) % boardSize;
 
-        renderPlayer();
-        checkPropertyTile();
-        checkLotteryTile(); // Check if player landed on a lottery tile
-        updatePlayerInfo();
+    // Check for passing 'Go'
+    if (oldPosition + spaces >= boardSize) {
+        player.money += passGoMoney;
+        alert("You passed GO! Collect $200.");
     }
+
+    // Check if landed on the 'Go to Jail' tile, which is tile 30
+    if (player.position === 30) {
+        goToJail();
+    }
+
+    renderPlayer();
+    checkPropertyTile();
+    checkLotteryTile(); // Check if player landed on a lottery tile
+    updatePlayerInfo();
+    }
+
+    // Function to handle the 'Go to Jail' event
+    function goToJail() {
+        player.position = 10; // Assuming tile 10 is the jail
+        player.inJail = true;
+        player.turnsInJail = 0;
+        alert("Go directly to Jail. Do not pass Go, do not collect $200.");
+        updatePlayerInfo(); // Refresh player info display
+        renderPlayer(); // Update player token position
+    }
+
 
     function renderPlayer() {
         const playerToken = document.getElementById('playerToken');
