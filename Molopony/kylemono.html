@@ -6,8 +6,111 @@
     <title>Jhonny Love loves to play Molopony</title>
     <link rel="stylesheet" href="kylemono.css">
     <style>
-        /* Add the CSS styles here */
-        /* Ensure to adjust styles as needed to fit with existing layout */
+       /* Add the CSS styles here */
+/* Ensure to adjust styles as needed to fit with existing layout */
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#board {
+    position: relative;
+    width: 600px;
+    height: 600px;
+}
+
+#playerToken {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #ff6347;
+    border-radius: 50%;
+}
+
+#playerInfo {
+    margin-top: 20px;
+}
+
+#propertyDialog {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.propertyCard {
+    text-align: center;
+}
+
+.lotteryCard {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.lotteryCard .base {
+    text-align: center;
+}
+
+#diceCanvasContainer {
+    margin-top: 20px;
+}
+
+#ownedProperties {
+    margin-top: 20px;
+}
+
+#propertiesList {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ownedPropertyCard {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.btn-buy {
+    margin-right: 10px;
+}
+
+.btn-move-on {
+    background-color: #dc3545;
+}
+
+.btn-move-on:hover {
+    background-color: #bd2130;
+}
+        
     </style>
 </head>
 <body>
@@ -35,7 +138,6 @@
             </div>
         </div>
 
-        <!-- Placeholder for Lottery Dialog -->
         <div id="lotteryDialog" class="lotteryCard">
             <div class="base">
                 <h4 id="h4Text"></h4>
@@ -59,132 +161,165 @@
 
     <script src="kylemono.js"></script>
     <script>
-    let canvas = document.getElementById("scratch");
-    let context = canvas.getContext("2d");
+        let canvas = document.getElementById("scratch");
+        let context = canvas.getContext("2d");
 
-    const init = () => {
-        let gradientColor = context.createLinearGradient(0, 0, 135, 135);
-        gradientColor.addColorStop(0, "#c3a3f1");
-        gradientColor.addColorStop(1, "#6414e9");
-        context.fillStyle = gradientColor;
-        context.fillRect(0, 0, 200, 200);
-    };
+        const init = () => {
+            let gradientColor = context.createLinearGradient(0, 0, 135, 135);
+            gradientColor.addColorStop(0, "#c3a3f1");
+            gradientColor.addColorStop(1, "#6414e9");
+            context.fillStyle = gradientColor;
+            context.fillRect(0, 0, 200, 200);
+        };
 
-    //initially mouse X and mouse Y positions are 0
-    let mouseX = 0;
-    let mouseY = 0;
-    let isDragged = false;
+        //initially mouse X and mouse Y positions are 0
+        let mouseX = 0;
+        let mouseY = 0;
+        let isDragged = false;
 
-    //Events for touch and mouse
-    let events = {
-        mouse: {
-            down: "mousedown",
-            move: "mousemove",
-            up: "mouseup",
-        },
-        touch: {
-            down: "touchstart",
-            move: "touchmove",
-            up: "touchend",
-        },
-    };
+        //Events for touch and mouse
+        let events = {
+            mouse: {
+                down: "mousedown",
+                move: "mousemove",
+                up: "mouseup",
+            },
+            touch: {
+                down: "touchstart",
+                move: "touchmove",
+                up: "touchend",
+            },
+        };
 
-    let deviceType = "";
+        let deviceType = "";
 
-    //Detect touch device
-    const isTouchDevice = () => {
-        try {
-            //We try to create TouchEvent. It would fail for desktops and throw an error.
-            document.createEvent("TouchEvent");
-            deviceType = "touch";
-            return true;
-        } catch (e) {
-            deviceType = "mouse";
-            return false;
-        }
-    };
+        //Detect touch device
+        const isTouchDevice = () => {
+            try {
+                //We try to create TouchEvent. It would fail for desktops and throw an error.
+                document.createEvent("TouchEvent");
+                deviceType = "touch";
+                return true;
+            } catch (e) {
+                deviceType = "mouse";
+                return false;
+            }
+        };
 
-    //Get left and top of canvas
-    let rectLeft = canvas.getBoundingClientRect().left;
-    let rectTop = canvas.getBoundingClientRect().top;
+        //Get left and top of canvas
+        let rectLeft = canvas.getBoundingClientRect().left;
+        let rectTop = canvas.getBoundingClientRect().top;
 
-    //Exact x and y position of mouse/touch
-    const getXY = (e) => {
-        mouseX = (!isTouchDevice() ? e.pageX : e.touches[0].pageX) - rectLeft;
-        mouseY = (!isTouchDevice() ? e.pageY : e.touches[0].pageY) - rectTop;
-    };
+        //Exact x and y position of mouse/touch
+        const getXY = (e) => {
+            mouseX = (!isTouchDevice() ? e.pageX : e.touches[0].pageX) - rectLeft;
+            mouseY = (!isTouchDevice() ? e.pageY : e.touches[0].pageY) - rectTop;
+        };
 
-    isTouchDevice();
-    //Start Scratch
-    canvas.addEventListener(events[deviceType].down, (event) => {
-        isDragged = true;
-        //Get x and y position
-        getXY(event);
-        scratch(mouseX, mouseY);
-    });
-
-    //mousemove/touchmove
-    canvas.addEventListener(events[deviceType].move, (event) => {
-        if (!isTouchDevice()) {
-            event.preventDefault();
-        }
-        if (isDragged) {
+        isTouchDevice();
+        //Start Scratch
+        canvas.addEventListener(events[deviceType].down, (event) => {
+            isDragged = true;
+            //Get x and y position
             getXY(event);
             scratch(mouseX, mouseY);
+        });
+
+        //mousemove/touchmove
+        canvas.addEventListener(events[deviceType].move, (event) => {
+            if (!isTouchDevice()) {
+                event.preventDefault();
+            }
+            if (isDragged) {
+                getXY(event);
+                scratch(mouseX, mouseY);
+            }
+        });
+
+        //stop drawing
+        canvas.addEventListener(events[deviceType].up, () => {
+            isDragged = false;
+        });
+
+        //If mouse leaves the square
+        canvas.addEventListener("mouseleave", () => {
+            isDragged = false;
+        });
+
+        const scratch = (x, y) => {
+            //destination-out draws new shapes behind the existing canvas content
+            context.globalCompositeOperation = "destination-out";
+            context.beginPath();
+            //arc makes circle - x,y,radius,start angle,end angle
+            context.arc(x, y, 12, 0, 2 * Math.PI);
+            context.fill();
+        };
+
+        window.onload = () => {
+            init();
+            setRandomText();
+        };
+
+        const textPairs = [
+            { h3: "You left your van window open and someone stole your mobile", h4: "Pay v100" },
+            { h3: "You found a rare collectible tea set at a village market. Sell it to collectors", h4: "Collect V50" },
+            // Add more pairs here...
+        ];
+
+        const setRandomText = () => {
+            const randomIndex = Math.floor(Math.random() * textPairs.length);
+            document.getElementById("h3Text").textContent = textPairs[randomIndex].h3;
+            document.getElementById("h4Text").textContent = textPairs[randomIndex].h4;
+        };
+
+        // Your existing JavaScript code
+
+        // Function to check if player has landed on a lottery tile
+        function checkLotteryTile() {
+            // Check if player has landed on a lottery tile (e.g., position 7, 22, 36)
+            const lotteryTiles = [7, 22, 36];
+            if (lotteryTiles.includes(player.position)) {
+                // Display the lottery dialog
+                document.getElementById('lotteryDialog').style.display = 'block';
+                // Set random text pair
+                setRandomText();
+            } else {
+                // Hide the lottery dialog if player is not on a lottery tile
+                document.getElementById('lotteryDialog').style.display = 'none';
+            }
         }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const boardSize = 40;
+        const passGoMoney = 200; // Money awarded for passing 'Go'
+        const player = {
+            position: 0,
+            money: 1500, // Starting money
+            ownedProperties: [], // Array to store owned properties
+            inJail: false, // Indicates if the player is currently in jail
+            turnsInJail: 0 // Counts how many turns the player has been in jail
+        };
+
+        // Other JavaScript code...
+
+        function movePlayer(spaces) {
+            let oldPosition = player.position;
+            player.position = (player.position + spaces) % boardSize;
+
+            if (oldPosition + spaces >= boardSize) {
+                player.money += passGoMoney;
+                alert("You passed GO! Collect $200.");
+            }
+
+            renderPlayer();
+            checkPropertyTile();
+            checkLotteryTile(); // Call checkLotteryTile function after moving player
+            updatePlayerInfo();
+        }
+
+        // Other JavaScript code...
     });
 
-    //stop drawing
-    canvas.addEventListener(events[deviceType].up, () => {
-        isDragged = false;
-    });
-
-    //If mouse leaves the square
-    canvas.addEventListener("mouseleave", () => {
-        isDragged = false;
-    });
-
-    const scratch = (x, y) => {
-        //destination-out draws new shapes behind the existing canvas content
-        context.globalCompositeOperation = "destination-out";
-        context.beginPath();
-        //arc makes circle - x,y,radius,start angle,end angle
-        context.arc(x, y, 12, 0, 2 * Math.PI);
-        context.fill();
-    };
-
-    window.onload = () => {
-        init();
-        setRandomText();
-    };
-
-    const textPairs = [
-        { h3: "You left your van window open and someone stole your mobile", h4: "Pay v100" },
-        { h3: "You found a rare collectible tea set at a village market. Sell it to collectors", h4: "Collect V50" },
-        { h3: "Your favourite football team looses the championship.. you bet at the bookies lost!", h4: "Pay V30." },
-        { h3: "Your garden party impresses your neighbours with your homemade scones.", h4: "Collect V50 in donations" },
-        { h3: "Your homemade jam wins first prize at the fair.", h4: "Collect V100 and a blue ribbon" },
-        { h3: "You attend university in Oxford because of your academic achievements.", h4: "Move forward 3 spaces" },
-        { h3: "Your stuck in London traffic during rush hour.", h4: "Move back 3 spaces" },
-        { h3: "You visit Stonehenge and experience its magic. For your spiritual journey.", h4: "Advance to launch!" },
-        { h3: "Attend a traditional English tea ceremony at Harrods for a delightful afternoon treat.", h4: "Move forward three spaces" },
-        { h3: "Take a scenic train ride through the Lake District and find a 50 Ven note on the train!", h4: "Collect V50!" },
-        { h3: "Tea Import Duty: You've been caught with an illegal shipment of tea at the docks.", h4: "Pay V50 to each player as a customs duty!" },
-        { h3: "Historic Castle Repair: One of your historic castles needs urgent repairs after a storm. Other players come to your aid with supplies and workers.", h4: "Pay V50 to each player!" },
-        { h3: "You organize a fundraiser for the National Well-being Service (NWS). Healthcare services fee.", h4: "Collect V50 from each player!" },
-        { h3: "You bump into a Local Celebrity, gain influence ", h4: "1 Free Pothole Repair" },
-        { h3: "You Encounter a sudden downpour during a countryside stroll. You must seek shelter from the rain.", h4: "Move back 3 spaces" },
-        // Add more pairs here...
-    ];
-
-    const setRandomText = () => {
-        const randomIndex = Math.floor(Math.random() * textPairs.length);
-        document.getElementById("h3Text").textContent = textPairs[randomIndex].h3;
-        document.getElementById("h4Text").textContent = textPairs[randomIndex].h4;
-    };
-</script> 
-    // Add the JavaScript logic here
-        // Ensure to integrate the lottery card logic with the existing JavaScript
+    </script>
 </body>
-    </html>
-                
+</html>
