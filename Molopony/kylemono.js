@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const passGoMoney = 200; // Money awarded for passing 'Go'
     const player = {
         position: 0,
-        money: 1500, // Starting money
+        money: 2000, // Starting money
         ownedProperties: [], // Array to store owned properties
         inJail: false, // Indicates if the player is currently in jail
         turnsInJail: 0 // Counts how many turns the player has been in jail
@@ -81,11 +81,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (player.inJail) {
             player.turnsInJail++;
             if (diceValue === 6 || diceValue === 7 || diceValue === 8) {
-                alert(`Rolled ${diceValue}! You're free from jail!`);
+                alert(`Rolled ${diceValue}! The Van Is Fixed!`);
                 player.inJail = false;
                 player.turnsInJail = 0;
             } else if (player.turnsInJail >= 3) {
-                alert("You are released from jail after 3 turns!");
+                alert("Arf Finaly The Van is Fixed!");
                 player.inJail = false;
                 player.turnsInJail = 0;
             } else {
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
         player.position = 10; // Assuming tile 10 is the jail
         player.inJail = true;
         player.turnsInJail = 0;
-        alert("Go directly to Jail. Do not pass Go, do not collect $200.");
+        alert("Uh oh PotHole, cannot not collect $200.");
         updatePlayerInfo(); // Refresh player info display
         renderPlayer(); // Update player token position
     }
@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
             displayOwnedProperty(player.position);
             hidePropertyDialog();
         } else {
-            alert("Not enough money to buy this property!");
+            alert("Not enough money to buy this Cheif!");
         }
     }
 
