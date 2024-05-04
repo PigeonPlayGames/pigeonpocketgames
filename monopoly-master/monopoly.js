@@ -1,7 +1,6 @@
 function Game() {
 	var die1;
 	var die2;
-	var die3;
 	var areDiceRolled = false;
 
 	var auctionQueue = [];
@@ -13,7 +12,6 @@ function Game() {
 	this.rollDice = function() {
 		die1 = Math.floor(Math.random() * 6) + 1;
 		die2 = Math.floor(Math.random() * 6) + 1;
-		die3 = MAth.floor(Math.random() * 6) + 1;
 		areDiceRolled = true;
 	};
 
@@ -45,14 +43,7 @@ function Game() {
 
 			return die2;
 		}
-		if (die === 2) {
-			return die2;
 
-		} else {
-			return die2;
-			return die3;
-			
-			
 	};
 
 
@@ -2296,7 +2287,6 @@ function land(increasedRent) {
 
 	var die1 = game.getDie(1);
 	var die2 = game.getDie(2);
-	var die3 = game.getDie(3);
 
 	$("#landed").show();
 	document.getElementById("landed").innerHTML = "You landed on " + s.name + ".";
@@ -2399,7 +2389,7 @@ function land(increasedRent) {
 		updatePosition();
 
 		if (p.human) {
-			popup("<div>Oh NO PotHole . Do not pass GO. Do not collect $200.</div>", gotojail);
+			popup("<div>Go to jail. Go directly to Jail. Do not pass GO. Do not collect $200.</div>", gotojail);
 		} else {
 			gotojail();
 		}
@@ -2440,7 +2430,6 @@ function roll() {
 	game.rollDice();
 	var die1 = game.getDie(1);
 	var die2 = game.getDie(2);
-	var die3 = game.getDie(3);
 
 	doublecount++;
 
@@ -2466,7 +2455,7 @@ function roll() {
 
 
 			if (p.human) {
-				popup("You rolled doubles three times in a row. too much luck. The van is broke.", gotojail);
+				popup("You rolled doubles three times in a row. Go to jail.", gotojail);
 			} else {
 				gotojail();
 			}
@@ -2497,7 +2486,7 @@ function roll() {
 			p.position = 10 + die1 + die2;
 			doublecount = 0;
 
-			addAlert(p.name + " rolled doubles The Van is fixed!.");
+			addAlert(p.name + " rolled doubles to get out of jail.");
 
 			land();
 		} else {
@@ -2527,16 +2516,16 @@ function roll() {
 
 
 	} else {
-		updateDice(die1, die2, die3);
+		updateDice(die1, die2);
 
 		// Move player
-		p.position += die1 + die2 + die3;
+		p.position += die1 + die2;
 
 		// Collect $200 salary as you pass GO
 		if (p.position >= 40) {
 			p.position -= 40;
 			p.money += 200;
-			addAlert(p.name + " collected a $200 salary for another month.");
+			addAlert(p.name + " collected a $200 salary for passing GO.");
 		}
 
 		land();
@@ -2572,12 +2561,9 @@ function play() {
 	}
 	document.getElementById("nextbutton").value = "Roll Dice";
 	document.getElementById("nextbutton").title = "Roll the dice and move your token accordingly.";
-	document.getElementById("rollThreeDice").title = "Roll 3 dice and move your token accordingly.";
 
 	$("#die0").hide();
 	$("#die1").hide();
-	$("#die2").hide();
-	
 
 	if (p.jail) {
 		$("#landed").show();
