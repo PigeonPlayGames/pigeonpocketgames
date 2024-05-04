@@ -70,6 +70,10 @@ td {
 	border-spacing: 3px;
 	margin: 25px;
 	float: left;
+	background-image: url('images/Molopony-board3.jpg'); /* Replace with your image path */
+    	background-size: contain; /* This will ensure the image fits within the board's dimensions */
+    	background-repeat: no-repeat; /* Prevents the image from repeating */
+    	background-position: center; /* Centers the background image */
 }
 
 #jail {
