@@ -2,6 +2,9 @@ body {
 	background: #FFFFFF;
 	margin: 0px;
 	min-width: 1075px;
+	background-image: url('images/Molopony-board3.jpg'); /* Replace 'path/to/your/image.jpg' with the actual path to your image */
+    	background-size: cover; /* Cover the entire page */
+   	background-position: center; /* Center the background image */
 }
 
 td {
