@@ -742,6 +742,10 @@ td {
 	vertical-align: middle;
 }
 
+.cell {
+	border: none;
+}
+
 .cell-anchor {
 	width: 100%;
 	height: 100%;
@@ -751,6 +755,7 @@ td {
 }
 
 .cell-name {
+	display: none;
 	position: absolute;
 	bottom: 0px;
 	left: 0px;
