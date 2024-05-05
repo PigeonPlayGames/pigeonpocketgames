@@ -146,6 +146,37 @@ document.addEventListener('DOMContentLoaded', function() {
         playerToken.style.top = `${getPositionY(player.position)}px`;
     }
 
+    function getPositionX(position) {
+    const boardWidth = canvas.width; // Assuming your board is as wide as the canvas
+    const spaceWidth = boardWidth / 10; // Assuming 10 spaces per side
+
+    if (position < 10) { // Bottom row, moving left
+        return boardWidth - spaceWidth * position - spaceWidth;
+    } else if (position < 20) { // Left column, moving up
+        return 0;
+    } else if (position < 30) { // Top row, moving right
+        return spaceWidth * (position - 20);
+    } else { // Right column, moving down
+        return boardWidth - spaceWidth;
+    }
+}
+
+function getPositionY(position) {
+    const boardHeight = canvas.height; // Assuming your board is as tall as the canvas
+    const spaceHeight = boardHeight / 10; // Assuming 10 spaces per side
+
+    if (position < 10) { // Bottom row, horizontal
+        return boardHeight - spaceHeight;
+    } else if (position < 20) { // Left column, vertical
+        return boardHeight - spaceHeight * (position - 10) - spaceHeight;
+    } else if (position < 30) { // Top row, horizontal
+        return 0;
+    } else { // Right column, vertical
+        return spaceHeight * (position - 30);
+    }
+}
+
+
     function checkPropertyTile(player) {
         const propertyTiles = [1, 3, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19, 21, 23, 24, 25, 26, 27, 28, 29, 31, 32, 34, 35, 37, 39];
         if (propertyTiles.includes(player.position) && !player.ownedProperties.includes(player.position)) {
