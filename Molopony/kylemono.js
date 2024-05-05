@@ -200,9 +200,26 @@ document.addEventListener('DOMContentLoaded', function() {
         const propertiesList = document.getElementById('propertiesList');
         const propertyCard = document.createElement('div');
         propertyCard.className = 'ownedPropertyCard';
-        propertyCard.textContent = `Property ${propertyIndex}`;
+
+    // Create an image element for the property
+        const propertyImage = document.createElement('img');
+        propertyImage.src = `Images/property${propertyIndex}.jpg`; // Ensure the path matches your images directory
+        propertyImage.alt = `Property ${propertyIndex}`;
+        propertyImage.style.width = "100%"; // Make the image fit the card
+        propertyImage.style.height = "auto"; // Maintain aspect ratio
+
+    // Add a caption or any additional text if needed
+        const propertyText = document.createElement('p');
+        propertyText.textContent = `Property ${propertyIndex}`;
+
+    // Append the image and text to the property card
+        propertyCard.appendChild(propertyImage);
+        propertyCard.appendChild(propertyText);
+
+    // Append the property card to the list of owned properties
         propertiesList.appendChild(propertyCard);
     }
+
 
     function updatePlayerInfo() {
         document.getElementById('playerPosition').textContent = player.position;
