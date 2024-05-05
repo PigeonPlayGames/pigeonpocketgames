@@ -252,6 +252,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const lotteryDialog = document.getElementById('lotteryDialog');
             lotteryDialog.style.display = 'none';
         }
+        
+    function checkCacheTile() {
+        const cacheTiles = [3, 17, 33];
+        if (lotteryTiles.includes(player.position)) {
+            const cacheDialog = document.getElementById('cacheDialog');
+            cacheDialog.style.display = 'block';
+            setRandomOutcome();
+        } else {
+            const cacheDialog = document.getElementById('cacheDialog');
+            cacheDialog.style.display = 'none';
+        }
     }
 
     document.getElementById('rollDice').addEventListener('click', function() {
