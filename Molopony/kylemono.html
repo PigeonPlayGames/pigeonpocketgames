@@ -43,7 +43,22 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
+        #propertyDialog, .cacheCard {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
         .propertyCard, .lotteryCard .base {
+            text-align: center;
+        }
+
+        .propertyCard, .cacheCard .base {
             text-align: center;
         }
 
@@ -126,6 +141,15 @@
                 <h4 id="h4Text"></h4>
                 <h3 id="h3Text"></h3>
                 <button id="showLottery">Show Lottery</button>
+            </div>
+            <canvas id="scratch" width="200" height="200"></canvas>
+        </div>
+        
+        <div id="cacheDialog" class="cacheCard">
+            <div class="base">
+                <h4 id="h4Text"></h4>
+                <h3 id="h3Text"></h3>
+                <button id="showCache">Show Cache</button>
             </div>
             <canvas id="scratch" width="200" height="200"></canvas>
         </div>
