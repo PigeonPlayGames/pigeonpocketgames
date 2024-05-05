@@ -178,3 +178,28 @@ button:hover, button:focus {
     -webkit-user-select: none;
     user-select: none;
 }
+/* Style changes for the owned property cards to make them larger and more visible */
+.ownedPropertyCard {
+    margin: 10px; /* More space around each card */
+    width: 150px; /* Increased width */
+    height: 90px; /* Increased height */
+    border: 1px solid #ddd; /* Keeping the border subtle */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15); /* More prominent shadow for better 3D effect */
+    transition: transform 0.3s ease; /* Smooth transformation on hover */
+}
+
+/* Optional: Add a hover effect to make the cards lift off the board slightly */
+.ownedPropertyCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Ensure that text and other content inside the property cards are properly scaled */
+.ownedPropertyCard > * {
+    font-size: 1.2em; /* Larger text */
+}
+
