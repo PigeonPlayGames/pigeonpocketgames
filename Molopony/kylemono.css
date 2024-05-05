@@ -259,3 +259,64 @@ button:hover, button:focus {
     font-size: 1.2em; /* Larger text */
 }
 
+/* Common styles for dialogs */
+.dialog {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+/* Specific styles for property and cache dialogs */
+#propertyDialog, #cacheDialog {
+    border: 2px solid #ccc;
+}
+
+/* Common styles for all cards */
+.card {
+    text-align: center;
+    background-image: url('Images/lottery_inner1.png');
+    background-size: cover;
+    height: 200px;
+    width: 200px;
+    cursor: grabbing;
+    border-radius: 0.3em;
+}
+
+/* Hover effect for all interactive cards */
+.card:hover {
+    transform: scale(1.03); /* Slightly enlarge cards on hover */
+}
+
+/* Styling for property cards within dialogs */
+.propertyCard, .lotteryCard .base, .cacheCard .base {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Styling for buttons */
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover, button:focus {
+    background-color: #0056b3;
+}
+
+
