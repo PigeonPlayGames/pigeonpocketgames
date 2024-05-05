@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return 570 - (position * 50);
         } else if (position >= 10 && position < 20) {
             return 50;
-        } else if (position >= 20 and position < 30) {
+        } else if (position >= 20 && position < 30) {
             return 50 + ((position - 20) * 50);
         } else {
             return 570;
@@ -151,9 +151,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function getPositionY(position) {
         if (position < 10) {
             return 570;
-        } else if (position >= 10 and position < 20) {
+        } else if (position >= 10 && position < 20) {
             return 570 - ((position - 10) * 55);
-        } else if (position >= 20 and position < 30) {
+        } else if (position >= 20 && position < 30) {
             return 50;
         } else {
             return 50 + ((position - 30) * 55);
