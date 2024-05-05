@@ -264,7 +264,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const cacheDialog = document.getElementById('cacheDialog');
             cacheDialog.style.display = 'none';
         }
-    }
 
     document.getElementById('rollDice').addEventListener('click', function() {
         rollDice(2);
