@@ -118,6 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
         renderPlayer();
         checkPropertyTile();
         checkLotteryTile(); // Check if player landed on a lottery tile
+        checkCacheTile(); // Check if player landed on a cache tile
         updatePlayerInfo();
     }
 
@@ -184,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function buyProperty() {
-        const purchaseCost = parseInt(document.getElementById('purchaseCost').textContent.replace('$', ''), 10);
+        const purchaseCost = parseInt(document.getElementById('purchaseCost').textContent.replace('V', ''), 10);
         if (player.money >= purchaseCost) {
             player.money -= purchaseCost;
             player.ownedProperties.push(player.position);
