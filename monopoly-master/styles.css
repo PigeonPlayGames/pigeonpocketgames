@@ -734,104 +734,88 @@ td {
 	min-width: 115px;
 }
 
+/* Trade cell styles */
 .trade-cell {
-	border: none;
-	border-radius: 3px;
-	width: 308px;
-	height: 26px;
-	vertical-align: middle;
+    border: none;
+    border-radius: 3px;
+    width: 308px;
+    height: 26px;  /* Height remains as it likely doesn't represent a board cell */
+    vertical-align: middle;
 }
 
+/* Base cell styles */
 .cell {
-	border: none;
+    border: none;
 }
 
 .cell-anchor {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	bottom: 0px;
-	left: 0px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    bottom: 0px;
+    left: 0px;
 }
 
 .cell-name {
-	display: none;
-	position: absolute;
-	bottom: 0px;
-	left: 0px;
-	text-align: center;
-	width: 100%;
+    display: none;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    text-align: center;
+    width: 100%;
 }
 
 .cell-position-holder {
-	width: 100%;
-	height: 100%;
-	z-index: 1;
-	position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    position: relative;
 }
 
 .cell-position {
-	height: 12px;
-	width: 12px;
-	position: absolute;
-	top: 0px;
-	left: 0px;
+    height: 12px;
+    width: 12px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }
 
+/* Cell owner decoration styles, adjusted for the new height */
 .cell-owner {
-	background-size: cover;
-	display: none;
-	position: absolute;
+    background-size: cover;
+    display: none;
+    position: absolute;
 }
 
 .board-top .cell-owner {
-	background-image: url("images/hori-bar.png");
-
-	height: 25px;
-	left: 0px;
-
-
-
-	top: -25px;
-	width: 72px;
-
+    background-image: url("images/hori-bar.png");
+    height: 25px;  /* Adjusted height */
+    left: 0px;
+    top: -25px;  /* May need to adjust if top alignment looks off */
+    width: 72px;
 }
 
 .board-bottom .cell-owner {
-	background-image: url("images/hori-bar.png");
-	bottom: -25px;
-
-	height: 15px;
-
-
-
-
-	left: 0px;
-	width: 72px;
+    background-image: url("images/hori-bar.png");
+    bottom: -25px;
+    height: 25px;  /* Adjusted height to match .board-top */
+    left: 0px;
+    width: 72px;
 }
 
 .board-left .cell-owner {
-	background-image: url("images/vert-bar.png");
-
-	height: 68px;
-	left: -25px;
-
-
-
-	top: 0px;
-	width: 15px;
-
+    background-image: url("images/vert-bar.png");
+    height: 78px;  /* Increased height */
+    left: -25px;
+    top: 0px;
+    width: 15px;
 }
 
 .board-right .cell-owner {
-	background-image: url("images/vert-bar.png");
-
-	height: 68px;
-	right: -25px;
-
-
-
-	top: 0px;
-	width: 15px;
-
+    background-image: url("images/vert-bar.png");
+    height: 78px;  /* Increased height */
+    right: -25px;
+    top: 0px;
+    width: 15px;
 }
+
