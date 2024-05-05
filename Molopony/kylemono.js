@@ -205,16 +205,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Updated function to handle display of owned properties
     function displayOwnedProperties() {
         const propertiesList = document.getElementById('propertiesList');
         propertiesList.innerHTML = ''; // Clear existing display
 
-        player.ownedProperties.forEach(propertyIndex => {
+        // Sort and display properties by sets
+        player.ownedProperties.sort((a, b) => findSetOrder(a) - findSetOrder(b)).forEach(propertyIndex => {
             displayOwnedProperty(propertyIndex);
         });
     }
 
     function findSetOrder(propertyIndex) {
+        // Find the first set that includes the property and return its index
         for (const [set, properties] of Object.entries(propertySets)) {
             if (properties.includes(propertyIndex)) {
                 return properties[0];
