@@ -793,6 +793,7 @@ td {
 
 /* Adjustments to top and bottom cells */
 .board-top .cell-owner, .board-bottom .cell-owner {
+    visibility: hidden;
     background-image: url("images/hori-bar.png");
     height: 30px;  /* Increased height */
     left: 0px;
@@ -803,6 +804,7 @@ td {
 
 /* Adjustments to left and right cells */
 .board-left .cell-owner, .board-right .cell-owner {
+    visibility: hidden;
     background-image: url("images/vert-bar.png");
     height: 92px;  /* Increased height */
     left: -25px;  /* Adjusted alignment */
@@ -813,6 +815,7 @@ td {
 
 /* Increasing corner cell dimensions */
 .board-corner {
+    visibility: hidden;
     width: 120px;  /* Increased width */
     height: 120px;  /* Increased height */
 }
