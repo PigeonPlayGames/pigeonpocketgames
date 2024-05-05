@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
     function checkCacheTile() {
         const cacheTiles = [3, 17, 33];
-        if (lotteryTiles.includes(player.position)) {
+        if (cacheTiles.includes(player.position)) {
             const cacheDialog = document.getElementById('cacheDialog');
             cacheDialog.style.display = 'block';
             setRandomOutcome();
