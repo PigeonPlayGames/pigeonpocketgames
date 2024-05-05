@@ -786,6 +786,7 @@ td {
 
 /* Cell owner decoration styles, adjusted for new cell dimensions */
 .cell-owner {
+    visibility: hidden;
     background-size: cover;
     display: none;
     position: absolute;
