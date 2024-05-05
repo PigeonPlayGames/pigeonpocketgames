@@ -253,6 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const lotteryDialog = document.getElementById('lotteryDialog');
             lotteryDialog.style.display = 'none';
         }
+    }
         
     function checkCacheTile() {
         const cacheTiles = [3, 17, 33];
@@ -264,6 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const cacheDialog = document.getElementById('cacheDialog');
             cacheDialog.style.display = 'none';
         }
+    }
 
     document.getElementById('rollDice').addEventListener('click', function() {
         rollDice(2);
