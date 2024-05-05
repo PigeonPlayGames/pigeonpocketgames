@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     const boardSize = 40;
-    const passGoMoney = 200; // Money awarded for passing 'Go'
+    const passGoMoney = 200;
     const player = {
         position: 0,
-        money: 2000, // Starting money
-        ownedProperties: [], // Array to store owned properties
-        inJail: false, // Indicates if the player is currently in jail
-        turnsInJail: 0 // Counts how many turns the player has been in jail
+        money: 2000,
+        ownedProperties: [],
+        inJail: false,
+        turnsInJail: 0
     };
 
     const propertySets = {
@@ -24,11 +24,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const ctx = canvas.getContext('2d');
 
     const textPairs = [
-        { h3: "Someone stole your mobile", h4: "Pay $100", outcome: function() { adjustMoney(-100); } },
-        { h3: "You found a rare collectible", h4: "Collect $50", outcome: function() { adjustMoney(50); } },
-        { h3: "Your team lost the championship", h4: "Pay $30", outcome: function() { adjustMoney(-30); } },
-        { h3: "Impress neighbours", h4: "Collect $50 in donations", outcome: function() { adjustMoney(50); } },
-        { h3: "Win a prize at the fair", h4: "Collect $100 and a blue ribbon", outcome: function() { adjustMoney(100); } },
+        { h3: "Someone stole your mobile", h4: "Pay $100", outcome: function() { adjustMoney(-100); }},
+        { h3: "You found a rare collectible", h4: "Collect $50", outcome: function() { adjustMoney(50); }},
+        { h3: "Your team lost the championship", h4: "Pay $30", outcome: function() { adjustMoney(-30); }},
+        { h3: "Impress neighbours", h4: "Collect $50 in donations", outcome: function() { adjustMoney(50); }},
+        { h3: "Win a prize at the fair", h4: "Collect $100 and a blue ribbon", outcome: function() { adjustMoney(100); }},
     ];
 
     function adjustMoney(amount) {
@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function drawDieDots(x, y, num) {
         const dotPositions = [
             [],
-            [[x+10, y+10]], 
-            [[x+3, y+3], [x+17, y+17]], 
+            [[x+10, y+10]],
+            [[x+3, y+3], [x+17, y+17]],
             [[x+3, y+3], [x+10, y+10], [x+17, y+17]],
             [[x+3, y+3], [x+17, y+3], [x+3, y+17], [x+17, y+17]],
             [[x+3, y+3], [x+17, y+3], [x+10, y+10], [x+3, y+17], [x+17, y+17]],
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 player.inJail = false;
                 player.turnsInJail = 0;
             } else if (player.turnsInJail >= 3) {
-                alert("Arf Finaly The Van is Fixed!");
+                alert("Arf Finally The Van is Fixed!");
                 player.inJail = false;
                 player.turnsInJail = 0;
             } else {
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return 570 - (position * 50);
         } else if (position >= 10 && position < 20) {
             return 50;
-        } else if (position >= 20 && position < 30) {
+        } else if (position >= 20 and position < 30) {
             return 50 + ((position - 20) * 50);
         } else {
             return 570;
@@ -152,9 +152,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function getPositionY(position) {
         if (position < 10) {
             return 570;
-        } else if (position >= 10 && position < 20) {
+        } else if (position >= 10 and position < 20) {
             return 570 - ((position - 10) * 55);
-        } else if (position >= 20 && position < 30) {
+        } else if (position >= 20 and position < 30) {
             return 50;
         } else {
             return 50 + ((position - 30) * 55);
@@ -185,7 +185,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function buyProperty() {
-        const purchaseCost = parseInt(document.getElementById('purchaseCost').textContent.replace('V', ''), 10);
+        const purchaseCostText = document.getElementById('purchaseCost').textContent;
+        const purchaseCost = parseInt(purchaseCostText.replace('$', '').trim(), 10);
+
+        console.log("Attempting to buy property for: " + purchaseCost); // Debug output
+        console.log("Player's current money: " + player.money); // Debug output
+
         if (player.money >= purchaseCost) {
             player.money -= purchaseCost;
             player.ownedProperties.push(player.position);
@@ -198,19 +203,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Updated function to handle display of owned properties
     function displayOwnedProperties() {
         const propertiesList = document.getElementById('propertiesList');
         propertiesList.innerHTML = ''; // Clear existing display
 
-        // Sort and display properties by sets
-        player.ownedProperties.sort((a, b) => findSetOrder(a) - findSetOrder(b)).forEach(propertyIndex => {
+        player.ownedProperties.forEach(propertyIndex => {
             displayOwnedProperty(propertyIndex);
         });
     }
 
     function findSetOrder(propertyIndex) {
-        // Find the first set that includes the property and return its index
         for (const [set, properties] of Object.entries(propertySets)) {
             if (properties.includes(propertyIndex)) {
                 return properties[0];
