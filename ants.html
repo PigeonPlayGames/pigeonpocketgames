@@ -105,16 +105,17 @@
                 ant.move();
 
                 if (player.collidesWith(ant)) {
-                    alert("Game Over! Final Score: " + score);
-                    window.location.reload();
-                }
-
-                // Eat ants and grow
-                if (player.collidesWith(ant)) {
-                    ants.splice(index, 1);
-                    ants.push(new Ant(Math.random() * canvas.width, Math.random() * canvas.height, "black"));
-                    score++;
-                    scoreDisplay.textContent = "Score: " + score;
+                    if (player.tail.length > ant.tail.length) {
+                        // Player kills the ant
+                        ants.splice(index, 1);
+                        ants.push(new Ant(Math.random() * canvas.width, Math.random() * canvas.height, "black"));
+                        score++;
+                        scoreDisplay.textContent = "Score: " + score;
+                    } else {
+                        // Ant kills the player
+                        alert("Game Over! Final Score: " + score);
+                        window.location.reload();
+                    }
                 }
             });
         }
@@ -161,4 +162,5 @@
     </script>
 </body>
 </html>
+
 
