@@ -8,6 +8,7 @@
             margin: 0;
             overflow: hidden;
             background: #6b8e23;
+            touch-action: none;
         }
         canvas {
             display: block;
@@ -46,11 +47,24 @@
 
             draw() {
                 ctx.fillStyle = this.color;
-                this.tail.forEach(segment => {
+                this.tail.forEach((segment, index) => {
                     ctx.beginPath();
-                    ctx.arc(segment.x, segment.y, this.size, 0, Math.PI * 2);
+                    const segmentSize = this.size * (1 - index / this.tail.length * 0.7);
+                    ctx.arc(segment.x, segment.y, segmentSize, 0, Math.PI * 2);
                     ctx.fill();
                 });
+
+                // Draw ant legs
+                for (let i = 0; i < 6; i++) {
+                    const angle = (Math.PI / 3) * i;
+                    const legX = this.x + Math.cos(angle) * this.size * 1.5;
+                    const legY = this.y + Math.sin(angle) * this.size * 1.5;
+                    ctx.beginPath();
+                    ctx.moveTo(this.x, this.y);
+                    ctx.lineTo(legX, legY);
+                    ctx.strokeStyle = this.color;
+                    ctx.stroke();
+                }
             }
 
             setDirection(dx, dy) {
@@ -68,7 +82,7 @@
 
         const player = new Ant(canvas.width / 2, canvas.height / 2, "red");
 
-        const ants = Array.from({ length: 10 }, () =>
+        const ants = Array.from({ length: 10 }, () => 
             new Ant(Math.random() * canvas.width, Math.random() * canvas.height, "black")
         );
 
@@ -104,9 +118,26 @@
             if (e.key === "ArrowRight") player.setDirection(player.speed, 0);
         });
 
+        let touchX, touchY;
+
+        window.addEventListener("touchstart", (e) => {
+            touchX = e.touches[0].clientX;
+            touchY = e.touches[0].clientY;
+        });
+
+        window.addEventListener("touchmove", (e) => {
+            const deltaX = e.touches[0].clientX - touchX;
+            const deltaY = e.touches[0].clientY - touchY;
+            const magnitude = Math.hypot(deltaX, deltaY);
+            if (magnitude > 0) {
+                player.setDirection((deltaX / magnitude) * player.speed, (deltaY / magnitude) * player.speed);
+            }
+            touchX = e.touches[0].clientX;
+            touchY = e.touches[0].clientY;
+        });
+
         gameLoop();
 
     </script>
 </body>
-</html>"
-
+</html>
