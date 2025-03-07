@@ -38,12 +38,12 @@
         let score = 0;
 
         class Ant {
-            constructor(x, y, color) {
+            constructor(x, y, color, size, speed) {
                 this.x = x;
                 this.y = y;
                 this.color = color;
-                this.size = 5;
-                this.speed = 2;
+                this.size = size;
+                this.speed = speed;
                 this.dx = 0;
                 this.dy = 0;
                 this.tail = [];
@@ -54,7 +54,7 @@
                 this.y += this.dy;
 
                 this.tail.push({ x: this.x, y: this.y });
-                if (this.tail.length > 50) this.tail.shift();
+                if (this.tail.length > this.size * 10) this.tail.shift();
             }
 
             draw() {
@@ -92,10 +92,16 @@
             }
         }
 
-        const player = new Ant(canvas.width / 2, canvas.height / 2, "red");
+        const player = new Ant(canvas.width / 2, canvas.height / 2, "red", 5, 2);
 
         const ants = Array.from({ length: 10 }, () => 
-            new Ant(Math.random() * canvas.width, Math.random() * canvas.height, "black")
+            new Ant(
+                Math.random() * canvas.width, 
+                Math.random() * canvas.height, 
+                "black", 
+                Math.random() * 5 + 3, 
+                Math.random() * 1.5 + 1
+            )
         );
 
         function updateAI() {
@@ -108,7 +114,14 @@
                     if (player.tail.length > ant.tail.length) {
                         // Player kills the ant
                         ants.splice(index, 1);
-                        ants.push(new Ant(Math.random() * canvas.width, Math.random() * canvas.height, "black"));
+                        ants.push(new Ant(
+                            Math.random() * canvas.width, 
+                            Math.random() * canvas.height, 
+                            "black", 
+                            Math.random() * 5 + 3, 
+                            Math.random() * 1.5 + 1
+                        ));
+                        player.size += 0.5; // Player grows
                         score++;
                         scoreDisplay.textContent = "Score: " + score;
                     } else {
@@ -162,5 +175,6 @@
     </script>
 </body>
 </html>
+
 
 
