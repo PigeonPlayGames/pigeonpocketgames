@@ -1,1 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ant Survival Game</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #6b8e23;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Ant {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.size = 5;
+                this.speed = 2;
+                this.dx = 0;
+                this.dy = 0;
+                this.tail = [];
+            }
+
+            move() {
+                this.x += this.dx;
+                this.y += this.dy;
+
+                this.tail.push({ x: this.x, y: this.y });
+                if (this.tail.length > 50) this.tail.shift();
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                this.tail.forEach(segment => {
+                    ctx.beginPath();
+                    ctx.arc(segment.x, segment.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+            }
+
+            setDirection(dx, dy) {
+                this.dx = dx;
+                this.dy = dy;
+            }
+
+            collidesWith(other) {
+                return other.tail.some(segment => {
+                    const dist = Math.hypot(this.x - segment.x, this.y - segment.y);
+                    return dist < this.size;
+                });
+            }
+        }
+
+        const player = new Ant(canvas.width / 2, canvas.height / 2, "red");
+
+        const ants = Array.from({ length: 10 }, () =>
+            new Ant(Math.random() * canvas.width, Math.random() * canvas.height, "black")
+        );
+
+        function updateAI() {
+            ants.forEach(ant => {
+                const angle = Math.random() * Math.PI * 2;
+                ant.setDirection(Math.cos(angle), Math.sin(angle));
+                ant.move();
+
+                if (player.collidesWith(ant)) {
+                    alert("Game Over!");
+                    window.location.reload();
+                }
+            });
+        }
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            player.move();
+            player.draw();
+
+            updateAI();
+            ants.forEach(ant => ant.draw());
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        window.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowUp") player.setDirection(0, -player.speed);
+            if (e.key === "ArrowDown") player.setDirection(0, player.speed);
+            if (e.key === "ArrowLeft") player.setDirection(-player.speed, 0);
+            if (e.key === "ArrowRight") player.setDirection(player.speed, 0);
+        });
+
+        gameLoop();
+
+    </script>
+</body>
+</html>"
 
