@@ -37,6 +37,8 @@
 
         let score = 0;
         let zoomLevel = 1;
+        let worldWidth = canvas.width;
+        let worldHeight = canvas.height;
 
         class Ant {
             constructor(x, y, color, size, speed) {
@@ -53,6 +55,10 @@
             move() {
                 this.x += this.dx;
                 this.y += this.dy;
+
+                // Keep within world bounds
+                this.x = Math.max(0, Math.min(this.x, worldWidth));
+                this.y = Math.max(0, Math.min(this.y, worldHeight));
 
                 this.tail.push({ x: this.x, y: this.y });
                 if (this.tail.length > this.size * 10) this.tail.shift();
@@ -116,8 +122,8 @@
                         // Player kills the ant
                         ants.splice(index, 1);
                         ants.push(new Ant(
-                            Math.random() * canvas.width, 
-                            Math.random() * canvas.height, 
+                            Math.random() * worldWidth, 
+                            Math.random() * worldHeight, 
                             "black", 
                             Math.random() * 10 + 3, 
                             Math.random() * 1.5 + 1
@@ -126,13 +132,17 @@
                         score++;
                         scoreDisplay.textContent = "Score: " + score;
 
-                        // Zoom out and add more ants
+                        // Zoom out and expand world
                         zoomLevel *= 0.98;
+                        worldWidth += 100;
+                        worldHeight += 100;
                         canvas.style.transform = `scale(${zoomLevel})`;
+
+                        // Add more ants as score increases
                         if (score % 5 === 0) {
                             ants.push(new Ant(
-                                Math.random() * canvas.width, 
-                                Math.random() * canvas.height, 
+                                Math.random() * worldWidth, 
+                                Math.random() * worldHeight, 
                                 "black", 
                                 Math.random() * 15 + 5, 
                                 Math.random() * 1.5 + 1
@@ -189,3 +199,4 @@
     </script>
 </body>
 </html>
+
