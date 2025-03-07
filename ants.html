@@ -37,8 +37,8 @@
 
         let score = 0;
         let zoomLevel = 1;
-        let worldWidth = canvas.width;
-        let worldHeight = canvas.height;
+        let worldWidth = canvas.width * 2;
+        let worldHeight = canvas.height * 2;
 
         class Ant {
             constructor(x, y, color, size, speed) {
@@ -57,8 +57,10 @@
                 this.y += this.dy;
 
                 // Keep within world bounds
-                this.x = Math.max(0, Math.min(this.x, worldWidth));
-                this.y = Math.max(0, Math.min(this.y, worldHeight));
+                if (this.x < 0) this.x = worldWidth;
+                if (this.x > worldWidth) this.x = 0;
+                if (this.y < 0) this.y = worldHeight;
+                if (this.y > worldHeight) this.y = 0;
 
                 this.tail.push({ x: this.x, y: this.y });
                 if (this.tail.length > this.size * 10) this.tail.shift();
@@ -103,8 +105,8 @@
 
         const ants = Array.from({ length: 10 }, () => 
             new Ant(
-                Math.random() * canvas.width, 
-                Math.random() * canvas.height, 
+                Math.random() * worldWidth, 
+                Math.random() * worldHeight, 
                 "black", 
                 Math.random() * 10 + 3, 
                 Math.random() * 1.5 + 1
@@ -134,9 +136,8 @@
 
                         // Zoom out and expand world
                         zoomLevel *= 0.98;
-                        worldWidth += 100;
-                        worldHeight += 100;
-                        canvas.style.transform = `scale(${zoomLevel})`;
+                        worldWidth += 200;
+                        worldHeight += 200;
 
                         // Add more ants as score increases
                         if (score % 5 === 0) {
@@ -160,11 +161,16 @@
         function gameLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+            ctx.save();
+            ctx.translate(canvas.width / 2 - player.x, canvas.height / 2 - player.y);
+
             player.move();
             player.draw();
 
             updateAI();
             ants.forEach(ant => ant.draw());
+
+            ctx.restore();
 
             requestAnimationFrame(gameLoop);
         }
@@ -199,4 +205,5 @@
     </script>
 </body>
 </html>
+
 
