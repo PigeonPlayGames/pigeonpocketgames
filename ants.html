@@ -36,6 +36,7 @@
         canvas.height = window.innerHeight;
 
         let score = 0;
+        let zoomLevel = 1;
 
         class Ant {
             constructor(x, y, color, size, speed) {
@@ -99,7 +100,7 @@
                 Math.random() * canvas.width, 
                 Math.random() * canvas.height, 
                 "black", 
-                Math.random() * 5 + 3, 
+                Math.random() * 10 + 3, 
                 Math.random() * 1.5 + 1
             )
         );
@@ -118,12 +119,25 @@
                             Math.random() * canvas.width, 
                             Math.random() * canvas.height, 
                             "black", 
-                            Math.random() * 5 + 3, 
+                            Math.random() * 10 + 3, 
                             Math.random() * 1.5 + 1
                         ));
                         player.size += 0.5; // Player grows
                         score++;
                         scoreDisplay.textContent = "Score: " + score;
+
+                        // Zoom out and add more ants
+                        zoomLevel *= 0.98;
+                        canvas.style.transform = `scale(${zoomLevel})`;
+                        if (score % 5 === 0) {
+                            ants.push(new Ant(
+                                Math.random() * canvas.width, 
+                                Math.random() * canvas.height, 
+                                "black", 
+                                Math.random() * 15 + 5, 
+                                Math.random() * 1.5 + 1
+                            ));
+                        }
                     } else {
                         // Ant kills the player
                         alert("Game Over! Final Score: " + score);
@@ -175,6 +189,3 @@
     </script>
 </body>
 </html>
-
-
-
